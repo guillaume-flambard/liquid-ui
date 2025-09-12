@@ -1,0 +1,27 @@
+{
+  "name": "@liquid-ui/example-basic",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Basic example showcasing Liquid UI components",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@liquid-ui/core": "*",
+    "@liquid-ui/react": "*",
+    "next": "15.5.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.3",
+    "typescript": "^5"
+  }
+}

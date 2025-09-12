@@ -1,0 +1,115 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Liquid UI/Introduction" />
+
+# Liquid UI 🌊
+
+Welcome to **Liquid UI** - the first complete Apple Liquid Glass library for React.
+
+Beautiful, performant, and accessible components that bring Apple's revolutionary design language to the web.
+
+## What is Liquid UI?
+
+Liquid UI is a collection of React components that implement Apple's Liquid Glass design system with pixel-perfect accuracy. Each component features:
+
+- **🎨 Apple-Perfect Glass Effects** - Authentic liquid glass with real physics
+- **⚡ 60fps Performance** - Buttery smooth animations optimized for all devices  
+- **🔧 Developer Experience** - TypeScript-first with excellent IntelliSense
+- **♿ Accessibility** - WCAG AA compliant out of the box
+- **🎯 Customizable** - Extensive theming and configuration options
+
+## Core Philosophy
+
+1. **Physics-Based** - Real Apple formulas: `1.0 - normalizedDist²`
+2. **Performance First** - <50kb bundle, 60fps animations
+3. **Accessibility Always** - Screen readers, keyboard navigation, color contrast
+4. **Developer Joy** - Intuitive APIs, great TypeScript support
+
+## Getting Started
+
+```bash
+npm install @liquid-ui/react
+```
+
+```tsx
+import { LiquidCard } from '@liquid-ui/react'
+
+function App() {
+  return (
+    <LiquidCard variant="frosted" interactive>
+      <h2>Hello Liquid UI! 🌊</h2>
+      <p>Beautiful glass effects with zero effort.</p>
+    </LiquidCard>
+  )
+}
+```
+
+## Components Overview
+
+### Core Components
+
+- **[LiquidCard](?path=/docs/components-liquidcard--docs)** - The signature glass card component
+- **[LiquidButton](?path=/docs/components-liquidbutton--docs)** - Interactive glass buttons
+- **[LiquidInput](?path=/docs/components-liquidinput--docs)** - Glass form fields
+- **[LiquidModal](?path=/docs/components-liquidmodal--docs)** - Blur overlays and modals
+
+### Design Tokens
+
+All components use a consistent set of design tokens based on Apple's specifications:
+
+```ts
+const liquidTokens = {
+  glass: {
+    blur: {
+      subtle: '5px',    // Light blur
+      regular: '12px',  // Standard Apple  
+      strong: '20px'    // Maximum blur
+    },
+    opacity: {
+      light: 0.15,      // 15% Apple minimum
+      regular: 0.25,    // Balanced
+      strong: 0.85      // 85% Apple maximum
+    }
+  }
+}
+```
+
+## Interactive Physics
+
+Hover over any interactive component to see Apple's liquid glass physics in action:
+
+- **Real-time refraction** based on mouse position
+- **Smooth transforms** following the Apple formula
+- **Performance optimized** with throttled calculations
+- **Graceful fallbacks** for older browsers
+
+## Browser Support
+
+- **Chrome/Edge** 90+
+- **Firefox** 88+ 
+- **Safari** 14+
+- **Graceful degradation** for older browsers
+
+## Accessibility Features
+
+- ✅ **Keyboard Navigation** - Full keyboard support
+- ✅ **Screen Reader** - Proper ARIA attributes
+- ✅ **Color Contrast** - WCAG AA compliant
+- ✅ **Reduced Motion** - Respects user preferences
+- ✅ **Focus Management** - Clear focus indicators
+
+## Open Source
+
+Liquid UI is open source under the MIT license. We welcome contributions from the community!
+
+- **[GitHub Repository](https://github.com/liquid-ui/liquid-ui)**
+- **[Contributing Guide](https://github.com/liquid-ui/liquid-ui/blob/main/CONTRIBUTING.md)**
+- **[Discord Community](https://discord.gg/liquidui)**
+
+---
+
+**Ready to make your React apps liquid?** 
+
+Explore the components in the sidebar to see what's possible with Liquid UI. 
+
+*Building the future of React UI, one glass component at a time.* ✨

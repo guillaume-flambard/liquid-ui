@@ -1,0 +1,113 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with Liquid UI
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us resolve the issue quickly.
+        
+  - type: input
+    id: package
+    attributes:
+      label: Package
+      description: Which Liquid UI package is affected?
+      placeholder: "@liquid-ui/react, @liquid-ui/core, etc."
+    validations:
+      required: true
+      
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of Liquid UI are you using?
+      placeholder: "0.1.0"
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser(s)
+      description: Which browser(s) are affected?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other (please specify in description)
+    validations:
+      required: true
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug
+      placeholder: Tell us what you expected to happen and what actually happened
+    validations:
+      required: true
+      
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the bug
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+      
+  - type: textarea
+    id: code
+    attributes:
+      label: Code Example
+      description: If applicable, provide a minimal code example that reproduces the issue
+      render: typescript
+      placeholder: |
+        import { LiquidCard } from '@liquid-ui/react'
+        
+        function App() {
+          return (
+            <LiquidCard variant="frosted">
+              Content that shows the bug
+            </LiquidCard>
+          )
+        }
+        
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Please provide your environment details
+      render: yaml
+      placeholder: |
+        OS: [e.g. macOS 14.0]
+        Node.js version: [e.g. 18.17.0]
+        React version: [e.g. 18.2.0]
+        TypeScript version: [e.g. 5.3.0]
+        Package manager: [e.g. npm 9.8.0]
+        
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here, including screenshots if applicable
+      
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Confirmation
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have provided all the requested information
+          required: true
+        - label: I am willing to help test a fix if needed
+          required: false

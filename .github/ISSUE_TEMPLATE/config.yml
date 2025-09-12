@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/liquid-ui/liquid-ui/discussions
+    about: For questions, ideas, and general discussions about Liquid UI
+  - name: 🎮 Discord Community
+    url: https://discord.gg/liquidui
+    about: Join our community for real-time chat and support
+  - name: 📚 Documentation
+    url: https://liquidui.dev
+    about: Check our documentation for guides and API references
+  - name: 🐦 Twitter
+    url: https://twitter.com/liquidui
+    about: Follow us for updates and announcements
