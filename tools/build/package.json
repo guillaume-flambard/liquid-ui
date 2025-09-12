@@ -1,0 +1,16 @@
+{
+  "name": "@liquid-ui/build-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared build configuration and tools for Liquid UI",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup src/index.ts --dts",
+    "dev": "tsup src/index.ts --dts --watch"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0"
+  }
+}

@@ -1,6 +1,6 @@
 # Liquid UI 🌊
 
-> The first complete Apple Liquid Glass library for React
+> The first complete Apple Liquid Glass library for React - Authentic glass morphism effects with environmental blending
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
@@ -47,6 +47,7 @@ This monorepo contains several packages:
 - **[@liquid-ui/icons](./packages/icons)** - Liquid glass icons
 
 ### Apps
+- **[demo](./apps/demo)** - Live demonstration of authentic Apple Liquid Glass effects
 - **[docs](./apps/docs)** - Documentation website
 - **[playground](./apps/playground)** - Interactive component playground
 - **[templates](./apps/templates)** - Starter templates
@@ -65,6 +66,7 @@ liquid-ui/
 │   ├── tokens/         # CSS variables
 │   └── icons/          # Icon set
 ├── apps/
+│   ├── demo/           # Live demo
 │   ├── docs/           # Documentation
 │   ├── playground/     # Testing
 │   └── templates/      # Examples
@@ -88,14 +90,14 @@ liquid-ui/
 
 ```bash
 # Clone the repository
-git clone https://github.com/liquid-ui/liquid-ui.git
+git clone https://github.com/guillaume-flambard/liquid-ui.git
 cd liquid-ui
 
 # Install dependencies
 npm install
 
-# Start development
-npm run dev
+# Start demo development server
+cd apps/demo && npm run dev
 
 # Build all packages
 npm run build
@@ -124,14 +126,14 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 ## 🌟 Support
 
 - ⭐ **Star this repo** if you find it helpful
-- 🐛 **Report bugs** via [GitHub Issues](https://github.com/liquid-ui/liquid-ui/issues)
-- 💡 **Request features** via [GitHub Discussions](https://github.com/liquid-ui/liquid-ui/discussions)
-- 🤝 **Join our community** on [Discord](https://discord.gg/liquidui)
+- 🐛 **Report bugs** via [GitHub Issues](https://github.com/guillaume-flambard/liquid-ui/issues)
+- 💡 **Request features** via [GitHub Discussions](https://github.com/guillaume-flambard/liquid-ui/discussions)
 
 ## 🚀 Roadmap
 
 - [x] Core glass engine
 - [x] Essential components (Card, Button, Input, Modal)
+- [x] Live demo with authentic Apple Liquid Glass effects
 - [ ] Navigation components (Navbar, Sidebar, Tabs)
 - [ ] Feedback components (Toast, Dropdown, Progress)
 - [ ] Vue.js support

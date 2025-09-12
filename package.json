@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
+    "demo": "cd apps/demo && npm run dev",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
