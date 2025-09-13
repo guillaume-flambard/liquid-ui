@@ -1,8 +1,7 @@
-import React, { forwardRef, useRef, useState, useCallback, useId } from 'react'
-import { clsx } from 'clsx'
+import React, { forwardRef, useRef, useState, useCallback, useId, useEffect } from 'react'
 import { useLiquidGlass } from '../hooks/useLiquidGlass'
 import { useInteractiveGlass } from '../hooks/useInteractiveGlass'
-import type { LiquidInputProps } from '../types'
+import type { LiquidInputProps, LiquidInputComponent } from '../types'
 
 /**
  * LiquidInput - Glass form input component
@@ -10,12 +9,12 @@ import type { LiquidInputProps } from '../types'
  * A beautiful input field with liquid glass effects, perfect for forms and data entry.
  * Includes labels, error states, helper text, and icons.
  */
-export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
+const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
   (
     {
       variant = 'frosted',
       intensity = 'subtle',
-      opacity = 'light',
+      opacity = 'regular',
       interactive = true,
       adaptiveOpacity = false,
       environmentBlending = false,
@@ -33,6 +32,52 @@ export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false)
+
+    // Add CSS styles for placeholder on client side only
+    useEffect(() => {
+      if (typeof document === 'undefined') return
+
+      const styleId = 'liquid-input-styles'
+      if (document.getElementById(styleId)) return
+
+      const style = document.createElement('style')
+      style.id = styleId
+      style.textContent = `
+        .liquid-input input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+          transition: color 0.2s ease;
+        }
+        .liquid-input input:focus::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+        .liquid-input input:disabled::placeholder {
+          color: rgba(255, 255, 255, 0.2);
+        }
+        .liquid-input input::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.4);
+          transition: color 0.2s ease;
+        }
+        .liquid-input input:focus::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+        .liquid-input input::-moz-placeholder {
+          color: rgba(255, 255, 255, 0.4);
+          opacity: 1;
+          transition: color 0.2s ease;
+        }
+        .liquid-input input:focus::-moz-placeholder {
+          color: rgba(255, 255, 255, 0.3);
+          opacity: 1;
+        }
+        .liquid-input input:-ms-input-placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+        .liquid-input input:focus:-ms-input-placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+      `
+      document.head.appendChild(style)
+    }, [])
     const [hasValue, setHasValue] = useState(Boolean(props.value || props.defaultValue))
     const inputRef = useRef<HTMLInputElement>(null)
     const wrapperRef = useRef<HTMLDivElement>(null)
@@ -87,101 +132,101 @@ export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
       handleMouseMove(e)
     }, [handleMouseMove])
     
-    // Wrapper classes
-    const wrapperClasses = clsx(
-      'liquid-input-wrapper',
-      'relative',
-      'rounded-lg',
-      'border',
-      'transition-all',
-      'duration-200',
-      'ease-out',
-      
-      // Border and shadow states
-      error ? 'border-red-500/50' : 'border-white/10',
-      isFocused && !error && 'border-blue-500/50 ring-1 ring-blue-500/20',
-      
-      // Interactive styles
-      interactive && !disabled && [
-        'transform-gpu',
-        'hover:shadow-lg'
-      ],
-      
-      // Disabled styles
-      disabled && 'opacity-50 cursor-not-allowed',
-      
-      // Width
-      fullWidth && 'w-full'
-    )
+    // Base styles
+    const containerStyle: React.CSSProperties = {
+      display: 'flex',
+      flexDirection: 'column',
+      width: fullWidth ? '100%' : 'auto',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    }
     
-    // Input classes
-    const inputClasses = clsx(
-      'liquid-input',
-      'w-full',
-      'bg-transparent',
-      'px-3',
-      'py-2',
-      'text-sm',
-      'placeholder-gray-400',
-      'border-none',
-      'outline-none',
-      'rounded-lg',
-      
-      // Padding adjustments for icons
-      leftIcon && 'pl-10',
-      rightIcon && 'pr-10'
-    )
+    const labelStyle: React.CSSProperties = {
+      fontSize: '14px',
+      fontWeight: 500,
+      marginBottom: '6px',
+      color: error ? '#ef4444' : isFocused ? '#3b82f6' : 'rgba(255, 255, 255, 0.9)',
+      transition: 'color 0.2s ease',
+    }
     
-    // Label classes
-    const labelClasses = clsx(
-      'block',
-      'text-sm',
-      'font-medium',
-      'mb-1',
-      'transition-colors',
-      'duration-200',
-      
-      error ? 'text-red-400' : 'text-gray-300',
-      isFocused && !error && 'text-blue-400'
-    )
+    const wrapperStyle: React.CSSProperties = {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      borderRadius: '12px',
+      border: `1px solid ${error ? 'rgba(239, 68, 68, 0.5)' : isFocused ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.15)'}`,
+      transition: 'all 0.2s ease',
+      cursor: disabled ? 'not-allowed' : 'text',
+      opacity: disabled ? 0.5 : 1,
+      transform: interactive && !disabled ? 'translateZ(0)' : 'none',
+      boxShadow: isFocused 
+        ? `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}, 0 8px 32px rgba(0, 0, 0, 0.12)` 
+        : '0 4px 16px rgba(0, 0, 0, 0.08)',
+      ...glassStyles,
+    }
     
-    // Helper/error text classes
-    const helperClasses = clsx(
-      'mt-1',
-      'text-xs',
-      error ? 'text-red-400' : 'text-gray-400'
-    )
+    const inputStyle: React.CSSProperties = {
+      width: '100%',
+      background: 'transparent',
+      border: 'none',
+      outline: 'none',
+      padding: '12px 16px',
+      paddingLeft: leftIcon ? '44px' : '16px',
+      paddingRight: rightIcon ? '44px' : '16px',
+      fontSize: '15px',
+      lineHeight: '1.4',
+      color: 'rgba(255, 255, 255, 0.95)',
+      fontFamily: 'inherit',
+      borderRadius: '12px',
+    }
     
-    // Icon classes
-    const iconClasses = clsx(
-      'absolute',
-      'top-1/2',
-      '-translate-y-1/2',
-      'w-4',
-      'h-4',
-      'text-gray-400',
-      'pointer-events-none'
-    )
+    const iconStyle: React.CSSProperties = {
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: '18px',
+      height: '18px',
+      color: 'rgba(255, 255, 255, 0.6)',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
+    
+    const leftIconStyle: React.CSSProperties = {
+      ...iconStyle,
+      left: '14px',
+    }
+    
+    const rightIconStyle: React.CSSProperties = {
+      ...iconStyle,
+      right: '14px',
+    }
+    
+    const helperStyle: React.CSSProperties = {
+      fontSize: '12px',
+      marginTop: '6px',
+      color: error ? '#ef4444' : 'rgba(255, 255, 255, 0.6)',
+      lineHeight: '1.4',
+    }
     
     return (
-      <div className={clsx('liquid-input-container', fullWidth && 'w-full', className)}>
+      <div style={containerStyle} className={`liquid-input ${className || ''}`}>
         {label && (
-          <label htmlFor={inputId} className={labelClasses}>
+          <label htmlFor={inputId} style={labelStyle}>
             {label}
           </label>
         )}
         
         <div
           ref={wrapperRef}
-          className={wrapperClasses}
-          style={{ ...glassStyles, ...style }}
+          style={{...wrapperStyle, ...style}}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onMouseMove={onMouseMove}
         >
           {/* Left icon */}
           {leftIcon && (
-            <div className={clsx(iconClasses, 'left-3')}>
+            <div style={leftIconStyle}>
               {leftIcon}
             </div>
           )}
@@ -193,24 +238,24 @@ export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
               if (typeof ref === 'function') {
                 ref(node)
               } else if (ref) {
-                ref.current = node
+                (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
               }
-              inputRef.current = node
+              (inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
             }}
             id={inputId}
-            className={inputClasses}
+            style={inputStyle}
             disabled={disabled}
             onFocus={onFocus}
             onBlur={onBlur}
             onChange={onChange}
             aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={clsx(errorId, helperId).trim() || undefined}
+            aria-describedby={errorId || helperId || undefined}
             {...props}
           />
           
           {/* Right icon */}
           {rightIcon && (
-            <div className={clsx(iconClasses, 'right-3')}>
+            <div style={rightIconStyle}>
               {rightIcon}
             </div>
           )}
@@ -220,7 +265,7 @@ export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
         {(helperText || error) && (
           <div
             id={errorId || helperId}
-            className={helperClasses}
+            style={helperStyle}
           >
             {error || helperText}
           </div>
@@ -230,4 +275,66 @@ export const LiquidInput = forwardRef<HTMLInputElement, LiquidInputProps>(
   }
 )
 
-LiquidInput.displayName = 'LiquidInput'
+LiquidInputBase.displayName = 'LiquidInput'
+
+// Create the main component with proper typing
+export const LiquidInput = LiquidInputBase as LiquidInputComponent
+
+// Preset components for easier usage
+LiquidInput.Default = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidInputBase
+    ref={ref}
+    variant="frosted"
+    intensity="subtle"
+    interactive
+    {...props}
+  />
+))
+LiquidInput.Default.displayName = 'LiquidInput.Default'
+
+LiquidInput.Clear = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'variant' | 'opacity' | 'interactive'>>((props, ref) => (
+  <LiquidInputBase
+    ref={ref}
+    variant="clear"
+    opacity="light"
+    interactive
+    {...props}
+  />
+))
+LiquidInput.Clear.displayName = 'LiquidInput.Clear'
+
+LiquidInput.Email = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidInputBase
+    ref={ref}
+    type="email"
+    variant="frosted"
+    intensity="subtle"
+    interactive
+    {...props}
+  />
+))
+LiquidInput.Email.displayName = 'LiquidInput.Email'
+
+LiquidInput.Password = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidInputBase
+    ref={ref}
+    type="password"
+    variant="frosted"
+    intensity="subtle"
+    interactive
+    {...props}
+  />
+))
+LiquidInput.Password.displayName = 'LiquidInput.Password'
+
+LiquidInput.Search = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidInputBase
+    ref={ref}
+    type="search"
+    variant="clear"
+    intensity="subtle"
+    interactive
+    {...props}
+  />
+))
+LiquidInput.Search.displayName = 'LiquidInput.Search'

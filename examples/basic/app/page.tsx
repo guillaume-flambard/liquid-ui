@@ -24,76 +24,48 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Frosted Card */}
-          <LiquidCard
-            variant="frosted"
-            intensity="regular"
-            className="p-6 space-y-4"
-            interactive
-            hover
-            shadow
-          >
+          <LiquidCard.Frosted className="p-6 space-y-4">
             <h3 className="text-xl font-semibold text-white">
               Frosted Glass
             </h3>
             <p className="text-blue-100">
               Perfect for content cards and information displays with subtle transparency.
             </p>
-            <LiquidButton size="sm" variant="clear">
+            <LiquidButton.Secondary size="sm">
               Learn More
-            </LiquidButton>
-          </LiquidCard>
+            </LiquidButton.Secondary>
+          </LiquidCard.Frosted>
 
           {/* Clear Card */}
-          <LiquidCard
-            variant="clear"
-            intensity="subtle"
-            opacity="light"
-            className="p-6 space-y-4"
-            interactive
-            hover
-          >
+          <LiquidCard.Clear className="p-6 space-y-4">
             <h3 className="text-xl font-semibold text-white">
               Clear Glass
             </h3>
             <p className="text-blue-100">
               Ultra-minimal design with pure transparency and elegant borders.
             </p>
-            <LiquidButton size="sm" variant="frosted">
+            <LiquidButton.Primary size="sm">
               Explore
-            </LiquidButton>
-          </LiquidCard>
+            </LiquidButton.Primary>
+          </LiquidCard.Clear>
 
           {/* Tinted Card */}
-          <LiquidCard
-            variant="tinted"
-            intensity="regular"
-            className="p-6 space-y-4"
-            interactive
-            hover
-            shadow
-          >
+          <LiquidCard.Tinted className="p-6 space-y-4">
             <h3 className="text-xl font-semibold text-white">
               Tinted Glass
             </h3>
             <p className="text-blue-100">
               Subtle color tinting that adapts beautifully to any background.
             </p>
-            <LiquidButton size="sm" variant="tinted">
+            <LiquidButton.Tinted size="sm">
               Try It
-            </LiquidButton>
-          </LiquidCard>
+            </LiquidButton.Tinted>
+          </LiquidCard.Tinted>
 
         </div>
 
         {/* Interactive Demo Section */}
-        <LiquidCard
-          variant="frosted"
-          intensity="strong"
-          className="p-8 space-y-6"
-          interactive
-          hover
-          shadow
-        >
+        <LiquidCard.Interactive className="p-8 space-y-6" intensity="strong">
           <h2 className="text-2xl font-bold text-white text-center">
             Interactive Demo
           </h2>
@@ -101,10 +73,9 @@ export default function Home() {
           {/* Form Elements */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <LiquidInput
+              <LiquidInput.Email
                 label="Email Address"
                 placeholder="Enter your email"
-                type="email"
                 leftIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
@@ -113,7 +84,7 @@ export default function Home() {
                 fullWidth
               />
               
-              <LiquidInput
+              <LiquidInput.Default
                 label="Message"
                 placeholder="Tell us what you think..."
                 helperText="Share your feedback about Liquid UI"
@@ -122,7 +93,7 @@ export default function Home() {
             </div>
 
             <div className="space-y-4">
-              <LiquidButton
+              <LiquidButton.Primary
                 fullWidth
                 leftIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,21 +102,18 @@ export default function Home() {
                 }
               >
                 Send Message
-              </LiquidButton>
+              </LiquidButton.Primary>
 
-              <LiquidButton
-                variant="clear"
+              <LiquidButton.Secondary
                 fullWidth
                 onClick={() => setIsModalOpen(true)}
               >
                 Open Modal Demo
-              </LiquidButton>
+              </LiquidButton.Secondary>
 
-              <LiquidButton
+              <LiquidButton.Large
                 variant="tinted"
-                size="lg"
                 fullWidth
-                loading={false}
                 rightIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -153,10 +121,10 @@ export default function Home() {
                 }
               >
                 Get Started
-              </LiquidButton>
+              </LiquidButton.Large>
             </div>
           </div>
-        </LiquidCard>
+        </LiquidCard.Interactive>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -166,22 +134,14 @@ export default function Home() {
             { title: "TypeScript", subtitle: "Full type safety" },
             { title: "A11y", subtitle: "WCAG compliant" }
           ].map((feature, index) => (
-            <LiquidCard
-              key={index}
-              variant="clear"
-              intensity="subtle"
-              opacity="light"
-              className="p-4 text-center"
-              interactive
-              hover
-            >
+            <LiquidCard.Clear key={index} className="p-4 text-center">
               <div className="text-2xl font-bold text-white">
                 {feature.title}
               </div>
               <div className="text-sm text-blue-200">
                 {feature.subtitle}
               </div>
-            </LiquidCard>
+            </LiquidCard.Clear>
           ))}
         </div>
 
@@ -208,18 +168,12 @@ export default function Home() {
           </ul>
 
           <div className="flex gap-3 pt-4">
-            <LiquidButton
-              onClick={() => setIsModalOpen(false)}
-              size="sm"
-            >
+            <LiquidButton.Small onClick={() => setIsModalOpen(false)}>
               Close Modal
-            </LiquidButton>
-            <LiquidButton
-              variant="clear"
-              size="sm"
-            >
+            </LiquidButton.Small>
+            <LiquidButton.Small variant="clear">
               Learn More
-            </LiquidButton>
+            </LiquidButton.Small>
           </div>
         </div>
       </LiquidModal>

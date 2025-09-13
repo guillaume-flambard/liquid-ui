@@ -34,7 +34,9 @@ export const liquidTokens = {
       clear: 'rgba(255, 255, 255, 0)',
       frosted: 'rgba(255, 255, 255, 0.1)',
       tinted: 'rgba(0, 122, 255, 0.1)',
-      dark: 'rgba(0, 0, 0, 0.1)'
+      dark: 'rgba(0, 0, 0, 0.1)',
+      aurora: 'rgba(147, 51, 234, 0.1)', // Purple tint for aurora
+      solid: 'rgba(255, 255, 255, 0.95)' // Nearly opaque for solid
     },
     border: {
       subtle: '1px solid rgba(255, 255, 255, 0.1)',
@@ -86,6 +88,6 @@ export const liquidTokens = {
 
 // Type helpers for better TypeScript support
 export type LiquidTokens = typeof liquidTokens
-export type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'dark'
+export type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'dark' | 'aurora' | 'solid'
 export type BlurIntensity = 'subtle' | 'regular' | 'strong' | 'none'
 export type OpacityLevel = 'light' | 'regular' | 'medium' | 'strong'

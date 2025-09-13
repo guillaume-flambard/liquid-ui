@@ -91,12 +91,13 @@ export class LiquidGlassEngine {
 
   /**
    * Detect device capabilities for performance optimization
+   * Returns consistent values for SSR compatibility
    */
   private detectDeviceCapabilities(): DeviceCapabilities {
     if (typeof window === 'undefined') {
-      // Server-side rendering fallback
+      // Server-side rendering fallback - assume modern browser support
       return {
-        supportsBackdropFilter: false,
+        supportsBackdropFilter: true, // Assume support for SSR consistency
         performanceLevel: 'medium',
         reducedMotion: false
       }
@@ -157,8 +158,8 @@ export class LiquidGlassEngine {
 
   private getBackgroundValue(config: GlassConfig): string {
     const { glass } = liquidTokens
-    const baseColor = glass.colors[config.variant]
-    const opacity = glass.opacity[config.opacity]
+    const baseColor = glass.colors[config.variant] || glass.colors.frosted
+    const opacity = glass.opacity[config.opacity] || glass.opacity.regular
     
     return this.adjustOpacity(baseColor, opacity)
   }
@@ -193,7 +194,7 @@ export class LiquidGlassEngine {
   private getFallbackBackground(config: GlassConfig): string {
     // Fallback for browsers that don't support backdrop-filter
     const { glass } = liquidTokens
-    const fallbackOpacity = glass.opacity[config.opacity] * 1.5 // Increase opacity for visibility
+    const fallbackOpacity = (glass.opacity[config.opacity] || glass.opacity.regular) * 1.5 // Increase opacity for visibility
     
     switch (config.variant) {
       case 'clear':
@@ -204,12 +205,18 @@ export class LiquidGlassEngine {
         return `rgba(219, 234, 254, ${fallbackOpacity})`
       case 'dark':
         return `rgba(15, 23, 42, ${fallbackOpacity})`
+      case 'aurora':
+        return `rgba(147, 51, 234, ${fallbackOpacity})`
+      case 'solid':
+        return `rgba(255, 255, 255, ${Math.min(fallbackOpacity * 2, 0.95)})`
       default:
         return `rgba(255, 255, 255, ${fallbackOpacity})`
     }
   }
 
-  private adjustOpacity(colorString: string, newOpacity: number): string {
+  private adjustOpacity(colorString: string | undefined, newOpacity: number): string {
+    if (!colorString) return `rgba(255, 255, 255, ${newOpacity})`
+    
     // Extract rgba values and replace opacity
     const rgbaMatch = colorString.match(/rgba?\(([^)]+)\)/)
     if (!rgbaMatch) return colorString

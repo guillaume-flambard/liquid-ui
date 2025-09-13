@@ -2,7 +2,7 @@ import React, { forwardRef, useRef, useState, useCallback } from 'react'
 import { clsx } from 'clsx'
 import { useLiquidGlass } from '../hooks/useLiquidGlass'
 import { useInteractiveGlass } from '../hooks/useInteractiveGlass'
-import type { LiquidButtonProps } from '../types'
+import type { LiquidButtonProps, LiquidButtonComponent } from '../types'
 
 /**
  * LiquidButton - Interactive glass button component
@@ -10,7 +10,7 @@ import type { LiquidButtonProps } from '../types'
  * A beautiful button with liquid glass effects, perfect for CTAs and interactive elements.
  * Includes loading states, icons, and responsive design.
  */
-export const LiquidButton = forwardRef<HTMLButtonElement, LiquidButtonProps>(
+const LiquidButtonBase = forwardRef<HTMLButtonElement, LiquidButtonProps>(
   (
     {
       variant = 'frosted',
@@ -168,9 +168,9 @@ export const LiquidButton = forwardRef<HTMLButtonElement, LiquidButtonProps>(
           if (typeof ref === 'function') {
             ref(node)
           } else if (ref) {
-            ref.current = node
+            (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
           }
-          buttonRef.current = node
+          (buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
         }}
         className={classes}
         style={combinedStyles}
@@ -197,4 +197,59 @@ export const LiquidButton = forwardRef<HTMLButtonElement, LiquidButtonProps>(
   }
 )
 
-LiquidButton.displayName = 'LiquidButton'
+LiquidButtonBase.displayName = 'LiquidButton'
+
+// Create the main component with proper typing
+export const LiquidButton = LiquidButtonBase as LiquidButtonComponent
+
+// Preset components for easier usage
+LiquidButton.Primary = forwardRef<HTMLButtonElement, Omit<LiquidButtonProps, 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidButtonBase
+    ref={ref}
+    variant="frosted"
+    intensity="regular"
+    interactive
+    {...props}
+  />
+))
+LiquidButton.Primary.displayName = 'LiquidButton.Primary'
+
+LiquidButton.Secondary = forwardRef<HTMLButtonElement, Omit<LiquidButtonProps, 'variant' | 'opacity' | 'interactive'>>((props, ref) => (
+  <LiquidButtonBase
+    ref={ref}
+    variant="clear"
+    opacity="light"
+    interactive
+    {...props}
+  />
+))
+LiquidButton.Secondary.displayName = 'LiquidButton.Secondary'
+
+LiquidButton.Tinted = forwardRef<HTMLButtonElement, Omit<LiquidButtonProps, 'variant' | 'intensity' | 'interactive'>>((props, ref) => (
+  <LiquidButtonBase
+    ref={ref}
+    variant="tinted"
+    intensity="regular"
+    interactive
+    {...props}
+  />
+))
+LiquidButton.Tinted.displayName = 'LiquidButton.Tinted'
+
+LiquidButton.Small = forwardRef<HTMLButtonElement, Omit<LiquidButtonProps, 'size'>>((props, ref) => (
+  <LiquidButtonBase
+    ref={ref}
+    size="sm"
+    {...props}
+  />
+))
+LiquidButton.Small.displayName = 'LiquidButton.Small'
+
+LiquidButton.Large = forwardRef<HTMLButtonElement, Omit<LiquidButtonProps, 'size'>>((props, ref) => (
+  <LiquidButtonBase
+    ref={ref}
+    size="lg"
+    {...props}
+  />
+))
+LiquidButton.Large.displayName = 'LiquidButton.Large'
