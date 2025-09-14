@@ -11,44 +11,38 @@ This guide will help you deploy Liquid UI to Google Cloud Platform with the doma
 
 ## Step 1: Google Cloud Project Setup
 
-### Create and Configure Project
+### Use Existing Project
 ```bash
-# Create new project (or use existing)
-gcloud projects create liquid-ui-prod --name="Liquid UI Production"
-
-# Set as default project
-gcloud config set project liquid-ui-prod
+# Set as default project (using existing strayeye project with billing)
+gcloud config set project strayeye
 
 # Enable required APIs
 gcloud services enable run.googleapis.com
 gcloud services enable containerregistry.googleapis.com
 gcloud services enable cloudbuild.googleapis.com
 gcloud services enable domains.googleapis.com
+gcloud services enable iamcredentials.googleapis.com
 ```
 
 ### Create Service Account for GitHub Actions
 ```bash
 # Create service account
-gcloud iam service-accounts create github-actions \
+gcloud iam service-accounts create github-actions-liquid \
     --description="Service account for GitHub Actions deployment" \
-    --display-name="GitHub Actions"
+    --display-name="GitHub Actions Liquid UI"
 
 # Grant necessary permissions
-gcloud projects add-iam-policy-binding liquid-ui-prod \
-    --member="serviceAccount:github-actions@liquid-ui-prod.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding strayeye \
+    --member="serviceAccount:github-actions-liquid@strayeye.iam.gserviceaccount.com" \
     --role="roles/run.admin"
 
-gcloud projects add-iam-policy-binding liquid-ui-prod \
-    --member="serviceAccount:github-actions@liquid-ui-prod.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding strayeye \
+    --member="serviceAccount:github-actions-liquid@strayeye.iam.gserviceaccount.com" \
     --role="roles/storage.admin"
 
-gcloud projects add-iam-policy-binding liquid-ui-prod \
-    --member="serviceAccount:github-actions@liquid-ui-prod.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding strayeye \
+    --member="serviceAccount:github-actions-liquid@strayeye.iam.gserviceaccount.com" \
     --role="roles/iam.serviceAccountUser"
-
-# Create and download service account key
-gcloud iam service-accounts keys create ~/github-actions-key.json \
-    --iam-account=github-actions@liquid-ui-prod.iam.gserviceaccount.com
 ```
 
 ## Step 2: Domain Configuration
@@ -73,36 +67,52 @@ Value: ghs.googlehosted.com
 TTL: 3600
 ```
 
-## Step 3: GitHub Secrets Configuration
+## Step 3: Setup Workload Identity Federation
 
-Add these secrets to your GitHub repository:
+Instead of using service account keys (which may be restricted by organizational policies), we use Workload Identity Federation for secure, keyless authentication:
 
-### Required Secrets
 ```bash
-# In GitHub repo: Settings > Secrets and Variables > Actions
+# Create Workload Identity Pool
+gcloud iam workload-identity-pools create "github-actions-pool" \
+    --project="strayeye" \
+    --location="global" \
+    --description="Workload Identity Pool for GitHub Actions"
 
-GCP_PROJECT_ID = "liquid-ui-prod"
-GCP_SA_KEY = "contents of ~/github-actions-key.json"
+# Create OIDC Provider for GitHub Actions
+gcloud iam workload-identity-pools providers create-oidc "github-provider" \
+    --project="strayeye" \
+    --location="global" \
+    --workload-identity-pool="github-actions-pool" \
+    --issuer-uri="https://token.actions.githubusercontent.com" \
+    --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository" \
+    --attribute-condition="assertion.repository=='memo/liquid-ui'"
+
+# Allow GitHub Actions to impersonate the service account
+gcloud iam service-accounts add-iam-policy-binding "github-actions-liquid@strayeye.iam.gserviceaccount.com" \
+    --project="strayeye" \
+    --role="roles/iam.workloadIdentityUser" \
+    --member="principalSet://iam.googleapis.com/projects/877046715242/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/memo/liquid-ui"
 ```
 
-### Optional Secrets (for notifications)
-```bash
-SLACK_WEBHOOK_URL = "your-slack-webhook-url"
-CODECOV_TOKEN = "your-codecov-token"
-NPM_TOKEN = "your-npm-token"
-```
+### GitHub Configuration
+
+**No secrets required!** The GitHub Actions workflow uses Workload Identity Federation for secure authentication. The workflow is configured with:
+
+- `WORKLOAD_IDENTITY_PROVIDER`: projects/877046715242/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
+- `GCP_SERVICE_ACCOUNT`: github-actions-liquid@strayeye.iam.gserviceaccount.com
+- `GCP_PROJECT_ID`: strayeye
 
 ## Step 4: Initial Deployment
 
 ### Manual First Deployment (Optional)
 ```bash
 # Build and push initial image
-docker build -t gcr.io/liquid-ui-prod/liquid-ui:initial .
-docker push gcr.io/liquid-ui-prod/liquid-ui:initial
+docker build -t gcr.io/strayeye/liquid-ui:initial .
+docker push gcr.io/strayeye/liquid-ui:initial
 
 # Deploy to Cloud Run
 gcloud run deploy liquid-ui \
-    --image gcr.io/liquid-ui-prod/liquid-ui:initial \
+    --image gcr.io/strayeye/liquid-ui:initial \
     --platform managed \
     --region us-central1 \
     --allow-unauthenticated \
