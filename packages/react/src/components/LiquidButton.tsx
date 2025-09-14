@@ -292,11 +292,13 @@ const LiquidButtonBase = forwardRef<HTMLButtonElement, LiquidButtonProps>(
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
+        type={props.type || 'button'}
         {...props}
       >
-        {/* Ripple Effects */}
-        <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-          {ripples.map((ripple) => (
+        {/* Ripple Effects - Only render when needed */}
+        {(interactive && ripples.length > 0) && (
+          <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
+            {ripples.map((ripple) => (
             <div
               key={ripple.id}
               className="absolute rounded-full bg-white/30 animate-ping"
@@ -309,8 +311,9 @@ const LiquidButtonBase = forwardRef<HTMLButtonElement, LiquidButtonProps>(
                 animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             />
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
         {loading && <LoadingSpinner />}
         {!loading && leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
         

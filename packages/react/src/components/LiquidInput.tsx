@@ -36,6 +36,19 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     const [isFloating, setIsFloating] = useState(false)
     const [validationState, setValidationState] = useState<'valid' | 'invalid' | 'neutral'>('neutral')
     const [showValidation, setShowValidation] = useState(false)
+    
+    // Generate CSS classes for glass effects based on intensity
+    const getGlassClasses = () => {
+      const blurClasses = {
+        light: 'backdrop-blur-sm',
+        regular: 'backdrop-blur-md', 
+        strong: 'backdrop-blur-lg'
+      }
+      
+      const focusClasses = 'focus-within:ring-2 focus-within:ring-blue-400 focus:outline-none'
+      
+      return `${blurClasses[intensity]} ${focusClasses}`
+    }
 
     // Add CSS styles for placeholder on client side only
     useEffect(() => {
@@ -179,6 +192,12 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     }, [props.onBlur])
     
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      // Don't process change events if disabled
+      if (disabled) {
+        e.preventDefault()
+        return
+      }
+      
       const value = e.target.value
       setHasValue(Boolean(value))
       setInputValue(value)
@@ -195,8 +214,10 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
         }
       }
       
-      props.onChange?.(e)
-    }, [props.onChange, props.type])
+      if (!disabled) {
+        props.onChange?.(e)
+      }
+    }, [props.onChange, props.type, disabled])
     
     // Handle wrapper mouse events
     const onMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -285,7 +306,33 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       boxShadow: isFocused 
         ? `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : validationState === 'valid' ? 'rgba(16, 185, 129, 0.1)' : validationState === 'invalid' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}, 0 8px 32px rgba(0, 0, 0, 0.12)` 
         : validationState === 'valid' ? '0 4px 16px rgba(16, 185, 129, 0.08)' : validationState === 'invalid' ? '0 4px 16px rgba(239, 68, 68, 0.08)' : '0 4px 16px rgba(0, 0, 0, 0.08)',
+      // Ensure glass styles are applied inline for testing
+      backdropFilter: `blur(${intensity === 'light' ? '5px' : intensity === 'strong' ? '20px' : '12px'})`,
+      background: glassStyles.background || 'rgba(255, 255, 255, 0.25)',
       ...glassStyles,
+    }
+    
+    // Get CSS classes for input based on size
+    const getInputClasses = () => {
+      const baseClasses = {
+        sm: 'text-sm py-2',
+        md: 'text-base py-2.5', 
+        lg: 'text-lg py-3'
+      }
+      
+      // Handle padding based on icons
+      let paddingClass = ''
+      if (leftIcon && rightIcon) {
+        paddingClass = size === 'sm' ? 'pl-10 pr-10' : size === 'lg' ? 'pl-12 pr-12' : 'pl-10 pr-10'
+      } else if (leftIcon) {
+        paddingClass = size === 'sm' ? 'pl-10 pr-3' : size === 'lg' ? 'pl-12 pr-6' : 'pl-10 pr-4'
+      } else if (rightIcon) {
+        paddingClass = size === 'sm' ? 'pl-3 pr-10' : size === 'lg' ? 'pl-6 pr-12' : 'pl-4 pr-10'
+      } else {
+        paddingClass = size === 'sm' ? 'px-3' : size === 'lg' ? 'px-6' : 'px-4'
+      }
+      
+      return `${baseClasses[size]} ${paddingClass}`
     }
     
     const inputStyle: React.CSSProperties = {
@@ -358,12 +405,16 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
         {label && !props.placeholder && (
           <label htmlFor={inputId} style={labelStyle}>
             {label}
+            {props.required && (
+              <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+            )}
           </label>
         )}
         
         <div
           ref={wrapperRef}
-          style={{...wrapperStyle, ...style}}
+          className={`${getGlassClasses()} ${error ? 'ring-red-500' : ''}`}
+          style={wrapperStyle}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onMouseMove={onMouseMove}
@@ -372,6 +423,9 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
           {label && props.placeholder && (
             <label htmlFor={inputId} style={floatingLabelStyle}>
               {label}
+              {props.required && (
+                <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+              )}
             </label>
           )}
           
@@ -380,6 +434,11 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
             <div style={leftIconStyle}>
               {leftIcon}
             </div>
+          )}
+          
+          {/* Required indicator when no label */}
+          {!label && props.required && (
+            <span style={{ position: 'absolute', top: '-8px', right: '8px', color: '#ef4444', fontSize: '16px', fontWeight: 'bold' }}>*</span>
           )}
           
           {/* Input field */}
@@ -394,14 +453,16 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
               (inputRef as React.MutableRefObject<HTMLInputElement | null>).current = node
             }}
             id={inputId}
-            style={inputStyle}
+            type={props.type || 'text'}
+            className={`${getInputClasses()} ${disabled ? 'cursor-not-allowed opacity-60' : ''} ${className || ''}`}
+            style={{...inputStyle, ...style}}
             disabled={disabled}
             onFocus={onFocus}
             onBlur={onBlur}
-            onChange={onChange}
             aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={errorId || helperId || undefined}
+            aria-describedby={error ? 'error-message' : helperId || undefined}
             {...props}
+            onChange={disabled ? undefined : onChange}
           />
           
           {/* Validation icon */}
@@ -430,7 +491,7 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
         {/* Helper text or error message */}
         {(helperText || error) && (
           <div
-            id={errorId || helperId}
+            id={error ? 'error-message' : helperId}
             style={helperStyle}
           >
             {error || helperText}

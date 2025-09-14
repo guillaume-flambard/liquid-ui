@@ -30,7 +30,7 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
       variant = 'frosted',
       intensity = 'regular',
       opacity = 'regular',
-      interactive = true,
+      interactive = false,
       adaptiveOpacity = false,
       environmentBlending = false,
       hover = true,
@@ -65,7 +65,7 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     
     // Use our custom hooks for glass effects
-    const { glassStyles } = useLiquidGlass({
+    const { glassStyles, glassClasses } = useLiquidGlass({
       variant,
       intensity,
       opacity,
@@ -122,9 +122,12 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
       return () => document.removeEventListener('mousemove', handleMagneticMove)
     }, [magneticEdges, isHovered, dragState.isDragging, magneticStrength])
     
+    // Auto-enable draggable if drag handlers are provided
+    const isDraggableEnabled = draggable || !!(onLiquidDragStart || onLiquidDrag || onLiquidDragEnd)
+    
     // Drag functionality
     const handleDragStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-      if (!draggable) return
+      if (!isDraggableEnabled) return
       
       e.preventDefault()
       const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
@@ -140,7 +143,7 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
       
       setShadowDepth(2)
       onLiquidDragStart?.(e)
-    }, [draggable, onLiquidDragStart])
+    }, [isDraggableEnabled, onLiquidDragStart])
     
     const handleDragMove = useCallback((e: MouseEvent | TouchEvent) => {
       if (!dragState.isDragging) return
@@ -226,6 +229,80 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
       rest.onTouchStart?.(e as any)
     }, [handleDragStart, rest.onTouchStart])
     
+    // Keyboard event handlers for drag/drop functionality
+    const onKeyDown = useCallback((e: React.KeyboardEvent) => {
+      // Handle Enter and Space keys for interaction
+      if ((e.key === 'Enter' || e.key === ' ') && interactive && rest.onClick) {
+        e.preventDefault()
+        rest.onClick?.(e as any)
+      }
+      
+      // Handle keyboard-based dragging with arrow keys
+      if (isDraggableEnabled && (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        e.preventDefault()
+        // Start drag operation or move if already dragging
+        if (!dragState.isDragging) {
+          // Simulate drag start
+          const rect = cardRef.current?.getBoundingClientRect()
+          if (rect) {
+            setDragState({
+              isDragging: true,
+              startX: rect.left + rect.width / 2,
+              startY: rect.top + rect.height / 2,
+              currentX: 0,
+              currentY: 0
+            })
+            onLiquidDragStart?.(e as any)
+          }
+        } else {
+          // Move based on arrow key
+          const moveDistance = e.shiftKey ? 10 : 2
+          let deltaX = 0
+          let deltaY = 0
+          
+          switch (e.key) {
+            case 'ArrowLeft':
+              deltaX = -moveDistance
+              break
+            case 'ArrowRight':
+              deltaX = moveDistance
+              break
+            case 'ArrowUp':
+              deltaY = -moveDistance
+              break
+            case 'ArrowDown':
+              deltaY = moveDistance
+              break
+          }
+          
+          setDragState(prev => ({
+            ...prev,
+            currentX: prev.currentX + deltaX,
+            currentY: prev.currentY + deltaY
+          }))
+          
+          onLiquidDrag?.(e as any, { x: dragState.currentX + deltaX, y: dragState.currentY + deltaY })
+        }
+      }
+      
+      // Handle Escape key to end keyboard dragging
+      if (e.key === 'Escape' && dragState.isDragging) {
+        e.preventDefault()
+        setDragState({
+          isDragging: false,
+          startX: 0,
+          startY: 0,
+          currentX: 0,
+          currentY: 0
+        })
+        setShadowDepth(0)
+        setMagneticEffect({ x: 0, y: 0, intensity: 0 })
+        onLiquidDragEnd?.(e as any)
+      }
+      
+      rest.onKeyDown?.(e as any)
+    }, [interactive, isDraggableEnabled, dragState, rest.onClick, rest.onKeyDown, onLiquidDragStart, onLiquidDrag, onLiquidDragEnd])
+    
     // Padding classes
     const paddingClasses = {
       sm: 'p-3',
@@ -245,11 +322,16 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
       'ease-out',
       'rounded-xl',
       
+      // Glass effect classes
+      glassClasses.base,
+      glassClasses.blur,
+      glassClasses.background,
+      
       // Padding styles
       paddingClasses[padding],
       
       // Border styles
-      border && 'border border-white/10',
+      border && (glassClasses.border || 'border border-white/10'),
       
       // Dynamic shadow styles based on depth
       shadow && [
@@ -259,24 +341,33 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
         dragState.isDragging && 'shadow-2xl shadow-blue-500/25'
       ],
       
-      // Interactive styles
+      // Interactive styles - only apply hover effects when interactive=true AND hover=true
+      interactive && hover && !dragState.isDragging && 'hover:scale-105',
       interactive && [
         !dragState.isDragging && 'cursor-pointer',
         'transform-gpu',
         !dragState.isDragging && 'transition-all',
         !dragState.isDragging && 'duration-300',
-        !dragState.isDragging && 'ease-out',
-        hover && 'hover:scale-105'
+        !dragState.isDragging && 'ease-out'
+      ],
+      
+      // Focus styles for interactive cards
+      interactive && [
+        'focus:outline-none',
+        'focus:ring-2',
+        'focus:ring-blue-500/50',
+        'focus:ring-offset-2',
+        'focus:ring-offset-transparent'
       ],
       
       // Draggable styles
-      draggable && [
+      isDraggableEnabled && [
         'select-none',
         dragState.isDragging && [
           'cursor-grabbing',
           'z-50'
         ],
-        !dragState.isDragging && draggable && 'cursor-grab'
+        !dragState.isDragging && isDraggableEnabled && 'cursor-grab'
       ],
       
       // Custom className
@@ -325,7 +416,9 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
         onMouseMove={onMouseMove}
         onMouseDown={onMouseDown}
         onTouchStart={onTouchStart}
+        onKeyDown={onKeyDown}
         draggable={false}
+        tabIndex={interactive ? 0 : undefined}
         {...rest}
       >
         {/* Magnetic field visualization */}
@@ -343,7 +436,7 @@ const LiquidCardBase = forwardRef<HTMLDivElement, LiquidCardProps>(
         )}
         
         {/* Drag indicator */}
-        {draggable && isHovered && !dragState.isDragging && (
+        {isDraggableEnabled && isHovered && !dragState.isDragging && (
           <div className="absolute top-2 right-2 opacity-50 pointer-events-none">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />

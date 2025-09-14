@@ -179,9 +179,18 @@ export const visualTestingHelpers = {
 // Component state testing utilities
 export const stateTestingHelpers = {
   expectGlassEffect: (element: HTMLElement) => {
-    const styles = window.getComputedStyle(element)
-    expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
-    expect(styles.background).toMatch(/rgba?\(/)
+    // In jsdom, getComputedStyle doesn't support backdropFilter/background properly
+    // Instead, check the inline styles that our components set directly
+    const inlineBackdropFilter = element.style.backdropFilter
+    const inlineBackground = element.style.background
+    
+    // Check that backdropFilter is set with blur value
+    expect(inlineBackdropFilter).toBeTruthy()
+    expect(inlineBackdropFilter).toMatch(/blur\(\d+px\)/)
+    
+    // Check that background is set with rgba/rgb value
+    expect(inlineBackground).toBeTruthy()
+    expect(inlineBackground).toMatch(/rgba?\(/)
   },
   
   expectInteractiveState: (element: HTMLElement, isInteractive: boolean) => {
