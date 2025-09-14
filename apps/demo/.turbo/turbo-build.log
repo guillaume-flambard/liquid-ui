@@ -2,13 +2,7 @@
 > @liquid-ui/demo@0.1.0 build
 > next build
 
- ⚠ Invalid next.config.ts options detected: 
- ⚠     Unrecognized key(s) in object: 'outputFileTracingRoot' at "experimental"
- ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
- ⚠ `experimental.outputFileTracingRoot` has been moved to `outputFileTracingRoot`. Please update your next.config.ts file accordingly.
    ▲ Next.js 15.5.3
-   - Experiments (use with caution):
-     · outputFileTracingRoot: "/Users/memo/projects/liquid-ui/apps/demo"
 
    Creating an optimized production build ...
 Failed to compile.

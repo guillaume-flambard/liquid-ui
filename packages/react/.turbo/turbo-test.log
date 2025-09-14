@@ -1081,3 +1081,3127 @@ Ignored nodes: comments, script, style
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/LiquidInput.test.tsx:294:32
+    292|       render(<LiquidInput required placeholder="Required indicator" />)
+    293|       
+    294|       const indicator = screen.getByText('*')
+       |                                ^
+    295|       expect(indicator).toBeInTheDocument()
+    296|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/30]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should associate error messages with input
+Error: expect(element).toHaveAttribute("id", "error-message") // element.getAttribute("id") === "error-message"
+
+Expected the element to have attribute:
+  id="error-message"
+Received:
+  id="liquid-input-:r42:-error"
+ ❯ src/components/__tests__/LiquidInput.test.tsx:368:28
+    366|       
+    367|       expect(input).toHaveAttribute('aria-describedby', 'error-message…
+    368|       expect(errorMessage).toHaveAttribute('id', 'error-message')
+       |                            ^
+    369|     })
+    370| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/30]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should merge custom className with defaults
+Error: expect(element).toHaveClass("custom-input-class")
+
+Expected the element to have class:
+  custom-input-class
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:424:21
+    422|       
+    423|       const input = screen.getByPlaceholderText('Custom styled')
+    424|       expect(input).toHaveClass('custom-input-class')
+       |                     ^
+    425|     })
+    426| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/30]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should apply custom styles
+Error: expect(element).toHaveStyle()
+
+- Expected
+
+- borderRadius: 12px;
+ ❯ src/components/__tests__/LiquidInput.test.tsx:437:21
+    435|       
+    436|       const input = screen.getByPlaceholderText('Custom styled')
+    437|       expect(input).toHaveStyle({ borderRadius: '12px' })
+       |                     ^
+    438|     })
+    439|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/30]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Basic Rendering > should apply glass effect styles to backdrop
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidModal.test.tsx:48:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/30]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should focus modal content when opened
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Focus me
+</button>
+Received element with focus:
+  <div
+  aria-modal="true"
+  class="liquid-modal relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-xl border border-white/10 shadow-2xl transform transition-all duration-300 ease-out animate-in fade-in-0 zoom-in-95"
+  role="dialog"
+  style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.3);"
+  tabindex="-1"
+>
+  <div
+    class="liquid-modal-header flex items-center justify-between p-6 border-b border-white/10"
+  >
+    <button
+      aria-label="Close modal"
+      class="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+      type="button"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6 18L18 6M6 6l12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="liquid-modal-content overflow-y-auto max-h-full"
+  >
+    <button>
+      Focus me
+    </button>
+  </div>
+</div>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:274:22
+    272|       
+    273|       const button = screen.getByRole('button', { name: 'Focus me' })
+    274|       expect(button).toHaveFocus()
+       |                      ^
+    275|     })
+    276| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/30]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should trap focus within modal
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Second
+</button>
+Received element with focus:
+  <button>
+  First
+</button>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:292:28
+    290|       
+    291|       fireEvent.keyDown(firstButton, { key: 'Tab' })
+    292|       expect(secondButton).toHaveFocus()
+       |                            ^
+    293|       
+    294|       fireEvent.keyDown(secondButton, { key: 'Tab' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/30]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Performance > should render within performance budget
+AssertionError: expected 17.472792000000027 to be less than 16
+ ❯ src/components/__tests__/LiquidModal.test.tsx:365:26
+    363|       })
+    364|       
+    365|       expect(renderTime).toBeLessThan(16)
+       |                          ^
+    366|     })
+    367| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/30]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Accessibility > should associate with title when provided
+Error: expect(element).toHaveAttribute("aria-labelledby", "modal-title") // element.getAttribute("aria-labelledby") === "modal-title"
+
+Expected the element to have attribute:
+  aria-labelledby="modal-title"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidModal.test.tsx:452:21
+    450|       
+ Test Files  4 failed (4)
+    451|       const modal = screen.getByRole('dialog')
+      Tests  30 failed | 98 passed (128)
+   Start at  16:21:59
+    452|       expect(modal).toHaveAttribute('aria-labelledby', 'modal-title')
+   Duration  5.76s (transform 291ms, setup 1.09s, collect 1.10s, tests 9.44s, environment 1.84s, prepare 318ms)
+
+       |                     ^
+
+ FAIL  Tests failed. Watching for file changes...
+    453|     })
+       press h to show help, press q to quit
+    454|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/30]⎯
+
+[3Jc
+ RERUN  package.json
+
+stderr | src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle hover effects when interactive
+Warning: An update to LiquidCard inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidCard.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidCard inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidCard.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle click events
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle keyboard interactions
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle keyboard interactions
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should handle blur events
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should support keyboard navigation
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx  (41 tests | 14 failed) 710ms
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with default props
+     → expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should apply glass effect styles
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with different intensity levels
+     → expect(element).toHaveClass("backdrop-blur-sm")
+
+Expected the element to have class:
+  backdrop-blur-sm
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Input Types > should render text input by default
+     → expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+     → expect(element).toHaveClass("focus-within:ring-2")
+
+Expected the element to have class:
+  focus-within:ring-2
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Size Variants > should apply correct size classes
+     → expect(element).toHaveClass("text-sm px-3 py-2")
+
+Expected the element to have class:
+  text-sm px-3 py-2
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Icons > should adjust padding when icons are present
+     → expect(element).toHaveClass("pl-10")
+
+Expected the element to have class:
+  pl-10
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Error States > should apply error styling
+     → expect(element).toHaveClass("ring-red-500")
+
+Expected the element to have class:
+  ring-red-500
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should apply disabled styling
+     → expect(element).toHaveClass("cursor-not-allowed opacity-60")
+
+Expected the element to have class:
+  cursor-not-allowed opacity-60
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should not respond to interactions when disabled
+     → expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      SyntheticBaseEvent {
+        "_reactName": "onChange",
+        "_targetInst": null,
+        "bubbles": true,
+        "cancelable": false,
+        "currentTarget": null,
+        "defaultPrevented": false,
+        "eventPhase": 3,
+        "isDefaultPrevented": [Function functionThatReturnsFalse],
+        "isPropagationStopped": [Function functionThatReturnsFalse],
+        "isTrusted": false,
+        "nativeEvent": Event {
+          "isTrusted": false,
+        },
+        "target": <input
+          aria-invalid="false"
+          disabled=""
+          id="liquid-input-:ro:"
+          placeholder="No interaction"
+          style="width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"
+        />,
+        "timeStamp": 1757843398654,
+        "type": "change",
+      },
+    ]
+
+
+Number of calls: 1
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Required Field > should display required indicator
+     → Unable to find an element with the text: *. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-config[39m=[32m"{\"variant\":\"frosted\",\"intensity\":\"regular\",\"opacity\":\"regular\",\"interactive\":true,\"adaptiveOpacity\":false,\"environmentBlending\":false}"[39m
+      [33mdata-testid[39m=[32m"liquid-test-provider"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"liquid-input "[39m
+        [33mstyle[39m=[32m"display: flex; flex-direction: column; width: auto; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; display: flex; align-items: center; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; cursor: text; opacity: 1; transform: translateZ(0); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.25);"[39m
+        [36m>[39m
+          [36m<input[39m
+            [33maria-invalid[39m=[32m"false"[39m
+            [33mid[39m=[32m"liquid-input-:rq:"[39m
+            [33mplaceholder[39m=[32m"Required indicator"[39m
+            [33mrequired[39m=[32m""[39m
+            [33mstyle[39m=[32m"width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"[39m
+          [36m/>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should associate error messages with input
+     → expect(element).toHaveAttribute("id", "error-message") // element.getAttribute("id") === "error-message"
+
+Expected the element to have attribute:
+  id="error-message"
+Received:
+  id="liquid-input-:r42:-error"
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should merge custom className with defaults
+     → expect(element).toHaveClass("custom-input-class")
+
+Expected the element to have class:
+  custom-input-class
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should apply custom styles
+     → expect(element).toHaveStyle()
+
+- Expected
+
+- borderRadius: 12px;
+ ❯ src/components/__tests__/LiquidCard.test.tsx  (26 tests | 8 failed) 960ms
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should apply glass effect styles
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should render with different intensity levels
+     → expect(received).toHaveClass()
+
+received value must be an HTMLElement or an SVGElement.
+
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should not respond to hover when not interactive
+     → expect(element).not.toHaveClass("hover:scale-105")
+
+Expected the element not to have class:
+  hover:scale-105
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle drag and drop interactions
+     → expected "spy" to be called at least once
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should support keyboard navigation when interactive
+     → expected "spy" to be called at least once
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should have proper focus indicators
+     → expect(element).toHaveClass("focus:outline-none")
+
+Expected the element to have class:
+  focus:outline-none
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Custom Styling > should merge custom className with defaults
+     → expect(element).toHaveClass("backdrop-blur-md")
+
+Expected the element to have class:
+  backdrop-blur-md
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105 custom-class
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Edge Cases > should handle undefined children gracefully
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidModal.test.tsx  (34 tests | 4 failed) 1160ms
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Basic Rendering > should apply glass effect styles to backdrop
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should focus modal content when opened
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Focus me
+</button>
+Received element with focus:
+  <div
+  aria-modal="true"
+  class="liquid-modal relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-xl border border-white/10 shadow-2xl transform transition-all duration-300 ease-out animate-in fade-in-0 zoom-in-95"
+  role="dialog"
+  style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.3);"
+  tabindex="-1"
+>
+  <div
+    class="liquid-modal-header flex items-center justify-between p-6 border-b border-white/10"
+  >
+    <button
+      aria-label="Close modal"
+      class="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+      type="button"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6 18L18 6M6 6l12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="liquid-modal-content overflow-y-auto max-h-full"
+  >
+    <button>
+      Focus me
+    </button>
+  </div>
+</div>
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should trap focus within modal
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Second
+</button>
+Received element with focus:
+  <button>
+  First
+</button>
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Accessibility > should associate with title when provided
+     → expect(element).toHaveAttribute("aria-labelledby", "modal-title") // element.getAttribute("aria-labelledby") === "modal-title"
+
+Expected the element to have attribute:
+  aria-labelledby="modal-title"
+Received:
+  null
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should show focus indicators
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Accessibility > should support keyboard navigation
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle rapid click events without errors
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400640`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400637`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400638`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400639`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843400640`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+ ❯ src/components/__tests__/LiquidButton.test.tsx  (27 tests | 3 failed) 2299ms
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should render with default props
+     → expect(element).toHaveAttribute("type", "button") // element.getAttribute("type") === "button"
+
+Expected the element to have attribute:
+  type="button"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should apply glass effect styles
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle undefined children gracefully
+     → expect(element).toBeEmptyDOMElement()
+
+Received:
+  "<div class="absolute inset-0 overflow-hidden rounded-lg pointer-events-none"></div>"
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 29 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should apply glass effect styles
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:30:20
+     28|       
+     29|       const card = screen.getByText('Glass Card').closest('[class*="ba…
+     30|       expect(card).toBeInTheDocument()
+       |                    ^
+     31|       stateTestingHelpers.expectGlassEffect(card!)
+     32|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should render with different intensity levels
+Error: expect(received).toHaveClass()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:48:20
+     46|       const { rerender } = render(<LiquidCard intensity="light">Light<…
+     47|       const card = screen.getByText('Light').closest('[class*="backdro…
+     48|       expect(card).toHaveClass('backdrop-blur-sm')
+       |                    ^
+     49|       
+     50|       rerender(<LiquidCard intensity="regular">Regular</LiquidCard>)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should not respond to hover when not interactive
+Error: expect(element).not.toHaveClass("hover:scale-105")
+
+Expected the element not to have class:
+  hover:scale-105
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+ ❯ src/components/__tests__/LiquidCard.test.tsx:74:24
+     72|       
+     73|       const card = screen.getByText('Static Card').closest('div')!
+     74|       expect(card).not.toHaveClass('hover:scale-105')
+       |                        ^
+     75|     })
+     76| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle drag and drop interactions
+AssertionError: expected "spy" to be called at least once
+ ❯ src/components/__tests__/LiquidCard.test.tsx:95:31
+     93|       
+     94|       fireEvent.mouseDown(card, { clientX: 100, clientY: 100 })
+     95|       expect(handleDragStart).toHaveBeenCalled()
+       |                               ^
+     96|       
+     97|       fireEvent.mouseMove(card, { clientX: 150, clientY: 150 })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should support keyboard navigation when interactive
+AssertionError: expected "spy" to be called at least once
+ ❯ src/components/__tests__/LiquidCard.test.tsx:228:27
+    226|       
+    227|       fireEvent.keyDown(card, { key: 'Enter' })
+    228|       expect(handleClick).toHaveBeenCalled()
+       |                           ^
+    229|     })
+    230| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should have proper focus indicators
+Error: expect(element).toHaveClass("focus:outline-none")
+
+Expected the element to have class:
+  focus:outline-none
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+ ❯ src/components/__tests__/LiquidCard.test.tsx:242:20
+    240|       
+    241|       expect(card).toHaveFocus()
+    242|       expect(card).toHaveClass('focus:outline-none')
+       |                    ^
+    243|       expect(card).toHaveClass('focus:ring-2')
+    244|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Custom Styling > should merge custom className with defaults
+Error: expect(element).toHaveClass("backdrop-blur-md")
+
+Expected the element to have class:
+  backdrop-blur-md
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105 custom-class
+ ❯ src/components/__tests__/LiquidCard.test.tsx:283:20
+    281|       const card = screen.getByText('Custom Styled Card').closest('div…
+    282|       expect(card).toHaveClass('custom-class')
+    283|       expect(card).toHaveClass('backdrop-blur-md')
+       |                    ^
+    284|     })
+    285| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Edge Cases > should handle undefined children gracefully
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:304:20
+    302|       
+    303|       const card = document.querySelector('[class*="backdrop-blur"]')
+    304|       expect(card).toBeInTheDocument()
+       |                    ^
+    305|     })
+    306| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/29]⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should render with default props
+Error: expect(element).toHaveAttribute("type", "button") // element.getAttribute("type") === "button"
+
+Expected the element to have attribute:
+  type="button"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidButton.test.tsx:24:22
+     22|       const button = screen.getByRole('button', { name: 'Click me' })
+     23|       expect(button).toBeInTheDocument()
+     24|       expect(button).toHaveAttribute('type', 'button')
+       |                      ^
+     25|     })
+     26| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/29]⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should apply glass effect styles
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidButton.test.tsx:31:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/29]⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle undefined children gracefully
+Error: expect(element).toBeEmptyDOMElement()
+
+Received:
+  "<div class="absolute inset-0 overflow-hidden rounded-lg pointer-events-none"></div>"
+ ❯ src/components/__tests__/LiquidButton.test.tsx:319:22
+    317|       const button = screen.getByRole('button')
+    318|       expect(button).toBeInTheDocument()
+    319|       expect(button).toBeEmptyDOMElement()
+       |                      ^
+    320|     })
+    321| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Basic Rendering > should apply glass effect styles to backdrop
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidModal.test.tsx:48:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should focus modal content when opened
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Focus me
+</button>
+Received element with focus:
+  <div
+  aria-modal="true"
+  class="liquid-modal relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-xl border border-white/10 shadow-2xl transform transition-all duration-300 ease-out animate-in fade-in-0 zoom-in-95"
+  role="dialog"
+  style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.3);"
+  tabindex="-1"
+>
+  <div
+    class="liquid-modal-header flex items-center justify-between p-6 border-b border-white/10"
+  >
+    <button
+      aria-label="Close modal"
+      class="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+      type="button"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6 18L18 6M6 6l12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="liquid-modal-content overflow-y-auto max-h-full"
+  >
+    <button>
+      Focus me
+    </button>
+  </div>
+</div>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:274:22
+    272|       
+    273|       const button = screen.getByRole('button', { name: 'Focus me' })
+    274|       expect(button).toHaveFocus()
+       |                      ^
+    275|     })
+    276| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should trap focus within modal
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Second
+</button>
+Received element with focus:
+  <button>
+  First
+</button>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:292:28
+    290|       
+    291|       fireEvent.keyDown(firstButton, { key: 'Tab' })
+    292|       expect(secondButton).toHaveFocus()
+       |                            ^
+    293|       
+    294|       fireEvent.keyDown(secondButton, { key: 'Tab' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Accessibility > should associate with title when provided
+Error: expect(element).toHaveAttribute("aria-labelledby", "modal-title") // element.getAttribute("aria-labelledby") === "modal-title"
+
+Expected the element to have attribute:
+  aria-labelledby="modal-title"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidModal.test.tsx:452:21
+    450|       
+    451|       const modal = screen.getByRole('dialog')
+    452|       expect(modal).toHaveAttribute('aria-labelledby', 'modal-title')
+       |                     ^
+    453|     })
+    454|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with default props
+Error: expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidInput.test.tsx:24:21
+     22|       const input = screen.getByPlaceholderText('Enter text')
+     23|       expect(input).toBeInTheDocument()
+     24|       expect(input).toHaveAttribute('type', 'text')
+       |                     ^
+     25|     })
+     26| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should apply glass effect styles
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidInput.test.tsx:32:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with different intensity levels
+Error: expect(element).toHaveClass("backdrop-blur-sm")
+
+Expected the element to have class:
+  backdrop-blur-sm
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:49:25
+     47|       const { rerender } = render(<LiquidInput intensity="light" place…
+     48|       const container = screen.getByPlaceholderText('Light').closest('…
+     49|       expect(container).toHaveClass('backdrop-blur-sm')
+       |                         ^
+     50|       
+     51|       rerender(<LiquidInput intensity="regular" placeholder="Regular" …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Input Types > should render text input by default
+Error: expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidInput.test.tsx:66:21
+     64|       
+     65|       const input = screen.getByRole('textbox')
+     66|       expect(input).toHaveAttribute('type', 'text')
+       |                     ^
+     67|     })
+     68| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+Error: expect(element).toHaveClass("focus-within:ring-2")
+
+Expected the element to have class:
+  focus-within:ring-2
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:150:25
+    148|       expect(input).toHaveFocus()
+    149|       const container = input.closest('div')
+    150|       expect(container).toHaveClass('focus-within:ring-2')
+       |                         ^
+    151|     })
+    152|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Size Variants > should apply correct size classes
+Error: expect(element).toHaveClass("text-sm px-3 py-2")
+
+Expected the element to have class:
+  text-sm px-3 py-2
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:158:21
+    156|       const { rerender } = render(<LiquidInput size="sm" placeholder="…
+    157|       let input = screen.getByPlaceholderText('Small')
+    158|       expect(input).toHaveClass('text-sm', 'px-3', 'py-2')
+       |                     ^
+    159|       
+    160|       rerender(<LiquidInput size="md" placeholder="Medium" />)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Icons > should adjust padding when icons are present
+Error: expect(element).toHaveClass("pl-10")
+
+Expected the element to have class:
+  pl-10
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:215:21
+    213|       )
+    214|       let input = screen.getByPlaceholderText('Left padding')
+    215|       expect(input).toHaveClass('pl-10')
+       |                     ^
+    216|       
+    217|       rerender(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Error States > should apply error styling
+Error: expect(element).toHaveClass("ring-red-500")
+
+Expected the element to have class:
+  ring-red-500
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:246:25
+    244|       
+    245|       const container = screen.getByPlaceholderText('Error styling').c…
+    246|       expect(container).toHaveClass('ring-red-500')
+       |                         ^
+    247|     })
+    248| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should apply disabled styling
+Error: expect(element).toHaveClass("cursor-not-allowed opacity-60")
+
+Expected the element to have class:
+  cursor-not-allowed opacity-60
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:269:21
+    267|       
+    268|       const input = screen.getByPlaceholderText('Disabled styling')
+    269|       expect(input).toHaveClass('cursor-not-allowed', 'opacity-60')
+       |                     ^
+    270|     })
+    271| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should not respond to interactions when disabled
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      SyntheticBaseEvent {
+        "_reactName": "onChange",
+        "_targetInst": null,
+        "bubbles": true,
+        "cancelable": false,
+        "currentTarget": null,
+        "defaultPrevented": false,
+        "eventPhase": 3,
+        "isDefaultPrevented": [Function functionThatReturnsFalse],
+        "isPropagationStopped": [Function functionThatReturnsFalse],
+        "isTrusted": false,
+        "nativeEvent": Event {
+          "isTrusted": false,
+        },
+        "target": <input
+          aria-invalid="false"
+          disabled=""
+          id="liquid-input-:ro:"
+          placeholder="No interaction"
+          style="width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"
+        />,
+        "timeStamp": 1757843398654,
+        "type": "change",
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:279:32
+    277|       fireEvent.change(input, { target: { value: 'test' } })
+    278|       
+    279|       expect(handleChange).not.toHaveBeenCalled()
+       |                                ^
+    280|     })
+    281|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Required Field > should display required indicator
+TestingLibraryElementError: Unable to find an element with the text: *. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-config[39m=[32m"{\"variant\":\"frosted\",\"intensity\":\"regular\",\"opacity\":\"regular\",\"interactive\":true,\"adaptiveOpacity\":false,\"environmentBlending\":false}"[39m
+      [33mdata-testid[39m=[32m"liquid-test-provider"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"liquid-input "[39m
+        [33mstyle[39m=[32m"display: flex; flex-direction: column; width: auto; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; display: flex; align-items: center; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; cursor: text; opacity: 1; transform: translateZ(0); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.25);"[39m
+        [36m>[39m
+          [36m<input[39m
+            [33maria-invalid[39m=[32m"false"[39m
+            [33mid[39m=[32m"liquid-input-:rq:"[39m
+            [33mplaceholder[39m=[32m"Required indicator"[39m
+            [33mrequired[39m=[32m""[39m
+            [33mstyle[39m=[32m"width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"[39m
+          [36m/>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/LiquidInput.test.tsx:294:32
+    292|       render(<LiquidInput required placeholder="Required indicator" />)
+    293|       
+    294|       const indicator = screen.getByText('*')
+       |                                ^
+    295|       expect(indicator).toBeInTheDocument()
+    296|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should associate error messages with input
+Error: expect(element).toHaveAttribute("id", "error-message") // element.getAttribute("id") === "error-message"
+
+Expected the element to have attribute:
+  id="error-message"
+Received:
+  id="liquid-input-:r42:-error"
+ ❯ src/components/__tests__/LiquidInput.test.tsx:368:28
+    366|       
+    367|       expect(input).toHaveAttribute('aria-describedby', 'error-message…
+    368|       expect(errorMessage).toHaveAttribute('id', 'error-message')
+       |                            ^
+    369|     })
+    370| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should merge custom className with defaults
+Error: expect(element).toHaveClass("custom-input-class")
+
+Expected the element to have class:
+  custom-input-class
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:424:21
+    422|       
+    423|       const input = screen.getByPlaceholderText('Custom styled')
+    424|       expect(input).toHaveClass('custom-input-class')
+       |                     ^
+    425|     })
+    426| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should apply custom styles
+Error: expect(element).toHaveStyle()
+
+- Expected
+
+- borderRadius: 12px;
+ ❯ src/components/__tests__/LiquidInput.test.tsx:437:21
+    435|       
+    436|       const input = screen.getByPlaceholderText('Custom styled')
+    437|       expect(input).toHaveStyle({ borderRadius: '12px' })
+       |                     ^
+    438|     })
+    439|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/29]⎯
+
+ Test Files  4 failed (4)
+      Tests  29 failed | 99 passed (128)
+   Start at  16:49:57
+   Duration  6.95s
+
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
+[3Jc
+ RERUN  package.json
+
+stderr | src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle hover effects when interactive
+Warning: An update to LiquidCard inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidCard.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidCard inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidCard.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle click events
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle keyboard interactions
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should handle keyboard interactions
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should handle blur events
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should support keyboard navigation
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidInput inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidInput.tsx:11:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx  (41 tests | 14 failed) 766ms
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with default props
+     → expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should apply glass effect styles
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with different intensity levels
+     → expect(element).toHaveClass("backdrop-blur-sm")
+
+Expected the element to have class:
+  backdrop-blur-sm
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Input Types > should render text input by default
+     → expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+     → expect(element).toHaveClass("focus-within:ring-2")
+
+Expected the element to have class:
+  focus-within:ring-2
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Size Variants > should apply correct size classes
+     → expect(element).toHaveClass("text-sm px-3 py-2")
+
+Expected the element to have class:
+  text-sm px-3 py-2
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Icons > should adjust padding when icons are present
+     → expect(element).toHaveClass("pl-10")
+
+Expected the element to have class:
+  pl-10
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Error States > should apply error styling
+     → expect(element).toHaveClass("ring-red-500")
+
+Expected the element to have class:
+  ring-red-500
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should apply disabled styling
+     → expect(element).toHaveClass("cursor-not-allowed opacity-60")
+
+Expected the element to have class:
+  cursor-not-allowed opacity-60
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should not respond to interactions when disabled
+     → expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      SyntheticBaseEvent {
+        "_reactName": "onChange",
+        "_targetInst": null,
+        "bubbles": true,
+        "cancelable": false,
+        "currentTarget": null,
+        "defaultPrevented": false,
+        "eventPhase": 3,
+        "isDefaultPrevented": [Function functionThatReturnsFalse],
+        "isPropagationStopped": [Function functionThatReturnsFalse],
+        "isTrusted": false,
+        "nativeEvent": Event {
+          "isTrusted": false,
+        },
+        "target": <input
+          aria-invalid="false"
+          disabled=""
+          id="liquid-input-:ro:"
+          placeholder="No interaction"
+          style="width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"
+        />,
+        "timeStamp": 1757843405195,
+        "type": "change",
+      },
+    ]
+
+
+Number of calls: 1
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Required Field > should display required indicator
+     → Unable to find an element with the text: *. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-config[39m=[32m"{\"variant\":\"frosted\",\"intensity\":\"regular\",\"opacity\":\"regular\",\"interactive\":true,\"adaptiveOpacity\":false,\"environmentBlending\":false}"[39m
+      [33mdata-testid[39m=[32m"liquid-test-provider"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"liquid-input "[39m
+        [33mstyle[39m=[32m"display: flex; flex-direction: column; width: auto; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; display: flex; align-items: center; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; cursor: text; opacity: 1; transform: translateZ(0); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.25);"[39m
+        [36m>[39m
+          [36m<input[39m
+            [33maria-invalid[39m=[32m"false"[39m
+            [33mid[39m=[32m"liquid-input-:rq:"[39m
+            [33mplaceholder[39m=[32m"Required indicator"[39m
+            [33mrequired[39m=[32m""[39m
+            [33mstyle[39m=[32m"width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"[39m
+          [36m/>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should associate error messages with input
+     → expect(element).toHaveAttribute("id", "error-message") // element.getAttribute("id") === "error-message"
+
+Expected the element to have attribute:
+  id="error-message"
+Received:
+  id="liquid-input-:r42:-error"
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should merge custom className with defaults
+     → expect(element).toHaveClass("custom-input-class")
+
+Expected the element to have class:
+  custom-input-class
+Received:
+
+   ❯ src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should apply custom styles
+     → expect(element).toHaveStyle()
+
+- Expected
+
+- borderRadius: 12px;
+ ❯ src/components/__tests__/LiquidCard.test.tsx  (26 tests | 8 failed) 984ms
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should apply glass effect styles
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should render with different intensity levels
+     → expect(received).toHaveClass()
+
+received value must be an HTMLElement or an SVGElement.
+
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should not respond to hover when not interactive
+     → expect(element).not.toHaveClass("hover:scale-105")
+
+Expected the element not to have class:
+  hover:scale-105
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle drag and drop interactions
+     → expected "spy" to be called at least once
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should support keyboard navigation when interactive
+     → expected "spy" to be called at least once
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should have proper focus indicators
+     → expect(element).toHaveClass("focus:outline-none")
+
+Expected the element to have class:
+  focus:outline-none
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Custom Styling > should merge custom className with defaults
+     → expect(element).toHaveClass("backdrop-blur-md")
+
+Expected the element to have class:
+  backdrop-blur-md
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105 custom-class
+   ❯ src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Edge Cases > should handle undefined children gracefully
+     → expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidModal.test.tsx  (34 tests | 4 failed) 1193ms
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Basic Rendering > should apply glass effect styles to backdrop
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should focus modal content when opened
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Focus me
+</button>
+Received element with focus:
+  <div
+  aria-modal="true"
+  class="liquid-modal relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-xl border border-white/10 shadow-2xl transform transition-all duration-300 ease-out animate-in fade-in-0 zoom-in-95"
+  role="dialog"
+  style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.3);"
+  tabindex="-1"
+>
+  <div
+    class="liquid-modal-header flex items-center justify-between p-6 border-b border-white/10"
+  >
+    <button
+      aria-label="Close modal"
+      class="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+      type="button"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6 18L18 6M6 6l12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="liquid-modal-content overflow-y-auto max-h-full"
+  >
+    <button>
+      Focus me
+    </button>
+  </div>
+</div>
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should trap focus within modal
+     → expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Second
+</button>
+Received element with focus:
+  <button>
+  First
+</button>
+   ❯ src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Accessibility > should associate with title when provided
+     → expect(element).toHaveAttribute("aria-labelledby", "modal-title") // element.getAttribute("aria-labelledby") === "modal-title"
+
+Expected the element to have attribute:
+  aria-labelledby="modal-title"
+Received:
+  null
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Interactive Features > should show focus indicators
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Accessibility > should support keyboard navigation
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: An update to LiquidButton inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+stderr | src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle rapid click events without errors
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407221`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407218`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407219`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407220`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+Warning: Encountered two children with the same key, `1757843407221`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at div
+    at button
+    at /Users/memo/projects/liquid-ui/packages/react/src/components/LiquidButton.tsx:13:5
+    at div
+    at LiquidTestProvider (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:52:31)
+    at Wrapper (/Users/memo/projects/liquid-ui/packages/react/src/test/utils.tsx:62:22)
+
+ ❯ src/components/__tests__/LiquidButton.test.tsx  (27 tests | 3 failed) 2345ms
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should render with default props
+     → expect(element).toHaveAttribute("type", "button") // element.getAttribute("type") === "button"
+
+Expected the element to have attribute:
+  type="button"
+Received:
+  null
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should apply glass effect styles
+     → .toMatch() expects to receive a string, but got undefined
+   ❯ src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle undefined children gracefully
+     → expect(element).toBeEmptyDOMElement()
+
+Received:
+  "<div class="absolute inset-0 overflow-hidden rounded-lg pointer-events-none"></div>"
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 29 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should render with default props
+Error: expect(element).toHaveAttribute("type", "button") // element.getAttribute("type") === "button"
+
+Expected the element to have attribute:
+  type="button"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidButton.test.tsx:24:22
+     22|       const button = screen.getByRole('button', { name: 'Click me' })
+     23|       expect(button).toBeInTheDocument()
+     24|       expect(button).toHaveAttribute('type', 'button')
+       |                      ^
+     25|     })
+     26| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/29]⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Basic Rendering > should apply glass effect styles
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidButton.test.tsx:31:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/29]⎯
+
+ FAIL  src/components/__tests__/LiquidButton.test.tsx > LiquidButton > Edge Cases > should handle undefined children gracefully
+Error: expect(element).toBeEmptyDOMElement()
+
+Received:
+  "<div class="absolute inset-0 overflow-hidden rounded-lg pointer-events-none"></div>"
+ ❯ src/components/__tests__/LiquidButton.test.tsx:319:22
+    317|       const button = screen.getByRole('button')
+    318|       expect(button).toBeInTheDocument()
+    319|       expect(button).toBeEmptyDOMElement()
+       |                      ^
+    320|     })
+    321| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should apply glass effect styles
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:30:20
+     28|       
+     29|       const card = screen.getByText('Glass Card').closest('[class*="ba…
+     30|       expect(card).toBeInTheDocument()
+       |                    ^
+     31|       stateTestingHelpers.expectGlassEffect(card!)
+     32|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Basic Rendering > should render with different intensity levels
+Error: expect(received).toHaveClass()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:48:20
+     46|       const { rerender } = render(<LiquidCard intensity="light">Light<…
+     47|       const card = screen.getByText('Light').closest('[class*="backdro…
+     48|       expect(card).toHaveClass('backdrop-blur-sm')
+       |                    ^
+     49|       
+     50|       rerender(<LiquidCard intensity="regular">Regular</LiquidCard>)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should not respond to hover when not interactive
+Error: expect(element).not.toHaveClass("hover:scale-105")
+
+Expected the element not to have class:
+  hover:scale-105
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+ ❯ src/components/__tests__/LiquidCard.test.tsx:74:24
+     72|       
+     73|       const card = screen.getByText('Static Card').closest('div')!
+     74|       expect(card).not.toHaveClass('hover:scale-105')
+       |                        ^
+     75|     })
+     76| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Interactive Features > should handle drag and drop interactions
+AssertionError: expected "spy" to be called at least once
+ ❯ src/components/__tests__/LiquidCard.test.tsx:95:31
+     93|       
+     94|       fireEvent.mouseDown(card, { clientX: 100, clientY: 100 })
+     95|       expect(handleDragStart).toHaveBeenCalled()
+       |                               ^
+     96|       
+     97|       fireEvent.mouseMove(card, { clientX: 150, clientY: 150 })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should support keyboard navigation when interactive
+AssertionError: expected "spy" to be called at least once
+ ❯ src/components/__tests__/LiquidCard.test.tsx:228:27
+    226|       
+    227|       fireEvent.keyDown(card, { key: 'Enter' })
+    228|       expect(handleClick).toHaveBeenCalled()
+       |                           ^
+    229|     })
+    230| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Accessibility > should have proper focus indicators
+Error: expect(element).toHaveClass("focus:outline-none")
+
+Expected the element to have class:
+  focus:outline-none
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105
+ ❯ src/components/__tests__/LiquidCard.test.tsx:242:20
+    240|       
+    241|       expect(card).toHaveFocus()
+    242|       expect(card).toHaveClass('focus:outline-none')
+       |                    ^
+    243|       expect(card).toHaveClass('focus:ring-2')
+    244|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Custom Styling > should merge custom className with defaults
+Error: expect(element).toHaveClass("backdrop-blur-md")
+
+Expected the element to have class:
+  backdrop-blur-md
+Received:
+  liquid-card relative overflow-hidden transition-all duration-200 ease-out rounded-xl p-6 border border-white/10 shadow-lg cursor-pointer transform-gpu transition-all duration-300 ease-out hover:scale-105 custom-class
+ ❯ src/components/__tests__/LiquidCard.test.tsx:283:20
+    281|       const card = screen.getByText('Custom Styled Card').closest('div…
+    282|       expect(card).toHaveClass('custom-class')
+    283|       expect(card).toHaveClass('backdrop-blur-md')
+       |                    ^
+    284|     })
+    285| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/29]⎯
+
+ FAIL  src/components/__tests__/LiquidCard.test.tsx > LiquidCard > Edge Cases > should handle undefined children gracefully
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+
+ ❯ src/components/__tests__/LiquidCard.test.tsx:304:20
+    302|       
+    303|       const card = document.querySelector('[class*="backdrop-blur"]')
+    304|       expect(card).toBeInTheDocument()
+       |                    ^
+    305|     })
+    306| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with default props
+Error: expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidInput.test.tsx:24:21
+     22|       const input = screen.getByPlaceholderText('Enter text')
+     23|       expect(input).toBeInTheDocument()
+     24|       expect(input).toHaveAttribute('type', 'text')
+       |                     ^
+     25|     })
+     26| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should apply glass effect styles
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidInput.test.tsx:32:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Basic Rendering > should render with different intensity levels
+Error: expect(element).toHaveClass("backdrop-blur-sm")
+
+Expected the element to have class:
+  backdrop-blur-sm
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:49:25
+     47|       const { rerender } = render(<LiquidInput intensity="light" place…
+     48|       const container = screen.getByPlaceholderText('Light').closest('…
+     49|       expect(container).toHaveClass('backdrop-blur-sm')
+       |                         ^
+     50|       
+     51|       rerender(<LiquidInput intensity="regular" placeholder="Regular" …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Input Types > should render text input by default
+Error: expect(element).toHaveAttribute("type", "text") // element.getAttribute("type") === "text"
+
+Expected the element to have attribute:
+  type="text"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidInput.test.tsx:66:21
+     64|       
+     65|       const input = screen.getByRole('textbox')
+     66|       expect(input).toHaveAttribute('type', 'text')
+       |                     ^
+     67|     })
+     68| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Interactive Features > should show focus effects
+Error: expect(element).toHaveClass("focus-within:ring-2")
+
+Expected the element to have class:
+  focus-within:ring-2
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:150:25
+    148|       expect(input).toHaveFocus()
+    149|       const container = input.closest('div')
+    150|       expect(container).toHaveClass('focus-within:ring-2')
+       |                         ^
+    151|     })
+    152|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Size Variants > should apply correct size classes
+Error: expect(element).toHaveClass("text-sm px-3 py-2")
+
+Expected the element to have class:
+  text-sm px-3 py-2
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:158:21
+    156|       const { rerender } = render(<LiquidInput size="sm" placeholder="…
+    157|       let input = screen.getByPlaceholderText('Small')
+    158|       expect(input).toHaveClass('text-sm', 'px-3', 'py-2')
+       |                     ^
+    159|       
+    160|       rerender(<LiquidInput size="md" placeholder="Medium" />)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Icons > should adjust padding when icons are present
+Error: expect(element).toHaveClass("pl-10")
+
+Expected the element to have class:
+  pl-10
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:215:21
+    213|       )
+    214|       let input = screen.getByPlaceholderText('Left padding')
+    215|       expect(input).toHaveClass('pl-10')
+       |                     ^
+    216|       
+    217|       rerender(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Error States > should apply error styling
+Error: expect(element).toHaveClass("ring-red-500")
+
+Expected the element to have class:
+  ring-red-500
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:246:25
+    244|       
+    245|       const container = screen.getByPlaceholderText('Error styling').c…
+    246|       expect(container).toHaveClass('ring-red-500')
+       |                         ^
+    247|     })
+    248| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should apply disabled styling
+Error: expect(element).toHaveClass("cursor-not-allowed opacity-60")
+
+Expected the element to have class:
+  cursor-not-allowed opacity-60
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:269:21
+    267|       
+    268|       const input = screen.getByPlaceholderText('Disabled styling')
+    269|       expect(input).toHaveClass('cursor-not-allowed', 'opacity-60')
+       |                     ^
+    270|     })
+    271| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Disabled State > should not respond to interactions when disabled
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received: 
+
+  1st spy call:
+
+    Array [
+      SyntheticBaseEvent {
+        "_reactName": "onChange",
+        "_targetInst": null,
+        "bubbles": true,
+        "cancelable": false,
+        "currentTarget": null,
+        "defaultPrevented": false,
+        "eventPhase": 3,
+        "isDefaultPrevented": [Function functionThatReturnsFalse],
+        "isPropagationStopped": [Function functionThatReturnsFalse],
+        "isTrusted": false,
+        "nativeEvent": Event {
+          "isTrusted": false,
+        },
+        "target": <input
+          aria-invalid="false"
+          disabled=""
+          id="liquid-input-:ro:"
+          placeholder="No interaction"
+          style="width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"
+        />,
+        "timeStamp": 1757843405195,
+        "type": "change",
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:279:32
+    277|       fireEvent.change(input, { target: { value: 'test' } })
+    278|       
+    279|       expect(handleChange).not.toHaveBeenCalled()
+       |                                ^
+    280|     })
+    281|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Required Field > should display required indicator
+TestingLibraryElementError: Unable to find an element with the text: *. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-config[39m=[32m"{\"variant\":\"frosted\",\"intensity\":\"regular\",\"opacity\":\"regular\",\"interactive\":true,\"adaptiveOpacity\":false,\"environmentBlending\":false}"[39m
+      [33mdata-testid[39m=[32m"liquid-test-provider"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"liquid-input "[39m
+        [33mstyle[39m=[32m"display: flex; flex-direction: column; width: auto; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mstyle[39m=[32m"position: relative; display: flex; align-items: center; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; cursor: text; opacity: 1; transform: translateZ(0); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.25);"[39m
+        [36m>[39m
+          [36m<input[39m
+            [33maria-invalid[39m=[32m"false"[39m
+            [33mid[39m=[32m"liquid-input-:rq:"[39m
+            [33mplaceholder[39m=[32m"Required indicator"[39m
+            [33mrequired[39m=[32m""[39m
+            [33mstyle[39m=[32m"width: 100%; background: transparent; outline: none; padding: 12px 16px 12px 16px; font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, 0.95); font-family: inherit; border-radius: 10px;"[39m
+          [36m/>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/LiquidInput.test.tsx:294:32
+    292|       render(<LiquidInput required placeholder="Required indicator" />)
+    293|       
+    294|       const indicator = screen.getByText('*')
+       |                                ^
+    295|       expect(indicator).toBeInTheDocument()
+    296|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Accessibility > should associate error messages with input
+Error: expect(element).toHaveAttribute("id", "error-message") // element.getAttribute("id") === "error-message"
+
+Expected the element to have attribute:
+  id="error-message"
+Received:
+  id="liquid-input-:r42:-error"
+ ❯ src/components/__tests__/LiquidInput.test.tsx:368:28
+    366|       
+    367|       expect(input).toHaveAttribute('aria-describedby', 'error-message…
+    368|       expect(errorMessage).toHaveAttribute('id', 'error-message')
+       |                            ^
+    369|     })
+    370| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should merge custom className with defaults
+Error: expect(element).toHaveClass("custom-input-class")
+
+Expected the element to have class:
+  custom-input-class
+Received:
+
+ ❯ src/components/__tests__/LiquidInput.test.tsx:424:21
+    422|       
+    423|       const input = screen.getByPlaceholderText('Custom styled')
+    424|       expect(input).toHaveClass('custom-input-class')
+       |                     ^
+    425|     })
+    426| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/29]⎯
+
+ FAIL  src/components/__tests__/LiquidInput.test.tsx > LiquidInput > Custom Styling > should apply custom styles
+Error: expect(element).toHaveStyle()
+
+- Expected
+
+- borderRadius: 12px;
+ ❯ src/components/__tests__/LiquidInput.test.tsx:437:21
+    435|       
+    436|       const input = screen.getByPlaceholderText('Custom styled')
+    437|       expect(input).toHaveStyle({ borderRadius: '12px' })
+       |                     ^
+    438|     })
+    439|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Basic Rendering > should apply glass effect styles to backdrop
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ Object.expectGlassEffect src/test/utils.tsx:183:35
+    181|   expectGlassEffect: (element: HTMLElement) => {
+    182|     const styles = window.getComputedStyle(element)
+    183|     expect(styles.backdropFilter).toMatch(/blur\(\d+px\)/)
+       |                                   ^
+    184|     expect(styles.background).toMatch(/rgba?\(/)
+    185|   },
+ ❯ src/components/__tests__/LiquidModal.test.tsx:48:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should focus modal content when opened
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Focus me
+</button>
+Received element with focus:
+  <div
+  aria-modal="true"
+  class="liquid-modal relative w-full max-w-lg max-h-[90vh] overflow-hidden rounded-xl border border-white/10 shadow-2xl transform transition-all duration-300 ease-out animate-in fade-in-0 zoom-in-95"
+  role="dialog"
+  style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.3);"
+  tabindex="-1"
+>
+  <div
+    class="liquid-modal-header flex items-center justify-between p-6 border-b border-white/10"
+  >
+    <button
+      aria-label="Close modal"
+      class="flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+      type="button"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M6 18L18 6M6 6l12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="liquid-modal-content overflow-y-auto max-h-full"
+  >
+    <button>
+      Focus me
+    </button>
+  </div>
+</div>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:274:22
+    272|       
+    273|       const button = screen.getByRole('button', { name: 'Focus me' })
+    274|       expect(button).toHaveFocus()
+       |                      ^
+    275|     })
+    276| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Focus Management > should trap focus within modal
+Error: expect(element).toHaveFocus()
+
+Expected element with focus:
+  <button>
+  Second
+</button>
+Received element with focus:
+  <button>
+  First
+</button>
+ ❯ src/components/__tests__/LiquidModal.test.tsx:292:28
+    290|       
+    291|       fireEvent.keyDown(firstButton, { key: 'Tab' })
+    292|       expect(secondButton).toHaveFocus()
+       |                            ^
+    293|       
+    294|       fireEvent.keyDown(secondButton, { key: 'Tab' })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/29]⎯
+
+ FAIL  src/components/__tests__/LiquidModal.test.tsx > LiquidModal > Accessibility > should associate with title when provided
+Error: expect(element).toHaveAttribute("aria-labelledby", "modal-title") // element.getAttribute("aria-labelledby") === "modal-title"
+
+Expected the element to have attribute:
+  aria-labelledby="modal-title"
+Received:
+  null
+ ❯ src/components/__tests__/LiquidModal.test.tsx:452:21
+    450|       
+    451|       const modal = screen.getByRole('dialog')
