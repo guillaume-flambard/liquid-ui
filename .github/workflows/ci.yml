@@ -71,7 +71,8 @@ jobs:
           npm install
 
       - name: Build Storybook
-        run: npm run build-storybook
+        run: npm run build
+        working-directory: apps/storybook
 
       - name: Run visual tests
         run: npm run test:visual || echo "Visual tests not implemented yet"

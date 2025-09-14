@@ -22,6 +22,10 @@ COPY . .
 # Build packages
 RUN npm run build
 
+# Build Storybook
+WORKDIR /app/apps/storybook
+RUN npm run build
+
 # Build demo app with standalone output
 WORKDIR /app/apps/demo
 ENV NEXT_TELEMETRY_DISABLED 1

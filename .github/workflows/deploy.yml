@@ -51,7 +51,7 @@ jobs:
           NODE_ENV: production
 
       - name: Build Storybook
-        run: npm run build-storybook
+        run: npm run build
         working-directory: apps/storybook
 
       - name: Authenticate to Google Cloud
