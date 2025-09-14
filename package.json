@@ -23,6 +23,7 @@
     "demo": "cd apps/demo && npm run dev",
     "build": "turbo run build",
     "build-storybook": "turbo run build-storybook",
+    "cli": "cd packages/cli && npm run dev",
     "test": "turbo run test",
     "test:ci": "turbo run test -- --coverage --passWithNoTests",
     "typecheck": "turbo run typecheck",

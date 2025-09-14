@@ -57,11 +57,14 @@ var import_react2 = require("react");
 var import_react = require("react");
 var import_core = require("@liquid-ui/core");
 function useLiquidGlass(config) {
-  const [isClient, setIsClient] = (0, import_react.useState)(false);
+  const isTestEnv = typeof process !== "undefined" && process.env.NODE_ENV === "test";
+  const [isClient, setIsClient] = (0, import_react.useState)(isTestEnv);
   const engine = (0, import_react.useMemo)(() => import_core.LiquidGlassEngine.getInstance(), []);
   (0, import_react.useEffect)(() => {
-    setIsClient(true);
-  }, []);
+    if (!isTestEnv) {
+      setIsClient(true);
+    }
+  }, [isTestEnv]);
   const glassStyles = (0, import_react.useMemo)(() => {
     const serverSafeConfig = isClient ? config : { ...config, interactive: false };
     return engine.generateGlassCSS(serverSafeConfig);

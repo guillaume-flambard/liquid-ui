@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1757852627787" clover="3.2.0">
-  <project timestamp="1757852627787" name="All files">
+<coverage generated="1757859642309" clover="3.2.0">
+  <project timestamp="1757859642309" name="All files">
     <metrics statements="727" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0" elements="735" coveredelements="0" complexity="0" loc="727" ncloc="727" packages="1" files="4" classes="4"/>
     <file name="engine.ts" path="/Users/memo/projects/liquid-ui/packages/core/src/engine.ts">
       <metrics statements="229" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>

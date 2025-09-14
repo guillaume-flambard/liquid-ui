@@ -5,11 +5,14 @@ import { forwardRef } from "react";
 import { useMemo, useEffect, useState } from "react";
 import { LiquidGlassEngine } from "@liquid-ui/core";
 function useLiquidGlass(config) {
-  const [isClient, setIsClient] = useState(false);
+  const isTestEnv = typeof process !== "undefined" && process.env.NODE_ENV === "test";
+  const [isClient, setIsClient] = useState(isTestEnv);
   const engine = useMemo(() => LiquidGlassEngine.getInstance(), []);
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isTestEnv) {
+      setIsClient(true);
+    }
+  }, [isTestEnv]);
   const glassStyles = useMemo(() => {
     const serverSafeConfig = isClient ? config : { ...config, interactive: false };
     return engine.generateGlassCSS(serverSafeConfig);

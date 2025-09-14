@@ -19,7 +19,7 @@ const addOptionsSchema = z.object({
   all: z.boolean().optional().default(false)
 })
 
-export async function addCommand(components: string[], opts: unknown) {
+export async function addCommand(components: string[], opts: Record<string, unknown>) {
   try {
     const options = addOptionsSchema.parse({
       components,

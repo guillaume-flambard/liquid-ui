@@ -7,5 +7,38 @@
      ✓ externalDir
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 572ms
+ ✓ Compiled successfully in 816ms
    Linting and checking validity of types ...
+
+./app/page.tsx
+4:15  Warning: 'LiquidCardHero' is defined but never used.  @typescript-eslint/no-unused-vars
+5:57  Warning: 'LiquidButtonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+6:16  Warning: 'LiquidInputSearch' is defined but never used.  @typescript-eslint/no-unused-vars
+6:53  Warning: 'LiquidInputPassword' is defined but never used.  @typescript-eslint/no-unused-vars
+7:16  Warning: 'LiquidModalAlert' is defined but never used.  @typescript-eslint/no-unused-vars
+7:34  Warning: 'LiquidModalConfirm' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'LiquidSurface' is defined but never used.  @typescript-eslint/no-unused-vars
+8:18  Warning: 'LiquidContent' is defined but never used.  @typescript-eslint/no-unused-vars
+8:45  Warning: 'LiquidInteractive' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/4) ...
+   Generating static pages (1/4) 
+   Generating static pages (2/4) 
+   Generating static pages (3/4) 
+ ✓ Generating static pages (4/4)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    16.9 kB         119 kB
+└ ○ /_not-found                            992 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/18-53ad9f46aa220114.js        45.8 kB
+  ├ chunks/87c73c54-0375ba195de27293.js  54.2 kB
+  └ other shared chunks (total)          1.86 kB
+
+
+○  (Static)  prerendered as static content
+

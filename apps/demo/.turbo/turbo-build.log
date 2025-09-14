@@ -3,41 +3,30 @@
 > next build
 
    ▲ Next.js 15.5.3
+   - Experiments (use with caution):
+     ✓ externalDir
 
    Creating an optimized production build ...
-Failed to compile.
+ ✓ Compiled successfully in 834ms
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+   Generating static pages (0/5) ...
+   Generating static pages (1/5) 
+   Generating static pages (2/5) 
+   Generating static pages (3/5) 
+ ✓ Generating static pages (5/5)
+   Finalizing page optimization ...
+   Collecting build traces ...
 
-./node_modules/next/dist/pages/_app.js
-Module not found: Can't resolve '../shared/lib/utils'
-
-https://nextjs.org/docs/messages/module-not-found
-
-./node_modules/next/dist/pages/_document.js
-Module not found: Can't resolve '../shared/lib/constants'
-
-https://nextjs.org/docs/messages/module-not-found
-
-./node_modules/next/dist/pages/_document.js
-Module not found: Can't resolve '../server/get-page-files'
-
-https://nextjs.org/docs/messages/module-not-found
-
-./node_modules/next/dist/pages/_document.js
-Module not found: Can't resolve '../server/htmlescape'
-
-https://nextjs.org/docs/messages/module-not-found
-
-./node_modules/next/dist/pages/_document.js
-Module not found: Can't resolve '../lib/is-error'
-
-https://nextjs.org/docs/messages/module-not-found
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    2.45 kB         104 kB
+└ ○ /_not-found                            992 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/18-53ad9f46aa220114.js        45.8 kB
+  ├ chunks/87c73c54-0375ba195de27293.js  54.2 kB
+  └ other shared chunks (total)          1.83 kB
 
 
-> Build failed because of webpack errors
-npm error Lifecycle script `build` failed with error:
-npm error code 1
-npm error path /Users/memo/projects/liquid-ui/apps/demo
-npm error workspace @liquid-ui/demo@0.1.0
-npm error location /Users/memo/projects/liquid-ui/apps/demo
-npm error command failed
-npm error command sh -c next build
+○  (Static)  prerendered as static content
+
