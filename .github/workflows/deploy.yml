@@ -66,23 +66,26 @@ jobs:
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
 
-      - name: Configure Docker for Artifact Registry
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker
 
       - name: Build Docker image
         run: |
-          docker build -t us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:${{ github.sha }} .
-          docker tag us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:${{ github.sha }} us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:latest
+          docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} .
+          docker tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest
 
-      - name: Push to Artifact Registry
+      - name: Enable Container Registry API
+        run: gcloud services enable containerregistry.googleapis.com || echo "API already enabled"
+
+      - name: Push to Container Registry
         run: |
-          docker push us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:${{ github.sha }}
-          docker push us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:latest
+          docker push gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }}
+          docker push gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy liquid-ui \
-            --image us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/liquid-ui/app:${{ github.sha }} \
+            --image gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
