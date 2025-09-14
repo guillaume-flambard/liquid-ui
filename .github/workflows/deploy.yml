@@ -65,21 +65,15 @@ jobs:
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
 
-      - name: Configure Docker for GCR
-        run: gcloud auth configure-docker
-
-      - name: Build Docker image
+      - name: Enable required APIs
         run: |
-          docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} .
-          docker tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest
+          gcloud services enable cloudbuild.googleapis.com || echo "Cloud Build API already enabled"
+          gcloud services enable containerregistry.googleapis.com || echo "Container Registry API already enabled"
 
-      - name: Enable Container Registry API
-        run: gcloud services enable containerregistry.googleapis.com || echo "API already enabled"
-
-      - name: Push to Container Registry
+      - name: Build and push with Cloud Build
         run: |
-          docker push gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }}
-          docker push gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest
+          gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} .
+          gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest .
 
       - name: Deploy to Cloud Run
         run: |
