@@ -9,10 +9,10 @@ CLI Target: es2020
 CJS Build start
 ESM Build start
 ESM dist/index.mjs 83.89 KB
-ESM ⚡️ Build success in 19ms
+ESM ⚡️ Build success in 21ms
 CJS dist/index.js 90.54 KB
-CJS ⚡️ Build success in 19ms
+CJS ⚡️ Build success in 21ms
 DTS Build start
-DTS ⚡️ Build success in 816ms
+DTS ⚡️ Build success in 787ms
 DTS dist/index.d.ts  12.91 KB
 DTS dist/index.d.mts 12.91 KB

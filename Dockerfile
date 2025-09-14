@@ -19,8 +19,8 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build packages
-RUN npm run build
+# Build packages (exclude problematic tools packages)
+RUN npx turbo build --filter="!@liquid-ui/testing" --filter="!@liquid-ui/build-tools"
 
 # Build Storybook
 WORKDIR /app/apps/storybook
