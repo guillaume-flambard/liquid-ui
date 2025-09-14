@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  output: 'export',
+  trailingSlash: true,
+  distDir: 'dist',
+  basePath: '/liquid-ui',
+  assetPrefix: '/liquid-ui',
   eslint: {
     ignoreDuringBuilds: true,
   },
