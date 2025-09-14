@@ -46,15 +46,15 @@ export function renderWithProviders(
 }
 
 // Performance testing utilities
-export const performance = {
+export const performanceUtils = {
   /**
    * Measure rendering time of a component
    */
   measureRender: async (renderFn: () => void): Promise<number> => {
-    const start = performance.now()
+    const start = globalThis.performance.now()
     renderFn()
     await new Promise(resolve => requestAnimationFrame(resolve))
-    const end = performance.now()
+    const end = globalThis.performance.now()
     return end - start
   },
 
@@ -63,13 +63,13 @@ export const performance = {
    */
   testFrameRate: async (animationFn: () => void, duration = 1000): Promise<boolean> => {
     let frameCount = 0
-    const start = performance.now()
+    const start = globalThis.performance.now()
     
     const animate = () => {
       frameCount++
       animationFn()
       
-      if (performance.now() - start < duration) {
+      if (globalThis.performance.now() - start < duration) {
         requestAnimationFrame(animate)
       }
     }
@@ -163,5 +163,4 @@ export const glass = {
 
 // Export everything for easy importing
 export * from '@testing-library/react'
-export * from '@testing-library/jest-dom'
-export * from '@testing-library/user-event'
+export { default as userEvent } from '@testing-library/user-event'
