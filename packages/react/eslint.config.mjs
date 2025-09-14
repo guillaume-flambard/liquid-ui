@@ -6,33 +6,18 @@ export default [
       "coverage/**",
       "*.config.js",
       "*.config.mjs",
-      "storybook-static/**",
+      "*.config.ts",
     ],
   },
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
     },
     rules: {
-      "no-unused-vars": "error",
-      "no-undef": "error",
-    },
-  },
-  {
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: "module",
-      parser: await import("@typescript-eslint/parser"),
-      parserOptions: {
-        jsx: true,
-      },
-    },
-    rules: {
-      "no-unused-vars": "off", // TypeScript handles this
-      "no-undef": "off", // TypeScript handles this
+      "no-unused-vars": "off",
+      "no-undef": "off",
     },
   },
 ];

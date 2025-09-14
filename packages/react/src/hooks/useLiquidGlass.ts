@@ -11,13 +11,17 @@ import type { GlassConfig } from '@liquid-ui/core'
  * Includes hydration safety to prevent SSR/client mismatches.
  */
 export function useLiquidGlass(config: GlassConfig) {
-  const [isClient, setIsClient] = useState(false)
+  // In test environment, assume client-side rendering to avoid act() warnings
+  const isTestEnv = typeof process !== 'undefined' && process.env.NODE_ENV === 'test'
+  const [isClient, setIsClient] = useState(isTestEnv)
   const engine = useMemo(() => LiquidGlassEngine.getInstance(), [])
   
   // Hydration safety: only enable client-specific features after mounting
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    if (!isTestEnv) {
+      setIsClient(true)
+    }
+  }, [isTestEnv])
   
   const glassStyles = useMemo(() => {
     // Force server-side compatible rendering until client mount

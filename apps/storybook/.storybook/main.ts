@@ -6,7 +6,6 @@ const config: StorybookConfig = {
   ],
   staticDirs: [],
   addons: [
-    '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -26,20 +25,30 @@ const config: StorybookConfig = {
     },
   },
   webpackFinal: async (config) => {
-    // Handle path aliases for monorepo - use dist instead of src
+    const path = require('path')
+    
+    // Handle path aliases for monorepo
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        '@liquid-ui/core': require.resolve('../../../packages/core/dist'),
-        '@liquid-ui/react': require.resolve('../../../packages/react/dist'),
+        '@liquid-ui/core': path.resolve(__dirname, '../../../packages/core/dist'),
+        '@liquid-ui/react': path.resolve(__dirname, '../../../packages/react/dist'),
       }
     }
     
-    // Add CSS support
+    // Add TypeScript support
     if (config.module?.rules) {
       config.module.rules.push({
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
+        exclude: /node_modules/,
       })
     }
     

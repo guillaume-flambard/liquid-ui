@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { LiquidModal } from '../LiquidModal'
 import { 
   render, 
@@ -16,7 +16,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Basic Rendering', () => {
-    it('should not render when closed', () => {
+    it('should not render when closed', async () => {
       render(
         <LiquidModal isOpen={false} onClose={() => {}}>
           Modal Content
@@ -26,7 +26,7 @@ describe('LiquidModal', () => {
       expect(screen.queryByText('Modal Content')).not.toBeInTheDocument()
     })
 
-    it('should render when open', () => {
+    it('should render when open', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -36,7 +36,7 @@ describe('LiquidModal', () => {
       expect(screen.getByText('Modal Content')).toBeInTheDocument()
     })
 
-    it('should apply glass effect styles to backdrop', () => {
+    it('should apply glass effect styles to backdrop', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -48,7 +48,7 @@ describe('LiquidModal', () => {
       stateTestingHelpers.expectGlassEffect(backdrop!)
     })
 
-    it('should render with different variants', () => {
+    it('should render with different variants', async () => {
       const { rerender } = render(
         <LiquidModal isOpen={true} onClose={() => {}} variant="frosted">
           Frosted Modal
@@ -73,7 +73,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Interactive Features', () => {
-    it('should call onClose when backdrop is clicked', () => {
+    it('should call onClose when backdrop is clicked', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose}>
@@ -82,12 +82,12 @@ describe('LiquidModal', () => {
       )
       
       const backdrop = document.querySelector('[class*="backdrop-blur"]')!
-      fireEvent.click(backdrop)
+      await simulateInteraction.click(backdrop)
       
       expect(handleClose).toHaveBeenCalledTimes(1)
     })
 
-    it('should not close when clicking modal content', () => {
+    it('should not close when clicking modal content', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose}>
@@ -96,12 +96,12 @@ describe('LiquidModal', () => {
       )
       
       const modalContent = screen.getByText('Modal Content')
-      fireEvent.click(modalContent)
+      await simulateInteraction.click(modalContent)
       
       expect(handleClose).not.toHaveBeenCalled()
     })
 
-    it('should close when pressing Escape key', () => {
+    it('should close when pressing Escape key', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose}>
@@ -109,12 +109,12 @@ describe('LiquidModal', () => {
         </LiquidModal>
       )
       
-      fireEvent.keyDown(document, { key: 'Escape' })
+      await simulateInteraction.keyDown(document, 'Escape')
       
       expect(handleClose).toHaveBeenCalledTimes(1)
     })
 
-    it('should not close on Escape when closeOnEscape is false', () => {
+    it('should not close on Escape when closeOnEscape is false', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose} closeOnEscape={false}>
@@ -122,12 +122,12 @@ describe('LiquidModal', () => {
         </LiquidModal>
       )
       
-      fireEvent.keyDown(document, { key: 'Escape' })
+      await simulateInteraction.keyDown(document, 'Escape')
       
       expect(handleClose).not.toHaveBeenCalled()
     })
 
-    it('should not close on backdrop click when closeOnBackdrop is false', () => {
+    it('should not close on backdrop click when closeOnBackdrop is false', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose} closeOnBackdrop={false}>
@@ -136,14 +136,14 @@ describe('LiquidModal', () => {
       )
       
       const backdrop = document.querySelector('[class*="backdrop-blur"]')!
-      fireEvent.click(backdrop)
+      await simulateInteraction.click(backdrop)
       
       expect(handleClose).not.toHaveBeenCalled()
     })
   })
 
   describe('Close Button', () => {
-    it('should render close button by default', () => {
+    it('should render close button by default', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -154,7 +154,7 @@ describe('LiquidModal', () => {
       expect(closeButton).toBeInTheDocument()
     })
 
-    it('should hide close button when showCloseButton is false', () => {
+    it('should hide close button when showCloseButton is false', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}} showCloseButton={false}>
           Modal Content
@@ -165,7 +165,7 @@ describe('LiquidModal', () => {
       expect(closeButton).not.toBeInTheDocument()
     })
 
-    it('should call onClose when close button is clicked', () => {
+    it('should call onClose when close button is clicked', async () => {
       const handleClose = vi.fn()
       render(
         <LiquidModal isOpen={true} onClose={handleClose}>
@@ -174,14 +174,14 @@ describe('LiquidModal', () => {
       )
       
       const closeButton = screen.getByRole('button', { name: /close/i })
-      fireEvent.click(closeButton)
+      await simulateInteraction.click(closeButton)
       
       expect(handleClose).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Size Variants', () => {
-    it('should apply correct size classes', () => {
+    it('should apply correct size classes', async () => {
       const { rerender } = render(
         <LiquidModal isOpen={true} onClose={() => {}} size="sm">
           Small Modal
@@ -294,18 +294,18 @@ describe('LiquidModal', () => {
         expect(firstButton).toHaveFocus()
       }, { timeout: 100 })
       
-      fireEvent.keyDown(firstButton, { key: 'Tab' })
+      await simulateInteraction.keyDown(firstButton, 'Tab')
       await waitFor(() => {
         expect(secondButton).toHaveFocus()
       }, { timeout: 100 })
       
-      fireEvent.keyDown(secondButton, { key: 'Tab' })
+      await simulateInteraction.keyDown(secondButton, 'Tab')
       await waitFor(() => {
         expect(firstButton).toHaveFocus()
       }, { timeout: 100 })
     })
 
-    it('should restore focus when closed', () => {
+    it('should restore focus when closed', async () => {
       const triggerButton = document.createElement('button')
       triggerButton.textContent = 'Open Modal'
       document.body.appendChild(triggerButton)
@@ -335,7 +335,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Body Scroll Lock', () => {
-    it('should lock body scroll when modal is open', () => {
+    it('should lock body scroll when modal is open', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -345,7 +345,7 @@ describe('LiquidModal', () => {
       expect(document.body).toHaveStyle({ overflow: 'hidden' })
     })
 
-    it('should restore body scroll when modal is closed', () => {
+    it('should restore body scroll when modal is closed', async () => {
       const { rerender } = render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -363,7 +363,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Performance', () => {
-    it('should render within performance budget', () => {
+    it('should render within performance budget', async () => {
       const renderTime = measurePerformance.renderTime(() => {
         render(
           <LiquidModal isOpen={true} onClose={() => {}}>
@@ -376,7 +376,7 @@ describe('LiquidModal', () => {
       expect(renderTime).toBeLessThan(100)
     })
 
-    it('should not cause memory leaks with rapid open/close', () => {
+    it('should not cause memory leaks with rapid open/close', async () => {
       const initialMemory = measurePerformance.memoryUsage()
       
       for (let i = 0; i < 50; i++) {
@@ -425,7 +425,7 @@ describe('LiquidModal', () => {
       await testAccessibility(container)
     })
 
-    it('should have proper ARIA attributes', () => {
+    it('should have proper ARIA attributes', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Modal Content
@@ -436,7 +436,7 @@ describe('LiquidModal', () => {
       expect(modal).toHaveAttribute('aria-modal', 'true')
     })
 
-    it('should support custom ARIA labels', () => {
+    it('should support custom ARIA labels', async () => {
       render(
         <LiquidModal 
           isOpen={true} 
@@ -451,7 +451,7 @@ describe('LiquidModal', () => {
       expect(modal).toBeInTheDocument()
     })
 
-    it('should associate with title when provided', () => {
+    it('should associate with title when provided', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           <h2 id="modal-title">Modal Title</h2>
@@ -465,21 +465,21 @@ describe('LiquidModal', () => {
   })
 
   describe('Preset Components', () => {
-    it('should render Alert preset correctly', () => {
+    it('should render Alert preset correctly', async () => {
       render(<LiquidModal.Alert isOpen={true} onClose={() => {}}>Alert Modal</LiquidModal.Alert>)
       
       const modal = screen.getByText('Alert Modal')
       expect(modal).toBeInTheDocument()
     })
 
-    it('should render Confirm preset correctly', () => {
+    it('should render Confirm preset correctly', async () => {
       render(<LiquidModal.Confirm isOpen={true} onClose={() => {}}>Confirm Modal</LiquidModal.Confirm>)
       
       const modal = screen.getByText('Confirm Modal')
       expect(modal).toBeInTheDocument()
     })
 
-    it('should render Fullscreen preset correctly', () => {
+    it('should render Fullscreen preset correctly', async () => {
       render(<LiquidModal.Fullscreen isOpen={true} onClose={() => {}}>Fullscreen Modal</LiquidModal.Fullscreen>)
       
       const modal = screen.getByText('Fullscreen Modal').closest('[class*="max-w"]')
@@ -488,7 +488,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Custom Styling', () => {
-    it('should merge custom className with defaults', () => {
+    it('should merge custom className with defaults', async () => {
       render(
         <LiquidModal 
           isOpen={true} 
@@ -503,7 +503,7 @@ describe('LiquidModal', () => {
       expect(modal).toBeInTheDocument()
     })
 
-    it('should apply custom styles to backdrop', () => {
+    it('should apply custom styles to backdrop', async () => {
       render(
         <LiquidModal 
           isOpen={true} 
@@ -520,7 +520,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Edge Cases', () => {
-    it('should handle portal mounting errors gracefully', () => {
+    it('should handle portal mounting errors gracefully', async () => {
       // Mock portal mounting failure
       const originalCreatePortal = require('react-dom').createPortal
       require('react-dom').createPortal = vi.fn(() => {
@@ -539,7 +539,7 @@ describe('LiquidModal', () => {
       require('react-dom').createPortal = originalCreatePortal
     })
 
-    it('should handle rapid state changes without errors', () => {
+    it('should handle rapid state changes without errors', async () => {
       const { rerender } = render(
         <LiquidModal isOpen={false} onClose={() => {}}>
           Rapid State Test
@@ -557,7 +557,7 @@ describe('LiquidModal', () => {
       expect(() => {}).not.toThrow()
     })
 
-    it('should cleanup all event listeners on unmount', () => {
+    it('should cleanup all event listeners on unmount', async () => {
       const { unmount } = render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           Cleanup Test

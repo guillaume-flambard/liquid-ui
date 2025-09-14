@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { LiquidCard } from '../LiquidCard'
 import { 
   render, 
@@ -16,14 +16,14 @@ describe('LiquidCard', () => {
   })
 
   describe('Basic Rendering', () => {
-    it('should render with default props', () => {
+    it('should render with default props', async () => {
       render(<LiquidCard>Card content</LiquidCard>)
       
       const card = screen.getByText('Card content')
       expect(card).toBeInTheDocument()
     })
 
-    it('should apply glass effect styles', () => {
+    it('should apply glass effect styles', async () => {
       render(<LiquidCard>Glass Card</LiquidCard>)
       
       const card = screen.getByText('Glass Card').closest('[class*="backdrop-blur"]')
@@ -31,7 +31,7 @@ describe('LiquidCard', () => {
       stateTestingHelpers.expectGlassEffect(card!)
     })
 
-    it('should render with different variants', () => {
+    it('should render with different variants', async () => {
       const { rerender } = render(<LiquidCard variant="frosted">Frosted</LiquidCard>)
       expect(screen.getByText('Frosted')).toBeInTheDocument()
       
@@ -42,7 +42,7 @@ describe('LiquidCard', () => {
       expect(screen.getByText('Tinted')).toBeInTheDocument()
     })
 
-    it('should render with different intensity levels', () => {
+    it('should render with different intensity levels', async () => {
       const { rerender } = render(<LiquidCard intensity="light">Light</LiquidCard>)
       const card = screen.getByText('Light').closest('[class*="backdrop-blur"]')
       expect(card).toHaveClass('backdrop-blur-sm')
@@ -58,7 +58,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Interactive Features', () => {
-    it('should handle hover effects when interactive', async () => {
+    it('should handle hover effects when interactive', async () => { // ASYNC_NEEDED async
       render(<LiquidCard interactive>Interactive Card</LiquidCard>)
       
       const card = screen.getByText('Interactive Card').closest('div')!
@@ -67,14 +67,14 @@ describe('LiquidCard', () => {
       expect(card).toHaveClass('hover:scale-105')
     })
 
-    it('should not respond to hover when not interactive', async () => {
+    it('should not respond to hover when not interactive', async () => { // ASYNC_NEEDED async
       render(<LiquidCard>Static Card</LiquidCard>)
       
       const card = screen.getByText('Static Card').closest('div')!
       expect(card).not.toHaveClass('hover:scale-105')
     })
 
-    it('should handle drag and drop interactions', async () => {
+    it('should handle drag and drop interactions', async () => { // ASYNC_NEEDED async
       const handleDragStart = vi.fn()
       const handleDrag = vi.fn()
       const handleDragEnd = vi.fn()
@@ -91,17 +91,17 @@ describe('LiquidCard', () => {
       
       const card = screen.getByText('Draggable Card').closest('div')!
       
-      fireEvent.mouseDown(card, { clientX: 100, clientY: 100 })
+      await simulateInteraction.mouseDown(card, { clientX: 100, clientY: 100 })
       expect(handleDragStart).toHaveBeenCalled()
       
-      fireEvent.mouseMove(card, { clientX: 150, clientY: 150 })
+      await simulateInteraction.mouseMove(card, { clientX: 150, clientY: 150 })
       expect(handleDrag).toHaveBeenCalled()
       
-      fireEvent.mouseUp(card)
+      await simulateInteraction.mouseUp(card)
       expect(handleDragEnd).toHaveBeenCalled()
     })
 
-    it('should apply magnetic edges behavior', () => {
+    it('should apply magnetic edges behavior', async () => {
       render(<LiquidCard magneticEdges>Magnetic Card</LiquidCard>)
       
       const card = screen.getByText('Magnetic Card').closest('div')!
@@ -109,19 +109,19 @@ describe('LiquidCard', () => {
       // Magnetic edges should be handled internally without DOM attributes
     })
 
-    it('should handle click events', () => {
+    it('should handle click events', async () => {
       const handleClick = vi.fn()
       render(<LiquidCard onClick={handleClick}>Clickable Card</LiquidCard>)
       
       const card = screen.getByText('Clickable Card').closest('div')!
-      fireEvent.click(card)
+      await simulateInteraction.click(card)
       
       expect(handleClick).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Adaptive Opacity', () => {
-    it('should adjust opacity based on background when enabled', () => {
+    it('should adjust opacity based on background when enabled', async () => {
       render(<LiquidCard adaptiveOpacity>Adaptive Card</LiquidCard>)
       
       const card = screen.getByText('Adaptive Card').closest('div')!
@@ -129,7 +129,7 @@ describe('LiquidCard', () => {
       // Adaptive opacity logic should be tested with actual background detection
     })
 
-    it('should use fixed opacity when adaptive is disabled', () => {
+    it('should use fixed opacity when adaptive is disabled', async () => {
       render(<LiquidCard opacity="strong">Fixed Opacity Card</LiquidCard>)
       
       const card = screen.getByText('Fixed Opacity Card').closest('div')!
@@ -138,7 +138,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Environment Blending', () => {
-    it('should apply environment blending effects when enabled', () => {
+    it('should apply environment blending effects when enabled', async () => {
       render(<LiquidCard environmentBlending>Blending Card</LiquidCard>)
       
       const card = screen.getByText('Blending Card').closest('div')!
@@ -148,7 +148,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Padding Variants', () => {
-    it('should apply correct padding classes', () => {
+    it('should apply correct padding classes', async () => {
       const { rerender } = render(<LiquidCard padding="sm">Small Padding</LiquidCard>)
       let card = screen.getByText('Small Padding').closest('div')!
       expect(card).toHaveClass('p-3')
@@ -168,7 +168,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Performance', () => {
-    it('should render within performance budget', () => {
+    it('should render within performance budget', async () => {
       const renderTime = measurePerformance.renderTime(() => {
         render(<LiquidCard>Performance Test</LiquidCard>)
       })
@@ -176,15 +176,15 @@ describe('LiquidCard', () => {
       expect(renderTime).toBeLessThan(16)
     })
 
-    it('should not cause memory leaks with drag interactions', () => {
+    it('should not cause memory leaks with drag interactions', async () => {
       const initialMemory = measurePerformance.memoryUsage()
       
       for (let i = 0; i < 100; i++) {
         const { unmount } = render(<LiquidCard>Test {i}</LiquidCard>)
         const card = screen.getByText(`Test ${i}`).closest('div')!
-        fireEvent.mouseDown(card)
-        fireEvent.mouseMove(card, { clientX: 100, clientY: 100 })
-        fireEvent.mouseUp(card)
+        await simulateInteraction.mouseDown(card)
+        await simulateInteraction.mouseMove(card, { clientX: 100, clientY: 100 })
+        await simulateInteraction.mouseUp(card)
         unmount()
       }
       
@@ -202,7 +202,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Accessibility', () => {
-    it('should meet WCAG accessibility standards', async () => {
+    it('should meet WCAG accessibility standards', async () => { // ASYNC_NEEDED async
       const { container } = render(
         <LiquidCard aria-label="Accessible card">
           Card content
@@ -212,7 +212,7 @@ describe('LiquidCard', () => {
       await testAccessibility(container)
     })
 
-    it('should support keyboard navigation when interactive', () => {
+    it('should support keyboard navigation when interactive', async () => {
       const handleClick = vi.fn()
       render(
         <LiquidCard interactive onClick={handleClick} tabIndex={0}>
@@ -221,14 +221,14 @@ describe('LiquidCard', () => {
       )
       
       const card = screen.getByText('Interactive Card').closest('div')!
-      card.focus()
+      await simulateInteraction.focus(card)
       expect(card).toHaveFocus()
       
-      fireEvent.keyDown(card, { key: 'Enter' })
+      await simulateInteraction.keyDown(card, 'Enter')
       expect(handleClick).toHaveBeenCalled()
     })
 
-    it('should have proper focus indicators', () => {
+    it('should have proper focus indicators', async () => {
       render(
         <LiquidCard interactive tabIndex={0}>
           Focusable Card
@@ -236,7 +236,7 @@ describe('LiquidCard', () => {
       )
       
       const card = screen.getByText('Focusable Card').closest('div')!
-      card.focus()
+      await simulateInteraction.focus(card)
       
       expect(card).toHaveFocus()
       expect(card).toHaveClass('focus:outline-none')
@@ -245,7 +245,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Preset Components', () => {
-    it('should render Hero preset correctly', () => {
+    it('should render Hero preset correctly', async () => {
       render(<LiquidCard.Hero>Hero Card</LiquidCard.Hero>)
       
       const card = screen.getByText('Hero Card').closest('div')!
@@ -253,7 +253,7 @@ describe('LiquidCard', () => {
       expect(card).toHaveClass('p-12')
     })
 
-    it('should render Compact preset correctly', () => {
+    it('should render Compact preset correctly', async () => {
       render(<LiquidCard.Compact>Compact Card</LiquidCard.Compact>)
       
       const card = screen.getByText('Compact Card').closest('div')!
@@ -261,7 +261,7 @@ describe('LiquidCard', () => {
       expect(card).toHaveClass('p-3')
     })
 
-    it('should render Interactive preset correctly', () => {
+    it('should render Interactive preset correctly', async () => {
       render(<LiquidCard.Interactive>Interactive Card</LiquidCard.Interactive>)
       
       const card = screen.getByText('Interactive Card').closest('div')!
@@ -271,7 +271,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Custom Styling', () => {
-    it('should merge custom className with defaults', () => {
+    it('should merge custom className with defaults', async () => {
       render(
         <LiquidCard className="custom-class">
           Custom Styled Card
@@ -283,7 +283,7 @@ describe('LiquidCard', () => {
       expect(card).toHaveClass('backdrop-blur-md')
     })
 
-    it('should apply custom styles', () => {
+    it('should apply custom styles', async () => {
       const customStyles = { borderRadius: '20px' }
       render(
         <LiquidCard style={customStyles}>
@@ -297,7 +297,7 @@ describe('LiquidCard', () => {
   })
 
   describe('Edge Cases', () => {
-    it('should handle undefined children gracefully', () => {
+    it('should handle undefined children gracefully', async () => {
       render(<LiquidCard>{undefined}</LiquidCard>)
       
       const card = document.querySelector('[class*="backdrop-blur"]')
@@ -311,16 +311,16 @@ describe('LiquidCard', () => {
       const card = screen.getByText('Rapid Test').closest('div')!
       
       for (let i = 0; i < 10; i++) {
-        fireEvent.mouseDown(card)
-        fireEvent.mouseUp(card)
-        fireEvent.click(card)
+        await simulateInteraction.mouseDown(card)
+        await simulateInteraction.mouseUp(card)
+        await simulateInteraction.click(card)
       }
       
       expect(handleClick).toHaveBeenCalledTimes(10)
       expect(() => {}).not.toThrow()
     })
 
-    it('should cleanup event listeners on unmount', () => {
+    it('should cleanup event listeners on unmount', async () => {
       const { unmount } = render(<LiquidCard>Cleanup Test</LiquidCard>)
       
       expect(screen.getByText('Cleanup Test')).toBeInTheDocument()

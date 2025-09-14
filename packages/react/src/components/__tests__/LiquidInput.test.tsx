@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { LiquidInput } from '../LiquidInput'
 import { 
   render, 
@@ -16,7 +16,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Basic Rendering', () => {
-    it('should render with default props', () => {
+    it('should render with default props', async () => {
       render(<LiquidInput placeholder="Enter text" />)
       
       const input = screen.getByPlaceholderText('Enter text')
@@ -24,7 +24,7 @@ describe('LiquidInput', () => {
       expect(input).toHaveAttribute('type', 'text')
     })
 
-    it('should apply glass effect styles', () => {
+    it('should apply glass effect styles', async () => {
       render(<LiquidInput placeholder="Glass Input" />)
       
       const input = screen.getByPlaceholderText('Glass Input')
@@ -32,7 +32,7 @@ describe('LiquidInput', () => {
       stateTestingHelpers.expectGlassEffect(container!)
     })
 
-    it('should render with different variants', () => {
+    it('should render with different variants', async () => {
       const { rerender } = render(<LiquidInput variant="frosted" placeholder="Frosted" />)
       expect(screen.getByPlaceholderText('Frosted')).toBeInTheDocument()
       
@@ -43,7 +43,7 @@ describe('LiquidInput', () => {
       expect(screen.getByPlaceholderText('Tinted')).toBeInTheDocument()
     })
 
-    it('should render with different intensity levels', () => {
+    it('should render with different intensity levels', async () => {
       const { rerender } = render(<LiquidInput intensity="light" placeholder="Light" />)
       const container = screen.getByPlaceholderText('Light').closest('div')
       expect(container).toHaveClass('backdrop-blur-sm')
@@ -59,35 +59,35 @@ describe('LiquidInput', () => {
   })
 
   describe('Input Types', () => {
-    it('should render text input by default', () => {
+    it('should render text input by default', async () => {
       render(<LiquidInput />)
       
       const input = screen.getByRole('textbox')
       expect(input).toHaveAttribute('type', 'text')
     })
 
-    it('should render email input', () => {
+    it('should render email input', async () => {
       render(<LiquidInput type="email" placeholder="Email" />)
       
       const input = screen.getByPlaceholderText('Email')
       expect(input).toHaveAttribute('type', 'email')
     })
 
-    it('should render password input', () => {
+    it('should render password input', async () => {
       render(<LiquidInput type="password" placeholder="Password" />)
       
       const input = screen.getByPlaceholderText('Password')
       expect(input).toHaveAttribute('type', 'password')
     })
 
-    it('should render number input', () => {
+    it('should render number input', async () => {
       render(<LiquidInput type="number" placeholder="Number" />)
       
       const input = screen.getByPlaceholderText('Number')
       expect(input).toHaveAttribute('type', 'number')
     })
 
-    it('should render search input', () => {
+    it('should render search input', async () => {
       render(<LiquidInput type="search" placeholder="Search" />)
       
       const input = screen.getByPlaceholderText('Search')
@@ -96,12 +96,12 @@ describe('LiquidInput', () => {
   })
 
   describe('Interactive Features', () => {
-    it('should handle focus events', async () => {
+    it('should handle focus events', async () => { // ASYNC_NEEDED async
       const handleFocus = vi.fn()
       render(<LiquidInput onFocus={handleFocus} placeholder="Focus test" />)
       
       const input = screen.getByPlaceholderText('Focus test')
-      input.focus()
+      await simulateInteraction.focus(input)
       
       expect(handleFocus).toHaveBeenCalledTimes(1)
       expect(input).toHaveFocus()
@@ -112,38 +112,38 @@ describe('LiquidInput', () => {
       render(<LiquidInput onBlur={handleBlur} placeholder="Blur test" />)
       
       const input = screen.getByPlaceholderText('Blur test')
-      input.focus()
-      input.blur()
+      await simulateInteraction.focus(input)
+      await simulateInteraction.blur(input)
       
       expect(handleBlur).toHaveBeenCalledTimes(1)
     })
 
-    it('should handle value changes', async () => {
+    it('should handle value changes', async () => { // ASYNC_NEEDED async
       const handleChange = vi.fn()
       render(<LiquidInput onChange={handleChange} placeholder="Change test" />)
       
       const input = screen.getByPlaceholderText('Change test')
-      fireEvent.change(input, { target: { value: 'test value' } })
+      await simulateInteraction.change(input, { target: { value: 'test value' } })
       
       expect(handleChange).toHaveBeenCalledTimes(1)
       expect(input).toHaveValue('test value')
     })
 
-    it('should handle keyboard events', async () => {
+    it('should handle keyboard events', async () => { // ASYNC_NEEDED async
       const handleKeyDown = vi.fn()
       render(<LiquidInput onKeyDown={handleKeyDown} placeholder="Key test" />)
       
       const input = screen.getByPlaceholderText('Key test')
-      fireEvent.keyDown(input, { key: 'Enter' })
+      await simulateInteraction.keyDown(input, 'Enter')
       
       expect(handleKeyDown).toHaveBeenCalledTimes(1)
     })
 
-    it('should show focus effects', () => {
+    it('should show focus effects', async () => {
       render(<LiquidInput placeholder="Focus effects" />)
       
       const input = screen.getByPlaceholderText('Focus effects')
-      input.focus()
+      await simulateInteraction.focus(input)
       
       expect(input).toHaveFocus()
       const container = input.closest('div')
@@ -152,7 +152,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Size Variants', () => {
-    it('should apply correct size classes', () => {
+    it('should apply correct size classes', async () => {
       const { rerender } = render(<LiquidInput size="sm" placeholder="Small" />)
       let input = screen.getByPlaceholderText('Small')
       expect(input).toHaveClass('text-sm', 'px-3', 'py-2')
@@ -170,7 +170,7 @@ describe('LiquidInput', () => {
   describe('Icons', () => {
     const TestIcon = () => <span data-testid="test-icon">Icon</span>
     
-    it('should render left icon correctly', () => {
+    it('should render left icon correctly', async () => {
       render(
         <LiquidInput 
           leftIcon={<TestIcon />} 
@@ -182,7 +182,7 @@ describe('LiquidInput', () => {
       expect(screen.getByPlaceholderText('Left icon input')).toBeInTheDocument()
     })
 
-    it('should render right icon correctly', () => {
+    it('should render right icon correctly', async () => {
       render(
         <LiquidInput 
           rightIcon={<TestIcon />} 
@@ -194,7 +194,7 @@ describe('LiquidInput', () => {
       expect(screen.getByPlaceholderText('Right icon input')).toBeInTheDocument()
     })
 
-    it('should render both icons correctly', () => {
+    it('should render both icons correctly', async () => {
       render(
         <LiquidInput 
           leftIcon={<TestIcon />}
@@ -207,7 +207,7 @@ describe('LiquidInput', () => {
       expect(icons).toHaveLength(2)
     })
 
-    it('should adjust padding when icons are present', () => {
+    it('should adjust padding when icons are present', async () => {
       const { rerender } = render(
         <LiquidInput leftIcon={<TestIcon />} placeholder="Left padding" />
       )
@@ -233,20 +233,20 @@ describe('LiquidInput', () => {
   })
 
   describe('Error States', () => {
-    it('should display error message', () => {
+    it('should display error message', async () => {
       render(<LiquidInput error="This field is required" placeholder="Error input" />)
       
       expect(screen.getByText('This field is required')).toBeInTheDocument()
     })
 
-    it('should apply error styling', () => {
+    it('should apply error styling', async () => {
       render(<LiquidInput error="Error" placeholder="Error styling" />)
       
       const container = screen.getByPlaceholderText('Error styling').closest('div')
       expect(container).toHaveClass('ring-red-500')
     })
 
-    it('should have aria-invalid when error is present', () => {
+    it('should have aria-invalid when error is present', async () => {
       render(<LiquidInput error="Error" placeholder="Aria invalid" />)
       
       const input = screen.getByPlaceholderText('Aria invalid')
@@ -255,40 +255,40 @@ describe('LiquidInput', () => {
   })
 
   describe('Disabled State', () => {
-    it('should render disabled input', () => {
+    it('should render disabled input', async () => {
       render(<LiquidInput disabled placeholder="Disabled input" />)
       
       const input = screen.getByPlaceholderText('Disabled input')
       expect(input).toBeDisabled()
     })
 
-    it('should apply disabled styling', () => {
+    it('should apply disabled styling', async () => {
       render(<LiquidInput disabled placeholder="Disabled styling" />)
       
       const input = screen.getByPlaceholderText('Disabled styling')
       expect(input).toHaveClass('cursor-not-allowed', 'opacity-60')
     })
 
-    it('should not respond to interactions when disabled', () => {
+    it('should not respond to interactions when disabled', async () => {
       const handleChange = vi.fn()
       render(<LiquidInput disabled onChange={handleChange} placeholder="No interaction" />)
       
       const input = screen.getByPlaceholderText('No interaction')
-      fireEvent.change(input, { target: { value: 'test' } })
+      await simulateInteraction.change(input, { target: { value: 'test' } })
       
       expect(handleChange).not.toHaveBeenCalled()
     })
   })
 
   describe('Required Field', () => {
-    it('should mark field as required', () => {
+    it('should mark field as required', async () => {
       render(<LiquidInput required placeholder="Required field" />)
       
       const input = screen.getByPlaceholderText('Required field')
       expect(input).toBeRequired()
     })
 
-    it('should display required indicator', () => {
+    it('should display required indicator', async () => {
       render(<LiquidInput required placeholder="Required indicator" />)
       
       const indicator = screen.getByText('*')
@@ -297,7 +297,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Performance', () => {
-    it('should render within performance budget', () => {
+    it('should render within performance budget', async () => {
       const renderTime = measurePerformance.renderTime(() => {
         render(<LiquidInput placeholder="Performance test" />)
       })
@@ -306,13 +306,13 @@ describe('LiquidInput', () => {
       expect(renderTime).toBeLessThan(100)
     })
 
-    it('should not cause memory leaks with rapid value changes', () => {
+    it('should not cause memory leaks with rapid value changes', async () => {
       const initialMemory = measurePerformance.memoryUsage()
       
       for (let i = 0; i < 100; i++) {
         const { unmount } = render(<LiquidInput placeholder={`Test ${i}`} />)
         const input = screen.getByPlaceholderText(`Test ${i}`)
-        fireEvent.change(input, { target: { value: `value-${i}` } })
+        await simulateInteraction.change(input, { target: { value: `value-${i}` } })
         unmount()
       }
       
@@ -330,7 +330,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Accessibility', () => {
-    it('should meet WCAG accessibility standards', async () => {
+    it('should meet WCAG accessibility standards', async () => { // ASYNC_NEEDED async
       const { container } = render(
         <LiquidInput 
           placeholder="Accessible input"
@@ -341,7 +341,7 @@ describe('LiquidInput', () => {
       await testAccessibility(container)
     })
 
-    it('should support proper labeling', () => {
+    it('should support proper labeling', async () => {
       render(
         <div>
           <label htmlFor="test-input">Test Label</label>
@@ -353,7 +353,7 @@ describe('LiquidInput', () => {
       expect(input).toBeInTheDocument()
     })
 
-    it('should associate error messages with input', () => {
+    it('should associate error messages with input', async () => {
       render(
         <LiquidInput 
           error="Error message"
@@ -369,7 +369,7 @@ describe('LiquidInput', () => {
       expect(errorMessage).toHaveAttribute('id', 'error-message')
     })
 
-    it('should support keyboard navigation', () => {
+    it('should support keyboard navigation', async () => {
       render(
         <div>
           <LiquidInput placeholder="First input" />
@@ -380,31 +380,31 @@ describe('LiquidInput', () => {
       const firstInput = screen.getByPlaceholderText('First input')
       const secondInput = screen.getByPlaceholderText('Second input')
       
-      firstInput.focus()
+      await simulateInteraction.focus(firstInput)
       expect(firstInput).toHaveFocus()
       
-      fireEvent.keyDown(firstInput, { key: 'Tab' })
-      secondInput.focus()
+      await simulateInteraction.keyDown(firstInput, 'Tab')
+      await simulateInteraction.focus(secondInput)
       expect(secondInput).toHaveFocus()
     })
   })
 
   describe('Preset Components', () => {
-    it('should render Search preset correctly', () => {
+    it('should render Search preset correctly', async () => {
       render(<LiquidInput.Search placeholder="Search" />)
       
       const input = screen.getByPlaceholderText('Search')
       expect(input).toHaveAttribute('type', 'search')
     })
 
-    it('should render Email preset correctly', () => {
+    it('should render Email preset correctly', async () => {
       render(<LiquidInput.Email placeholder="Email" />)
       
       const input = screen.getByPlaceholderText('Email')
       expect(input).toHaveAttribute('type', 'email')
     })
 
-    it('should render Password preset correctly', () => {
+    it('should render Password preset correctly', async () => {
       render(<LiquidInput.Password placeholder="Password" />)
       
       const input = screen.getByPlaceholderText('Password')
@@ -413,7 +413,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Custom Styling', () => {
-    it('should merge custom className with defaults', () => {
+    it('should merge custom className with defaults', async () => {
       render(
         <LiquidInput 
           className="custom-input-class"
@@ -425,7 +425,7 @@ describe('LiquidInput', () => {
       expect(input).toHaveClass('custom-input-class')
     })
 
-    it('should apply custom styles', () => {
+    it('should apply custom styles', async () => {
       const customStyles = { borderRadius: '12px' }
       render(
         <LiquidInput 
@@ -440,7 +440,7 @@ describe('LiquidInput', () => {
   })
 
   describe('Edge Cases', () => {
-    it('should handle null/undefined values gracefully', () => {
+    it('should handle null/undefined values gracefully', async () => {
       render(<LiquidInput value={undefined} placeholder="Undefined value" />)
       
       const input = screen.getByPlaceholderText('Undefined value')
@@ -454,14 +454,14 @@ describe('LiquidInput', () => {
       const input = screen.getByPlaceholderText('Rapid input')
       
       for (let i = 0; i < 10; i++) {
-        fireEvent.change(input, { target: { value: `value-${i}` } })
+        await simulateInteraction.change(input, { target: { value: `value-${i}` } })
       }
       
       expect(handleChange).toHaveBeenCalledTimes(10)
       expect(() => {}).not.toThrow()
     })
 
-    it('should cleanup event listeners on unmount', () => {
+    it('should cleanup event listeners on unmount', async () => {
       const { unmount } = render(<LiquidInput placeholder="Cleanup test" />)
       
       expect(screen.getByPlaceholderText('Cleanup test')).toBeInTheDocument()

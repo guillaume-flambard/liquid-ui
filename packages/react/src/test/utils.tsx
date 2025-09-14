@@ -116,6 +116,55 @@ export const simulateInteraction = {
     })
   },
   
+  click: async (element: HTMLElement) => {
+    const user = userEvent.setup()
+    await act(async () => {
+      await user.click(element)
+    })
+  },
+  
+  focus: async (element: HTMLElement) => {
+    await act(async () => {
+      element.focus()
+    })
+  },
+  
+  blur: async (element: HTMLElement) => {
+    await act(async () => {
+      element.blur()
+    })
+  },
+  
+  mouseDown: async (element: HTMLElement, options?: { clientX?: number; clientY?: number }) => {
+    await act(async () => {
+      fireEvent.mouseDown(element, options)
+    })
+  },
+  
+  mouseUp: async (element: HTMLElement) => {
+    await act(async () => {
+      fireEvent.mouseUp(element)
+    })
+  },
+  
+  mouseMove: async (element: HTMLElement, options?: { clientX?: number; clientY?: number }) => {
+    await act(async () => {
+      fireEvent.mouseMove(element, options)
+    })
+  },
+  
+  keyDown: async (element: HTMLElement, key: string) => {
+    await act(async () => {
+      fireEvent.keyDown(element, { key })
+    })
+  },
+  
+  change: async (element: HTMLElement, options: { target: { value: string } }) => {
+    await act(async () => {
+      fireEvent.change(element, options)
+    })
+  },
+  
   drag: async (element: HTMLElement, options: { x: number; y: number }) => {
     const user = userEvent.setup()
     await act(async () => {

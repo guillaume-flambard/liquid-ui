@@ -51,7 +51,7 @@ describe('LiquidButton', () => {
       const button = screen.getByRole('button')
       await simulateInteraction.hover(button)
       
-      fireEvent.click(button)
+      await simulateInteraction.click(button)
       expect(handleClick).toHaveBeenCalledTimes(1)
     })
 
@@ -59,7 +59,7 @@ describe('LiquidButton', () => {
       render(<LiquidButton>Ripple Button</LiquidButton>)
       
       const button = screen.getByRole('button')
-      fireEvent.mouseDown(button, { 
+      await simulateInteraction.mouseDown(button, { 
         clientX: 100, 
         clientY: 100 
       })
@@ -85,7 +85,7 @@ describe('LiquidButton', () => {
       render(<LiquidButton>Focus Button</LiquidButton>)
       
       const button = screen.getByRole('button')
-      button.focus()
+      await simulateInteraction.focus(button)
       
       expect(button).toHaveFocus()
       expect(button).toHaveClass('focus:outline-none')
@@ -104,7 +104,7 @@ describe('LiquidButton', () => {
       expect(spinner).toBeInTheDocument()
     })
 
-    it('should disable interactions when loading', () => {
+    it('should disable interactions when loading', async () => {
       const handleClick = vi.fn()
       render(
         <LiquidButton loading onClick={handleClick}>
@@ -113,14 +113,14 @@ describe('LiquidButton', () => {
       )
       
       const button = screen.getByRole('button')
-      fireEvent.click(button)
+      await simulateInteraction.click(button)
       
       expect(handleClick).not.toHaveBeenCalled()
     })
   })
 
   describe('Disabled State', () => {
-    it('should not respond to interactions when disabled', () => {
+    it('should not respond to interactions when disabled', async () => {
       const handleClick = vi.fn()
       render(
         <LiquidButton disabled onClick={handleClick}>
@@ -131,11 +131,11 @@ describe('LiquidButton', () => {
       const button = screen.getByRole('button')
       expect(button).toBeDisabled()
       
-      fireEvent.click(button)
+      await simulateInteraction.click(button)
       expect(handleClick).not.toHaveBeenCalled()
     })
 
-    it('should have correct aria attributes when disabled', () => {
+    it('should have correct aria attributes when disabled', async () => {
       render(<LiquidButton disabled>Disabled Button</LiquidButton>)
       
       const button = screen.getByRole('button')
@@ -144,7 +144,7 @@ describe('LiquidButton', () => {
   })
 
   describe('Size Variants', () => {
-    it('should apply correct size classes', () => {
+    it('should apply correct size classes', async () => {
       const { rerender } = render(<LiquidButton size="sm">Small</LiquidButton>)
       let button = screen.getByRole('button')
       expect(button).toHaveClass('text-sm')
@@ -162,7 +162,7 @@ describe('LiquidButton', () => {
   describe('Icons', () => {
     const TestIcon = () => <span data-testid="test-icon">Icon</span>
     
-    it('should render left icon correctly', () => {
+    it('should render left icon correctly', async () => {
       render(
         <LiquidButton leftIcon={<TestIcon />}>
           Button with Left Icon
@@ -173,7 +173,7 @@ describe('LiquidButton', () => {
       expect(screen.getByText('Button with Left Icon')).toBeInTheDocument()
     })
 
-    it('should render right icon correctly', () => {
+    it('should render right icon correctly', async () => {
       render(
         <LiquidButton rightIcon={<TestIcon />}>
           Button with Right Icon
@@ -184,7 +184,7 @@ describe('LiquidButton', () => {
       expect(screen.getByText('Button with Right Icon')).toBeInTheDocument()
     })
 
-    it('should render both icons correctly', () => {
+    it('should render both icons correctly', async () => {
       render(
         <LiquidButton 
           leftIcon={<TestIcon />} 
@@ -200,7 +200,7 @@ describe('LiquidButton', () => {
   })
 
   describe('Performance', () => {
-    it('should render within performance budget', () => {
+    it('should render within performance budget', async () => {
       const renderTime = measurePerformance.renderTime(() => {
         render(<LiquidButton>Performance Test</LiquidButton>)
       })
@@ -209,14 +209,14 @@ describe('LiquidButton', () => {
       expect(renderTime).toBeLessThan(100)
     })
 
-    it('should not cause memory leaks with ripple effects', () => {
+    it('should not cause memory leaks with ripple effects', async () => {
       const initialMemory = measurePerformance.memoryUsage()
       
       // Create and destroy many buttons with ripples
       for (let i = 0; i < 100; i++) {
         const { unmount } = render(<LiquidButton>Test {i}</LiquidButton>)
         const button = screen.getByRole('button')
-        fireEvent.mouseDown(button)
+        await simulateInteraction.mouseDown(button)
         unmount()
       }
       
@@ -236,7 +236,7 @@ describe('LiquidButton', () => {
   })
 
   describe('Accessibility', () => {
-    it('should meet WCAG accessibility standards', async () => {
+    it('should meet WCAG accessibility standards', async () => { // ASYNC_NEEDED async
       const { container } = render(
         <LiquidButton aria-label="Accessible button">
           Click me
@@ -246,7 +246,7 @@ describe('LiquidButton', () => {
       await testAccessibility(container)
     })
 
-    it('should support keyboard navigation', async () => {
+    it('should support keyboard navigation', async () => { // ASYNC_NEEDED async
       render(
         <div>
           <LiquidButton>First</LiquidButton>
@@ -257,16 +257,16 @@ describe('LiquidButton', () => {
       const buttons = screen.getAllByRole('button')
       
       // Tab to first button
-      buttons[0].focus()
+      await simulateInteraction.focus(buttons[0])
       expect(buttons[0]).toHaveFocus()
       
       // Tab to second button
-      fireEvent.keyDown(buttons[0], { key: 'Tab' })
-      buttons[1].focus()
+      await simulateInteraction.keyDown(buttons[0], 'Tab')
+      await simulateInteraction.focus(buttons[1])
       expect(buttons[1]).toHaveFocus()
     })
 
-    it('should announce loading state to screen readers', () => {
+    it('should announce loading state to screen readers', async () => {
       render(<LiquidButton loading>Loading Button</LiquidButton>)
       
       const button = screen.getByRole('button')
@@ -277,7 +277,7 @@ describe('LiquidButton', () => {
   })
 
   describe('Preset Components', () => {
-    it('should render Primary preset correctly', () => {
+    it('should render Primary preset correctly', async () => {
       render(<LiquidButton.Primary>Primary Button</LiquidButton.Primary>)
       
       const button = screen.getByRole('button')
@@ -285,7 +285,7 @@ describe('LiquidButton', () => {
       expect(button).toHaveTextContent('Primary Button')
     })
 
-    it('should render Secondary preset correctly', () => {
+    it('should render Secondary preset correctly', async () => {
       render(<LiquidButton.Secondary>Secondary Button</LiquidButton.Secondary>)
       
       const button = screen.getByRole('button')
@@ -293,7 +293,7 @@ describe('LiquidButton', () => {
       expect(button).toHaveTextContent('Secondary Button')
     })
 
-    it('should render Small preset correctly', () => {
+    it('should render Small preset correctly', async () => {
       render(<LiquidButton.Small>Small Button</LiquidButton.Small>)
       
       const button = screen.getByRole('button')
@@ -301,7 +301,7 @@ describe('LiquidButton', () => {
       expect(button).toHaveClass('text-sm')
     })
 
-    it('should render Large preset correctly', () => {
+    it('should render Large preset correctly', async () => {
       render(<LiquidButton.Large>Large Button</LiquidButton.Large>)
       
       const button = screen.getByRole('button')
@@ -311,7 +311,7 @@ describe('LiquidButton', () => {
   })
 
   describe('Edge Cases', () => {
-    it('should handle undefined children gracefully', () => {
+    it('should handle undefined children gracefully', async () => {
       render(<LiquidButton>{undefined}</LiquidButton>)
       
       const button = screen.getByRole('button')
@@ -327,16 +327,16 @@ describe('LiquidButton', () => {
       
       // Simulate rapid clicking
       for (let i = 0; i < 10; i++) {
-        fireEvent.mouseDown(button)
-        fireEvent.mouseUp(button)
-        fireEvent.click(button)
+        await simulateInteraction.mouseDown(button)
+        await simulateInteraction.mouseUp(button)
+        await simulateInteraction.click(button)
       }
       
       expect(handleClick).toHaveBeenCalledTimes(10)
       expect(() => {}).not.toThrow()
     })
 
-    it('should cleanup event listeners on unmount', () => {
+    it('should cleanup event listeners on unmount', async () => {
       const { unmount } = render(<LiquidButton>Cleanup Test</LiquidButton>)
       
       // Verify button is rendered
