@@ -72,8 +72,19 @@ jobs:
 
       - name: Build and push with Cloud Build
         run: |
-          gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} .
-          gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest .
+          # Submit build asynchronously to avoid log streaming issues
+          BUILD_ID=$(gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:${{ github.sha }} --async --format="value(id)" .)
+          echo "Build ID: $BUILD_ID"
+          
+          # Wait for build to complete
+          gcloud builds wait $BUILD_ID
+          
+          # Tag as latest
+          BUILD_ID_LATEST=$(gcloud builds submit --tag gcr.io/${{ env.GCP_PROJECT_ID }}/liquid-ui:latest --async --format="value(id)" .)
+          echo "Latest Build ID: $BUILD_ID_LATEST" 
+          
+          # Wait for latest build to complete
+          gcloud builds wait $BUILD_ID_LATEST
 
       - name: Deploy to Cloud Run
         run: |
