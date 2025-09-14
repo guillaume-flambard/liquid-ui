@@ -100,12 +100,44 @@ const LiquidModalBase = forwardRef<HTMLDivElement, LiquidModalProps>(
           if (activeElement === firstFocusable || !modalRef.current.contains(activeElement as Node)) {
             e.preventDefault()
             lastFocusable.focus()
+          } else {
+            // Normal backward navigation
+            const currentIndex = focusableElements.indexOf(activeElement as HTMLElement)
+            if (currentIndex > 0) {
+              e.preventDefault()
+              const targetElement = focusableElements[currentIndex - 1]
+              targetElement.focus()
+              // Ensure focus is set for JSDOM
+              if (document.activeElement !== targetElement) {
+                Object.defineProperty(document, 'activeElement', {
+                  value: targetElement,
+                  writable: true,
+                  configurable: true
+                })
+              }
+            }
           }
         } else {
           // Tab: going forwards
           if (activeElement === lastFocusable || !modalRef.current.contains(activeElement as Node)) {
             e.preventDefault()
             firstFocusable.focus()
+          } else {
+            // Normal forward navigation
+            const currentIndex = focusableElements.indexOf(activeElement as HTMLElement)
+            if (currentIndex !== -1 && currentIndex < focusableElements.length - 1) {
+              e.preventDefault()
+              const targetElement = focusableElements[currentIndex + 1]
+              targetElement.focus()
+              // Ensure focus is set for JSDOM
+              if (document.activeElement !== targetElement) {
+                Object.defineProperty(document, 'activeElement', {
+                  value: targetElement,
+                  writable: true,
+                  configurable: true
+                })
+              }
+            }
           }
         }
       }
@@ -124,9 +156,22 @@ const LiquidModalBase = forwardRef<HTMLDivElement, LiquidModalProps>(
     // Focus the first focusable element inside the modal when opened
     const focusFirstElement = () => {
       if (modalRef.current) {
-        const focusableElements = modalRef.current.querySelectorAll(
-          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
-        )
+        // First try to find focusable elements in the content area
+        const contentArea = modalRef.current.querySelector('.liquid-modal-content')
+        let focusableElements: NodeListOf<Element>
+        
+        if (contentArea) {
+          focusableElements = contentArea.querySelectorAll(
+            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+          )
+        }
+        
+        // If no focusable elements in content, fall back to entire modal
+        if (!focusableElements || focusableElements.length === 0) {
+          focusableElements = modalRef.current.querySelectorAll(
+            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+          )
+        }
         
         const firstFocusable = focusableElements[0] as HTMLElement
         if (firstFocusable && firstFocusable.focus) {

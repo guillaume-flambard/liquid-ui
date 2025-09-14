@@ -263,7 +263,7 @@ describe('LiquidModal', () => {
   })
 
   describe('Focus Management', () => {
-    it('should focus modal content when opened', () => {
+    it('should focus modal content when opened', async () => {
       render(
         <LiquidModal isOpen={true} onClose={() => {}}>
           <button>Focus me</button>
@@ -271,12 +271,16 @@ describe('LiquidModal', () => {
       )
       
       const button = screen.getByRole('button', { name: 'Focus me' })
-      expect(button).toHaveFocus()
+      
+      // Wait for focus management timeouts to complete
+      await waitFor(() => {
+        expect(button).toHaveFocus()
+      }, { timeout: 100 })
     })
 
-    it('should trap focus within modal', () => {
+    it('should trap focus within modal', async () => {
       render(
-        <LiquidModal isOpen={true} onClose={() => {}}>
+        <LiquidModal isOpen={true} onClose={() => {}} showCloseButton={false}>
           <button>First</button>
           <button>Second</button>
         </LiquidModal>
@@ -285,14 +289,20 @@ describe('LiquidModal', () => {
       const firstButton = screen.getByRole('button', { name: 'First' })
       const secondButton = screen.getByRole('button', { name: 'Second' })
       
-      firstButton.focus()
-      expect(firstButton).toHaveFocus()
+      // Wait for initial focus management
+      await waitFor(() => {
+        expect(firstButton).toHaveFocus()
+      }, { timeout: 100 })
       
       fireEvent.keyDown(firstButton, { key: 'Tab' })
-      expect(secondButton).toHaveFocus()
+      await waitFor(() => {
+        expect(secondButton).toHaveFocus()
+      }, { timeout: 100 })
       
       fireEvent.keyDown(secondButton, { key: 'Tab' })
-      expect(firstButton).toHaveFocus()
+      await waitFor(() => {
+        expect(firstButton).toHaveFocus()
+      }, { timeout: 100 })
     })
 
     it('should restore focus when closed', () => {
