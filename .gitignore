@@ -19,10 +19,22 @@
 
 # production
 /build
+/dist
+/storybook-static
 
 # misc
 .DS_Store
 *.pem
+
+# turbo
+.turbo/
+
+# cache directories
+**/.cache/
+**/node_modules/.cache/
+
+# storybook
+storybook-static/
 
 # debug
 npm-debug.log*

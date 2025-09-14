@@ -18,13 +18,11 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "incremental": false,
+    "incremental": true,
     "baseUrl": ".",
     "paths": {
       "@liquid-ui/core": ["./packages/core/src"],
-      "@liquid-ui/react": ["./packages/react/src"],
-      "@liquid-ui/tokens": ["./packages/tokens/src"],
-      "@liquid-ui/icons": ["./packages/icons/src"]
+      "@liquid-ui/react": ["./packages/react/src"]
     }
   },
   "include": [
@@ -37,8 +35,6 @@
   ],
   "references": [
     { "path": "./packages/core" },
-    { "path": "./packages/react" },
-    { "path": "./packages/tokens" },
-    { "path": "./packages/icons" }
+    { "path": "./packages/react" }
   ]
 }
