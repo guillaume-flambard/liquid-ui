@@ -1,5 +1,5 @@
-import React, { ReactElement, ReactNode } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
+import React, { ReactElement, ReactNode, act } from 'react'
+import { render, RenderOptions, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { vi } from 'vitest'
@@ -100,30 +100,38 @@ export const mockGlassEngine = () => {
   return mockStyles
 }
 
-// Simulate interactive behaviors
+// Simulate interactive behaviors with act() wrapper
 export const simulateInteraction = {
   hover: async (element: HTMLElement) => {
     const user = userEvent.setup()
-    await user.hover(element)
+    await act(async () => {
+      await user.hover(element)
+    })
   },
   
   unhover: async (element: HTMLElement) => {
     const user = userEvent.setup()
-    await user.unhover(element)
+    await act(async () => {
+      await user.unhover(element)
+    })
   },
   
   drag: async (element: HTMLElement, options: { x: number; y: number }) => {
     const user = userEvent.setup()
-    await user.pointer([
-      { keys: '[MouseLeft>]', target: element },
-      { coords: { x: options.x, y: options.y } }
-    ])
+    await act(async () => {
+      await user.pointer([
+        { keys: '[MouseLeft>]', target: element },
+        { coords: { x: options.x, y: options.y } }
+      ])
+    })
   },
   
   keyboard: async (element: HTMLElement, key: string) => {
     const user = userEvent.setup()
-    element.focus()
-    await user.keyboard(key)
+    await act(async () => {
+      element.focus()
+      await user.keyboard(key)
+    })
   }
 }
 
@@ -202,7 +210,8 @@ export const stateTestingHelpers = {
   }
 }
 
-// Export everything
+// Export everything including act
 export * from '@testing-library/react'
+export { act }
 export { customRender as render, userEvent }
 export { axe, toHaveNoViolations }
