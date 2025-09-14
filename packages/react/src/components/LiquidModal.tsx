@@ -158,7 +158,7 @@ const LiquidModalBase = forwardRef<HTMLDivElement, LiquidModalProps>(
       if (modalRef.current) {
         // First try to find focusable elements in the content area
         const contentArea = modalRef.current.querySelector('.liquid-modal-content')
-        let focusableElements: NodeListOf<Element>
+        let focusableElements: NodeListOf<Element> | null = null
         
         if (contentArea) {
           focusableElements = contentArea.querySelectorAll(
