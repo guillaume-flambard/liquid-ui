@@ -8,11 +8,11 @@ CLI tsup v8.5.0
 CLI Target: es2020
 CJS Build start
 ESM Build start
-CJS dist/index.js 17.83 KB
-CJS ⚡️ Build success in 11ms
 ESM dist/index.mjs 15.94 KB
-ESM ⚡️ Build success in 12ms
+ESM ⚡️ Build success in 40ms
+CJS dist/index.js 17.83 KB
+CJS ⚡️ Build success in 40ms
 DTS Build start
-DTS ⚡️ Build success in 522ms
+DTS ⚡️ Build success in 702ms
 DTS dist/index.d.ts  20.18 KB
 DTS dist/index.d.mts 20.18 KB

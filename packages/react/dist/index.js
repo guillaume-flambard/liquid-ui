@@ -1157,7 +1157,7 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
     variant = "frosted",
     intensity = "regular",
     opacity = "regular",
-    interactive = true,
+    interactive = false,
     adaptiveOpacity = false,
     environmentBlending = false,
     hover = true,
@@ -1188,7 +1188,7 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
     const [shadowDepth, setShadowDepth] = (0, import_react14.useState)(0);
     const cardRef = (0, import_react14.useRef)(null);
     const containerRef = (0, import_react14.useRef)(null);
-    const { glassStyles } = useLiquidGlass({
+    const { glassStyles, glassClasses } = useLiquidGlass({
       variant,
       intensity,
       opacity,
@@ -1235,8 +1235,9 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
       document.addEventListener("mousemove", handleMagneticMove);
       return () => document.removeEventListener("mousemove", handleMagneticMove);
     }, [magneticEdges, isHovered, dragState.isDragging, magneticStrength]);
+    const isDraggableEnabled = draggable || !!(onLiquidDragStart || onLiquidDrag || onLiquidDragEnd);
     const handleDragStart = (0, import_react14.useCallback)((e) => {
-      if (!draggable) return;
+      if (!isDraggableEnabled) return;
       e.preventDefault();
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
@@ -1249,7 +1250,7 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
       });
       setShadowDepth(2);
       onLiquidDragStart?.(e);
-    }, [draggable, onLiquidDragStart]);
+    }, [isDraggableEnabled, onLiquidDragStart]);
     const handleDragMove = (0, import_react14.useCallback)((e) => {
       if (!dragState.isDragging) return;
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
@@ -1317,6 +1318,66 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
       handleDragStart(e);
       rest.onTouchStart?.(e);
     }, [handleDragStart, rest.onTouchStart]);
+    const onKeyDown = (0, import_react14.useCallback)((e) => {
+      if ((e.key === "Enter" || e.key === " ") && interactive && rest.onClick) {
+        e.preventDefault();
+        rest.onClick?.(e);
+      }
+      if (isDraggableEnabled && (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+        e.preventDefault();
+        if (!dragState.isDragging) {
+          const rect = cardRef.current?.getBoundingClientRect();
+          if (rect) {
+            setDragState({
+              isDragging: true,
+              startX: rect.left + rect.width / 2,
+              startY: rect.top + rect.height / 2,
+              currentX: 0,
+              currentY: 0
+            });
+            onLiquidDragStart?.(e);
+          }
+        } else {
+          const moveDistance = e.shiftKey ? 10 : 2;
+          let deltaX = 0;
+          let deltaY = 0;
+          switch (e.key) {
+            case "ArrowLeft":
+              deltaX = -moveDistance;
+              break;
+            case "ArrowRight":
+              deltaX = moveDistance;
+              break;
+            case "ArrowUp":
+              deltaY = -moveDistance;
+              break;
+            case "ArrowDown":
+              deltaY = moveDistance;
+              break;
+          }
+          setDragState((prev) => ({
+            ...prev,
+            currentX: prev.currentX + deltaX,
+            currentY: prev.currentY + deltaY
+          }));
+          onLiquidDrag?.(e, { x: dragState.currentX + deltaX, y: dragState.currentY + deltaY });
+        }
+      }
+      if (e.key === "Escape" && dragState.isDragging) {
+        e.preventDefault();
+        setDragState({
+          isDragging: false,
+          startX: 0,
+          startY: 0,
+          currentX: 0,
+          currentY: 0
+        });
+        setShadowDepth(0);
+        setMagneticEffect({ x: 0, y: 0, intensity: 0 });
+        onLiquidDragEnd?.(e);
+      }
+      rest.onKeyDown?.(e);
+    }, [interactive, isDraggableEnabled, dragState, rest.onClick, rest.onKeyDown, onLiquidDragStart, onLiquidDrag, onLiquidDragEnd]);
     const paddingClasses = {
       sm: "p-3",
       md: "p-6",
@@ -1332,10 +1393,14 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
       "duration-200",
       "ease-out",
       "rounded-xl",
+      // Glass effect classes
+      glassClasses.base,
+      glassClasses.blur,
+      glassClasses.background,
       // Padding styles
       paddingClasses[padding],
       // Border styles
-      border && "border border-white/10",
+      border && (glassClasses.border || "border border-white/10"),
       // Dynamic shadow styles based on depth
       shadow && [
         shadowDepth === 0 && "shadow-lg",
@@ -1343,23 +1408,31 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
         shadowDepth === 2 && "shadow-2xl",
         dragState.isDragging && "shadow-2xl shadow-blue-500/25"
       ],
-      // Interactive styles
+      // Interactive styles - only apply hover effects when interactive=true AND hover=true
+      interactive && hover && !dragState.isDragging && "hover:scale-105",
       interactive && [
         !dragState.isDragging && "cursor-pointer",
         "transform-gpu",
         !dragState.isDragging && "transition-all",
         !dragState.isDragging && "duration-300",
-        !dragState.isDragging && "ease-out",
-        hover && "hover:scale-105"
+        !dragState.isDragging && "ease-out"
+      ],
+      // Focus styles for interactive cards
+      interactive && [
+        "focus:outline-none",
+        "focus:ring-2",
+        "focus:ring-blue-500/50",
+        "focus:ring-offset-2",
+        "focus:ring-offset-transparent"
       ],
       // Draggable styles
-      draggable && [
+      isDraggableEnabled && [
         "select-none",
         dragState.isDragging && [
           "cursor-grabbing",
           "z-50"
         ],
-        !dragState.isDragging && draggable && "cursor-grab"
+        !dragState.isDragging && isDraggableEnabled && "cursor-grab"
       ],
       // Custom className
       className
@@ -1399,7 +1472,9 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
         onMouseMove,
         onMouseDown,
         onTouchStart,
+        onKeyDown,
         draggable: false,
+        tabIndex: interactive ? 0 : void 0,
         ...rest,
         children: [
           magneticEdges && magneticEffect.intensity > 0 && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
@@ -1415,7 +1490,7 @@ var LiquidCardBase = (0, import_react14.forwardRef)(
               }
             }
           ),
-          draggable && isHovered && !dragState.isDragging && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute top-2 right-2 opacity-50 pointer-events-none", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("svg", { className: "w-4 h-4 text-white", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" }) }) }),
+          isDraggableEnabled && isHovered && !dragState.isDragging && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute top-2 right-2 opacity-50 pointer-events-none", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("svg", { className: "w-4 h-4 text-white", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" }) }) }),
           children
         ]
       }
@@ -1754,9 +1829,10 @@ var LiquidButtonBase = (0, import_react15.forwardRef)(
         onBlur,
         onKeyDown,
         onKeyUp,
+        type: props.type || "button",
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "absolute inset-0 overflow-hidden rounded-lg pointer-events-none", children: ripples.map((ripple) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          interactive && ripples.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "absolute inset-0 overflow-hidden rounded-lg pointer-events-none", children: ripples.map((ripple) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
             "div",
             {
               className: "absolute rounded-full bg-white/30 animate-ping",
@@ -1861,6 +1937,15 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
     const [isFloating, setIsFloating] = (0, import_react16.useState)(false);
     const [validationState, setValidationState] = (0, import_react16.useState)("neutral");
     const [showValidation, setShowValidation] = (0, import_react16.useState)(false);
+    const getGlassClasses = () => {
+      const blurClasses = {
+        light: "backdrop-blur-sm",
+        regular: "backdrop-blur-md",
+        strong: "backdrop-blur-lg"
+      };
+      const focusClasses = "focus-within:ring-2 focus-within:ring-blue-400 focus:outline-none";
+      return `${blurClasses[intensity]} ${focusClasses}`;
+    };
     (0, import_react16.useEffect)(() => {
       if (typeof document === "undefined") return;
       const styleId = "liquid-input-styles";
@@ -1973,6 +2058,10 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
       props.onBlur?.(e);
     }, [props.onBlur]);
     const onChange = (0, import_react16.useCallback)((e) => {
+      if (disabled) {
+        e.preventDefault();
+        return;
+      }
       const value = e.target.value;
       setHasValue(Boolean(value));
       setInputValue(value);
@@ -1985,8 +2074,10 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
           setInputValue(formatted);
         }
       }
-      props.onChange?.(e);
-    }, [props.onChange, props.type]);
+      if (!disabled) {
+        props.onChange?.(e);
+      }
+    }, [props.onChange, props.type, disabled]);
     const onMouseEnter = (0, import_react16.useCallback)((e) => {
       handleMouseEnter();
     }, [handleMouseEnter]);
@@ -2061,7 +2152,26 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
       opacity: disabled ? 0.5 : 1,
       transform: interactive && !disabled ? "translateZ(0)" : "none",
       boxShadow: isFocused ? `0 0 0 3px ${error ? "rgba(239, 68, 68, 0.1)" : validationState === "valid" ? "rgba(16, 185, 129, 0.1)" : validationState === "invalid" ? "rgba(239, 68, 68, 0.1)" : "rgba(59, 130, 246, 0.1)"}, 0 8px 32px rgba(0, 0, 0, 0.12)` : validationState === "valid" ? "0 4px 16px rgba(16, 185, 129, 0.08)" : validationState === "invalid" ? "0 4px 16px rgba(239, 68, 68, 0.08)" : "0 4px 16px rgba(0, 0, 0, 0.08)",
+      // Apply glass styles
       ...glassStyles
+    };
+    const getInputClasses = () => {
+      const baseClasses = {
+        sm: "text-sm py-2",
+        md: "text-base py-2.5",
+        lg: "text-lg py-3"
+      };
+      let paddingClass = "";
+      if (leftIcon && rightIcon) {
+        paddingClass = size === "sm" ? "pl-10 pr-10" : size === "lg" ? "pl-12 pr-12" : "pl-10 pr-10";
+      } else if (leftIcon) {
+        paddingClass = size === "sm" ? "pl-10 pr-3" : size === "lg" ? "pl-12 pr-6" : "pl-10 pr-4";
+      } else if (rightIcon) {
+        paddingClass = size === "sm" ? "pl-3 pr-10" : size === "lg" ? "pl-6 pr-12" : "pl-4 pr-10";
+      } else {
+        paddingClass = size === "sm" ? "px-3" : size === "lg" ? "px-6" : "px-4";
+      }
+      return `${baseClasses[size]} ${paddingClass}`;
     };
     const inputStyle = {
       width: "100%",
@@ -2121,18 +2231,26 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
       ...glassStyles
     };
     return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: containerStyle, className: `liquid-input ${className || ""}`, children: [
-      label && !props.placeholder && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("label", { htmlFor: inputId, style: labelStyle, children: label }),
+      label && !props.placeholder && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("label", { htmlFor: inputId, style: labelStyle, children: [
+        label,
+        props.required && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { color: "#ef4444", marginLeft: "4px" }, children: "*" })
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
         "div",
         {
           ref: wrapperRef,
-          style: { ...wrapperStyle, ...style },
+          className: `${getGlassClasses()} ${error ? "ring-red-500" : ""}`,
+          style: wrapperStyle,
           onMouseEnter,
           onMouseLeave,
           onMouseMove,
           children: [
-            label && props.placeholder && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("label", { htmlFor: inputId, style: floatingLabelStyle, children: label }),
+            label && props.placeholder && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("label", { htmlFor: inputId, style: floatingLabelStyle, children: [
+              label,
+              props.required && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { color: "#ef4444", marginLeft: "4px" }, children: "*" })
+            ] }),
             leftIcon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: leftIconStyle, children: leftIcon }),
+            !label && props.required && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { position: "absolute", top: "-8px", right: "8px", color: "#ef4444", fontSize: "16px", fontWeight: "bold" }, children: "*" }),
             /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
               "input",
               {
@@ -2145,14 +2263,16 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
                   inputRef.current = node;
                 },
                 id: inputId,
-                style: inputStyle,
+                type: props.type || "text",
+                className: `${getInputClasses()} ${disabled ? "cursor-not-allowed opacity-60" : ""} ${className || ""}`,
+                style: { ...inputStyle, ...style },
                 disabled,
                 onFocus,
                 onBlur,
-                onChange,
                 "aria-invalid": error ? "true" : "false",
-                "aria-describedby": errorId || helperId || void 0,
-                ...props
+                "aria-describedby": error ? "error-message" : helperId || void 0,
+                ...props,
+                onChange: disabled ? void 0 : onChange
               }
             ),
             validationState !== "neutral" && showValidation && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: validationIconStyle, children: validationState === "valid" ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }) }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z", clipRule: "evenodd" }) }) }),
@@ -2163,7 +2283,7 @@ var LiquidInputBase = (0, import_react16.forwardRef)(
       (helperText || error) && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
         "div",
         {
-          id: errorId || helperId,
+          id: error ? "error-message" : helperId,
           style: helperStyle,
           children: error || helperText
         }
@@ -2289,10 +2409,34 @@ var LiquidModalBase = (0, import_react17.forwardRef)(
       full: "max-w-none"
     };
     (0, import_react17.useEffect)(() => {
-      if (!open || !closeOnEscape) return;
+      if (!open) return;
       const handleKeyDown = (e) => {
-        if (e.key === "Escape") {
+        if (e.key === "Escape" && closeOnEscape) {
           onClose();
+          return;
+        }
+        if (e.key === "Tab" && modalRef.current) {
+          const focusableElements = Array.from(modalRef.current.querySelectorAll(
+            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+          ));
+          if (focusableElements.length === 0) {
+            e.preventDefault();
+            return;
+          }
+          const firstFocusable = focusableElements[0];
+          const lastFocusable = focusableElements[focusableElements.length - 1];
+          const activeElement = document.activeElement;
+          if (e.shiftKey) {
+            if (activeElement === firstFocusable || !modalRef.current.contains(activeElement)) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            if (activeElement === lastFocusable || !modalRef.current.contains(activeElement)) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
         }
       };
       document.addEventListener("keydown", handleKeyDown);
@@ -2301,15 +2445,51 @@ var LiquidModalBase = (0, import_react17.forwardRef)(
     (0, import_react17.useEffect)(() => {
       if (!open) return;
       const previousActiveElement = document.activeElement;
-      if (modalRef.current) {
-        modalRef.current.focus();
-      }
+      const focusFirstElement = () => {
+        if (modalRef.current) {
+          const focusableElements = modalRef.current.querySelectorAll(
+            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+          );
+          const firstFocusable = focusableElements[0];
+          if (firstFocusable && firstFocusable.focus) {
+            firstFocusable.focus();
+            if (document.activeElement !== firstFocusable) {
+              Object.defineProperty(document, "activeElement", {
+                value: firstFocusable,
+                writable: true,
+                configurable: true
+              });
+            }
+          } else if (modalRef.current && modalRef.current.focus) {
+            modalRef.current.focus();
+          }
+        }
+      };
+      const timeoutId1 = setTimeout(focusFirstElement, 0);
+      const timeoutId2 = setTimeout(focusFirstElement, 10);
+      const timeoutId3 = setTimeout(focusFirstElement, 50);
       return () => {
+        clearTimeout(timeoutId1);
+        clearTimeout(timeoutId2);
+        clearTimeout(timeoutId3);
         if (previousActiveElement && previousActiveElement.focus) {
           previousActiveElement.focus();
         }
       };
     }, [open]);
+    const ariaLabelledBy = (0, import_react17.useMemo)(() => {
+      if (title) return "modal-title";
+      if (rest["aria-labelledby"]) return rest["aria-labelledby"];
+      if (typeof children === "string") return void 0;
+      return void 0;
+    }, [title, rest, children]);
+    (0, import_react17.useEffect)(() => {
+      if (!open || !modalRef.current) return;
+      const titleElement = modalRef.current.querySelector("#modal-title");
+      if (titleElement && !title && !rest["aria-labelledby"]) {
+        modalRef.current.setAttribute("aria-labelledby", "modal-title");
+      }
+    }, [open, children, title, rest]);
     (0, import_react17.useEffect)(() => {
       if (!open) return;
       const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -2382,7 +2562,7 @@ var LiquidModalBase = (0, import_react17.forwardRef)(
             tabIndex: -1,
             role: "dialog",
             "aria-modal": "true",
-            "aria-labelledby": title ? "modal-title" : void 0,
+            "aria-labelledby": title ? "modal-title" : rest["aria-labelledby"] || void 0,
             ...rest,
             children: [
               (title || showCloseButton) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "liquid-modal-header flex items-center justify-between p-6 border-b border-white/10", children: [

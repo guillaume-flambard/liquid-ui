@@ -306,9 +306,7 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       boxShadow: isFocused 
         ? `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : validationState === 'valid' ? 'rgba(16, 185, 129, 0.1)' : validationState === 'invalid' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}, 0 8px 32px rgba(0, 0, 0, 0.12)` 
         : validationState === 'valid' ? '0 4px 16px rgba(16, 185, 129, 0.08)' : validationState === 'invalid' ? '0 4px 16px rgba(239, 68, 68, 0.08)' : '0 4px 16px rgba(0, 0, 0, 0.08)',
-      // Ensure glass styles are applied inline for testing
-      backdropFilter: `blur(${intensity === 'light' ? '5px' : intensity === 'strong' ? '20px' : '12px'})`,
-      background: glassStyles.background || 'rgba(255, 255, 255, 0.25)',
+      // Apply glass styles
       ...glassStyles,
     }
     
