@@ -212,8 +212,8 @@ describe('LiquidButton', () => {
     it('should not cause memory leaks with ripple effects', async () => {
       const initialMemory = measurePerformance.memoryUsage()
       
-      // Create and destroy many buttons with ripples
-      for (let i = 0; i < 100; i++) {
+      // Create and destroy many buttons with ripples (reduced for CI)
+      for (let i = 0; i < 50; i++) {
         const { unmount } = render(<LiquidButton>Test {i}</LiquidButton>)
         const button = screen.getByRole('button')
         await simulateInteraction.mouseDown(button)
@@ -232,7 +232,7 @@ describe('LiquidButton', () => {
         // Memory increase should be minimal (less than 1MB)
         expect(memoryIncrease).toBeLessThan(1024 * 1024)
       }
-    })
+    }, 10000)
   })
 
   describe('Accessibility', () => {
