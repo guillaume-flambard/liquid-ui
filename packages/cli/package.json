@@ -1,0 +1,54 @@
+{
+  "name": "liquid-ui",
+  "version": "1.0.0",
+  "description": "A CLI for adding Apple-style liquid glass components to your project",
+  "bin": {
+    "liquid-ui": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts --clean",
+    "dev": "tsup src/index.ts --format cjs --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "liquid-ui",
+    "components",
+    "react",
+    "glass",
+    "apple",
+    "ui"
+  ],
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^9.2.11",
+    "ora": "^5.4.1",
+    "fs-extra": "^11.1.1",
+    "node-fetch": "^3.3.2",
+    "cosmiconfig": "^8.3.6",
+    "zod": "^3.22.4",
+    "ts-morph": "^20.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.8.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guillaume-flambard/liquid-ui.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/guillaume-flambard/liquid-ui/issues"
+  },
+  "homepage": "https://liquid-ui.strayeye.com"
+}
