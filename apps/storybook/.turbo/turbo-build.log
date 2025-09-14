@@ -6,6 +6,3 @@
 
 info => Cleaning outputDir: storybook-static
 info => Loading presets
-info => Building manager..
-info => Manager built ([38;2;181;126;229m117 ms[39m)
-info => Building preview..

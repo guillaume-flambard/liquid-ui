@@ -2378,11 +2378,39 @@ var LiquidModalBase = forwardRef13(
             if (activeElement === firstFocusable || !modalRef.current.contains(activeElement)) {
               e.preventDefault();
               lastFocusable.focus();
+            } else {
+              const currentIndex = focusableElements.indexOf(activeElement);
+              if (currentIndex > 0) {
+                e.preventDefault();
+                const targetElement = focusableElements[currentIndex - 1];
+                targetElement.focus();
+                if (document.activeElement !== targetElement) {
+                  Object.defineProperty(document, "activeElement", {
+                    value: targetElement,
+                    writable: true,
+                    configurable: true
+                  });
+                }
+              }
             }
           } else {
             if (activeElement === lastFocusable || !modalRef.current.contains(activeElement)) {
               e.preventDefault();
               firstFocusable.focus();
+            } else {
+              const currentIndex = focusableElements.indexOf(activeElement);
+              if (currentIndex !== -1 && currentIndex < focusableElements.length - 1) {
+                e.preventDefault();
+                const targetElement = focusableElements[currentIndex + 1];
+                targetElement.focus();
+                if (document.activeElement !== targetElement) {
+                  Object.defineProperty(document, "activeElement", {
+                    value: targetElement,
+                    writable: true,
+                    configurable: true
+                  });
+                }
+              }
             }
           }
         }
@@ -2395,9 +2423,18 @@ var LiquidModalBase = forwardRef13(
       const previousActiveElement = document.activeElement;
       const focusFirstElement = () => {
         if (modalRef.current) {
-          const focusableElements = modalRef.current.querySelectorAll(
-            'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
-          );
+          const contentArea = modalRef.current.querySelector(".liquid-modal-content");
+          let focusableElements = null;
+          if (contentArea) {
+            focusableElements = contentArea.querySelectorAll(
+              'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+            );
+          }
+          if (!focusableElements || focusableElements.length === 0) {
+            focusableElements = modalRef.current.querySelectorAll(
+              'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+            );
+          }
           const firstFocusable = focusableElements[0];
           if (firstFocusable && firstFocusable.focus) {
             firstFocusable.focus();
