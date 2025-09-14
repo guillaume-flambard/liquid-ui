@@ -39,7 +39,7 @@ jobs:
         continue-on-error: true
 
       - name: Test
-        run: npm run test -- --coverage
+        run: npm run test:ci
 
       - name: Build packages
         run: npm run build
