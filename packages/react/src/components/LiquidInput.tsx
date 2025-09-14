@@ -13,11 +13,12 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
   (
     {
       variant = 'frosted',
-      intensity = 'subtle',
+      intensity = 'light',
       opacity = 'regular',
       interactive = true,
       adaptiveOpacity = false,
       environmentBlending = false,
+      size = 'md',
       label,
       error,
       helperText,
@@ -32,6 +33,9 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false)
+    const [isFloating, setIsFloating] = useState(false)
+    const [validationState, setValidationState] = useState<'valid' | 'invalid' | 'neutral'>('neutral')
+    const [showValidation, setShowValidation] = useState(false)
 
     // Add CSS styles for placeholder on client side only
     useEffect(() => {
@@ -79,8 +83,57 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       document.head.appendChild(style)
     }, [])
     const [hasValue, setHasValue] = useState(Boolean(props.value || props.defaultValue))
+    const [inputValue, setInputValue] = useState(props.value || props.defaultValue || '')
     const inputRef = useRef<HTMLInputElement>(null)
     const wrapperRef = useRef<HTMLDivElement>(null)
+    
+    // Enhanced validation patterns
+    const validationPatterns = {
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      phone: /^[\+]?[1-9][\d]{0,3}?[\s\-\(]?[\d]{3}[\s\-\)]?[\d]{3}[\s\-]?[\d]{4}$/,
+      url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
+      number: /^[0-9]+$/,
+      decimal: /^[0-9]+\.?[0-9]*$/
+    }
+    
+    // Auto-validation based on type and patterns
+    const validateInput = useCallback((value: string) => {
+      if (!value || !showValidation) {
+        setValidationState('neutral')
+        return
+      }
+      
+      // Type-based validation
+      if (props.type === 'email' && !validationPatterns.email.test(value)) {
+        setValidationState('invalid')
+        return
+      }
+      
+      // Custom validation via props
+      if (props.pattern && !new RegExp(props.pattern).test(value)) {
+        setValidationState('invalid')
+        return
+      }
+      
+      // Min/max length validation
+      if (props.minLength && value.length < props.minLength) {
+        setValidationState('invalid')
+        return
+      }
+      
+      if (props.maxLength && value.length > props.maxLength) {
+        setValidationState('invalid')
+        return
+      }
+      
+      // Required field validation
+      if (props.required && !value.trim()) {
+        setValidationState('invalid')
+        return
+      }
+      
+      setValidationState('valid')
+    }, [props.type, props.pattern, props.minLength, props.maxLength, props.required, showValidation])
     
     const id = useId()
     const inputId = props.id || `liquid-input-${id}`
@@ -88,7 +141,7 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     const helperId = helperText ? `${inputId}-helper` : undefined
     
     // Generate glass styles for the wrapper
-    const glassStyles = useLiquidGlass({
+    const { glassStyles } = useLiquidGlass({
       variant,
       intensity,
       opacity,
@@ -103,9 +156,20 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       enabled: interactive && !disabled
     })
     
+    // Handle floating label animation
+    useEffect(() => {
+      setIsFloating(hasValue || isFocused)
+    }, [hasValue, isFocused])
+    
+    // Handle validation on value change
+    useEffect(() => {
+      validateInput(String(inputValue))
+    }, [inputValue, validateInput])
+    
     // Handle input events
     const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true)
+      setShowValidation(true)
       props.onFocus?.(e)
     }, [props.onFocus])
     
@@ -115,9 +179,24 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     }, [props.onBlur])
     
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-      setHasValue(Boolean(e.target.value))
+      const value = e.target.value
+      setHasValue(Boolean(value))
+      setInputValue(value)
+      
+      // Auto-formatting based on type
+      if (props.type === 'tel') {
+        // Simple phone number formatting (US format)
+        const cleaned = value.replace(/\D/g, '')
+        const match = cleaned.match(/^(1|)?([2-9]\d{2})([2-9]\d{2})(\d{4})$/)
+        if (match) {
+          const formatted = `${match[1] ? '+1 ' : ''}(${match[2]}) ${match[3]}-${match[4]}`
+          e.target.value = formatted
+          setInputValue(formatted)
+        }
+      }
+      
       props.onChange?.(e)
-    }, [props.onChange])
+    }, [props.onChange, props.type])
     
     // Handle wrapper mouse events
     const onMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -132,6 +211,36 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       handleMouseMove(e)
     }, [handleMouseMove])
     
+    // Size-based configurations
+    const sizeConfig = {
+      sm: {
+        fontSize: '14px',
+        padding: label ? '12px 12px 6px 12px' : '8px 12px',
+        paddingLeft: (hasLeftIcon: boolean, hasLabel: boolean) => hasLeftIcon ? (hasLabel ? '36px' : '36px') : (hasLabel ? '12px' : '12px'),
+        paddingRight: (hasRightIcon: boolean, hasValidation: boolean) => hasRightIcon ? '36px' : hasValidation ? '36px' : '12px',
+        iconSize: '16px',
+        iconOffset: '10px'
+      },
+      md: {
+        fontSize: '15px',
+        padding: label ? '16px 16px 8px 16px' : '12px 16px',
+        paddingLeft: (hasLeftIcon: boolean, hasLabel: boolean) => hasLeftIcon ? (hasLabel ? '44px' : '44px') : (hasLabel ? '16px' : '16px'),
+        paddingRight: (hasRightIcon: boolean, hasValidation: boolean) => hasRightIcon ? '44px' : hasValidation ? '44px' : '16px',
+        iconSize: '18px',
+        iconOffset: '14px'
+      },
+      lg: {
+        fontSize: '16px',
+        padding: label ? '20px 20px 10px 20px' : '16px 20px',
+        paddingLeft: (hasLeftIcon: boolean, hasLabel: boolean) => hasLeftIcon ? (hasLabel ? '52px' : '52px') : (hasLabel ? '20px' : '20px'),
+        paddingRight: (hasRightIcon: boolean, hasValidation: boolean) => hasRightIcon ? '52px' : hasValidation ? '52px' : '20px',
+        iconSize: '20px',
+        iconOffset: '16px'
+      }
+    }
+    
+    const currentSizeConfig = sizeConfig[size]
+    
     // Base styles
     const containerStyle: React.CSSProperties = {
       display: 'flex',
@@ -144,8 +253,23 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       fontSize: '14px',
       fontWeight: 500,
       marginBottom: '6px',
-      color: error ? '#ef4444' : isFocused ? '#3b82f6' : 'rgba(255, 255, 255, 0.9)',
+      color: error ? '#ef4444' : validationState === 'valid' ? '#10b981' : validationState === 'invalid' ? '#ef4444' : isFocused ? '#3b82f6' : 'rgba(255, 255, 255, 0.9)',
       transition: 'color 0.2s ease',
+    }
+    
+    const floatingLabelStyle: React.CSSProperties = {
+      position: 'absolute',
+      left: leftIcon ? '44px' : '16px',
+      fontSize: isFloating ? '12px' : '15px',
+      fontWeight: 500,
+      color: error ? '#ef4444' : validationState === 'valid' ? '#10b981' : validationState === 'invalid' ? '#ef4444' : isFocused ? '#3b82f6' : 'rgba(255, 255, 255, 0.6)',
+      transition: 'all 0.2s ease',
+      transform: isFloating ? 'translateY(-22px)' : 'translateY(0px)',
+      transformOrigin: 'left center',
+      pointerEvents: 'none',
+      background: isFloating ? 'linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 80%, transparent 100%)' : 'none',
+      padding: isFloating ? '0 4px' : '0',
+      zIndex: 1,
     }
     
     const wrapperStyle: React.CSSProperties = {
@@ -153,14 +277,14 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       display: 'flex',
       alignItems: 'center',
       borderRadius: '12px',
-      border: `1px solid ${error ? 'rgba(239, 68, 68, 0.5)' : isFocused ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.15)'}`,
-      transition: 'all 0.2s ease',
+      border: `2px solid ${error ? 'rgba(239, 68, 68, 0.5)' : validationState === 'valid' ? 'rgba(16, 185, 129, 0.5)' : validationState === 'invalid' ? 'rgba(239, 68, 68, 0.5)' : isFocused ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.15)'}`,
+      transition: 'all 0.3s ease',
       cursor: disabled ? 'not-allowed' : 'text',
       opacity: disabled ? 0.5 : 1,
       transform: interactive && !disabled ? 'translateZ(0)' : 'none',
       boxShadow: isFocused 
-        ? `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}, 0 8px 32px rgba(0, 0, 0, 0.12)` 
-        : '0 4px 16px rgba(0, 0, 0, 0.08)',
+        ? `0 0 0 3px ${error ? 'rgba(239, 68, 68, 0.1)' : validationState === 'valid' ? 'rgba(16, 185, 129, 0.1)' : validationState === 'invalid' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)'}, 0 8px 32px rgba(0, 0, 0, 0.12)` 
+        : validationState === 'valid' ? '0 4px 16px rgba(16, 185, 129, 0.08)' : validationState === 'invalid' ? '0 4px 16px rgba(239, 68, 68, 0.08)' : '0 4px 16px rgba(0, 0, 0, 0.08)',
       ...glassStyles,
     }
     
@@ -169,22 +293,22 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
       background: 'transparent',
       border: 'none',
       outline: 'none',
-      padding: '12px 16px',
-      paddingLeft: leftIcon ? '44px' : '16px',
-      paddingRight: rightIcon ? '44px' : '16px',
-      fontSize: '15px',
+      padding: currentSizeConfig.padding,
+      paddingLeft: currentSizeConfig.paddingLeft(!!leftIcon, !!label),
+      paddingRight: currentSizeConfig.paddingRight(!!rightIcon, validationState !== 'neutral'),
+      fontSize: currentSizeConfig.fontSize,
       lineHeight: '1.4',
       color: 'rgba(255, 255, 255, 0.95)',
       fontFamily: 'inherit',
-      borderRadius: '12px',
+      borderRadius: '10px',
     }
     
     const iconStyle: React.CSSProperties = {
       position: 'absolute',
       top: '50%',
       transform: 'translateY(-50%)',
-      width: '18px',
-      height: '18px',
+      width: currentSizeConfig.iconSize,
+      height: currentSizeConfig.iconSize,
       color: 'rgba(255, 255, 255, 0.6)',
       pointerEvents: 'none',
       display: 'flex',
@@ -194,24 +318,44 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
     
     const leftIconStyle: React.CSSProperties = {
       ...iconStyle,
-      left: '14px',
+      left: currentSizeConfig.iconOffset,
     }
     
     const rightIconStyle: React.CSSProperties = {
       ...iconStyle,
-      right: '14px',
+      right: currentSizeConfig.iconOffset,
+    }
+    
+    const validationIconStyle: React.CSSProperties = {
+      ...iconStyle,
+      right: rightIcon ? (size === 'sm' ? '36px' : size === 'lg' ? '52px' : '44px') : currentSizeConfig.iconOffset,
+      color: validationState === 'valid' ? '#10b981' : validationState === 'invalid' ? '#ef4444' : 'rgba(255, 255, 255, 0.6)',
     }
     
     const helperStyle: React.CSSProperties = {
       fontSize: '12px',
       marginTop: '6px',
-      color: error ? '#ef4444' : 'rgba(255, 255, 255, 0.6)',
+      color: error ? '#ef4444' : validationState === 'valid' ? '#10b981' : validationState === 'invalid' ? '#ef4444' : 'rgba(255, 255, 255, 0.6)',
       lineHeight: '1.4',
+      transition: 'color 0.2s ease',
+    }
+    
+    // Auto-suggestion styles
+    const suggestionStyle: React.CSSProperties = {
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      marginTop: '4px',
+      borderRadius: '8px',
+      overflow: 'hidden',
+      ...glassStyles,
     }
     
     return (
       <div style={containerStyle} className={`liquid-input ${className || ''}`}>
-        {label && (
+        {label && !props.placeholder && (
           <label htmlFor={inputId} style={labelStyle}>
             {label}
           </label>
@@ -224,6 +368,13 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
           onMouseLeave={onMouseLeave}
           onMouseMove={onMouseMove}
         >
+          {/* Floating label */}
+          {label && props.placeholder && (
+            <label htmlFor={inputId} style={floatingLabelStyle}>
+              {label}
+            </label>
+          )}
+          
           {/* Left icon */}
           {leftIcon && (
             <div style={leftIconStyle}>
@@ -252,6 +403,21 @@ const LiquidInputBase = forwardRef<HTMLInputElement, LiquidInputProps>(
             aria-describedby={errorId || helperId || undefined}
             {...props}
           />
+          
+          {/* Validation icon */}
+          {validationState !== 'neutral' && showValidation && (
+            <div style={validationIconStyle}>
+              {validationState === 'valid' ? (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          )}
           
           {/* Right icon */}
           {rightIcon && (
@@ -285,7 +451,7 @@ LiquidInput.Default = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'varia
   <LiquidInputBase
     ref={ref}
     variant="frosted"
-    intensity="subtle"
+    intensity="light"
     interactive
     {...props}
   />
@@ -308,7 +474,7 @@ LiquidInput.Email = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type' |
     ref={ref}
     type="email"
     variant="frosted"
-    intensity="subtle"
+    intensity="light"
     interactive
     {...props}
   />
@@ -320,7 +486,7 @@ LiquidInput.Password = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type
     ref={ref}
     type="password"
     variant="frosted"
-    intensity="subtle"
+    intensity="light"
     interactive
     {...props}
   />
@@ -332,7 +498,7 @@ LiquidInput.Search = forwardRef<HTMLInputElement, Omit<LiquidInputProps, 'type' 
     ref={ref}
     type="search"
     variant="clear"
-    intensity="subtle"
+    intensity="light"
     interactive
     {...props}
   />

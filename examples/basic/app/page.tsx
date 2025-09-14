@@ -1,6 +1,12 @@
 'use client'
 
-import { LiquidCard, LiquidButton, LiquidInput, LiquidModal } from '@liquid-ui/react'
+import { 
+  LiquidCard, LiquidCardHero, LiquidCardCompact, LiquidCardInteractive,
+  LiquidButton, LiquidButtonPrimary, LiquidButtonGhost, LiquidButtonIcon,
+  LiquidInput, LiquidInputSearch, LiquidInputEmail, LiquidInputPassword,
+  LiquidModal, LiquidModalAlert, LiquidModalConfirm,
+  LiquidSurface, LiquidContent, LiquidText, LiquidInteractive
+} from '@liquid-ui/react'
 import { useState } from 'react'
 
 export default function Home() {
@@ -13,7 +19,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-white">
-            Liquid UI 🌊
+            Liquid UI
           </h1>
           <p className="text-xl text-blue-200">
             Beautiful Apple Liquid Glass components for React
@@ -23,77 +29,78 @@ export default function Home() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
-          {/* Frosted Card */}
-          <LiquidCard.Frosted className="p-6 space-y-4">
+          {/* Enhanced Frosted Card */}
+          <LiquidCard variant="frosted" interactive className="space-y-4">
             <h3 className="text-xl font-semibold text-white">
-              Frosted Glass
+              Enhanced Glass
             </h3>
             <p className="text-blue-100">
-              Perfect for content cards and information displays with subtle transparency.
+              Drag me around! Features magnetic edges and smooth 3D transforms with ripple effects.
             </p>
-            <LiquidButton.Secondary size="sm">
-              Learn More
-            </LiquidButton.Secondary>
-          </LiquidCard.Frosted>
+            <LiquidButtonGhost size="sm">
+              Interactive Glass
+            </LiquidButtonGhost>
+          </LiquidCard>
 
-          {/* Clear Card */}
-          <LiquidCard.Clear className="p-6 space-y-4">
+          {/* Interactive Clear Card */}
+          <LiquidCard variant="clear" interactive className="space-y-4">
             <h3 className="text-xl font-semibold text-white">
-              Clear Glass
+              Magnetic Glass
             </h3>
             <p className="text-blue-100">
-              Ultra-minimal design with pure transparency and elegant borders.
+              Hover near me to feel the magnetic attraction! Notice the smooth color transitions.
             </p>
-            <LiquidButton.Primary size="sm">
-              Explore
-            </LiquidButton.Primary>
-          </LiquidCard.Clear>
+            <LiquidButtonPrimary size="sm">
+              Feel the Glass
+            </LiquidButtonPrimary>
+          </LiquidCard>
 
-          {/* Tinted Card */}
-          <LiquidCard.Tinted className="p-6 space-y-4">
+          {/* Advanced Tinted Card */}
+          <LiquidCard variant="tinted" interactive className="space-y-4">
             <h3 className="text-xl font-semibold text-white">
-              Tinted Glass
+              Advanced Glass
             </h3>
             <p className="text-blue-100">
-              Subtle color tinting that adapts beautifully to any background.
+              Combines drag & drop with magnetic edges. Click buttons to see ripple effects!
             </p>
-            <LiquidButton.Tinted size="sm">
-              Try It
-            </LiquidButton.Tinted>
-          </LiquidCard.Tinted>
+            <LiquidButton variant="tinted" size="sm">
+              Premium Glass
+            </LiquidButton>
+          </LiquidCard>
 
         </div>
 
         {/* Interactive Demo Section */}
-        <LiquidCard.Interactive className="p-8 space-y-6" intensity="strong">
+        <LiquidCardInteractive className="space-y-6" intensity="strong">
           <h2 className="text-2xl font-bold text-white text-center">
             Interactive Demo
           </h2>
 
-          {/* Form Elements */}
+          {/* Enhanced Form Elements */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <LiquidInput.Email
-                label="Email Address"
+              <LiquidInputEmail
                 placeholder="Enter your email"
                 leftIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                   </svg>
                 }
-                fullWidth
               />
               
-              <LiquidInput.Default
-                label="Message"
-                placeholder="Tell us what you think..."
-                helperText="Share your feedback about Liquid UI"
-                fullWidth
+              <LiquidInput
+                type="tel"
+                placeholder="Enter your phone"
+                leftIcon={
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                }
               />
             </div>
 
             <div className="space-y-4">
-              <LiquidButton.Primary
+              <LiquidButtonPrimary
                 fullWidth
                 leftIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,18 +108,19 @@ export default function Home() {
                   </svg>
                 }
               >
-                Send Message
-              </LiquidButton.Primary>
+                Experience Glass Physics
+              </LiquidButtonPrimary>
 
-              <LiquidButton.Secondary
+              <LiquidButton variant="frosted"
                 fullWidth
                 onClick={() => setIsModalOpen(true)}
               >
-                Open Modal Demo
-              </LiquidButton.Secondary>
+                Enhanced Modal
+              </LiquidButton>
 
-              <LiquidButton.Large
+              <LiquidButton
                 variant="tinted"
+                size="lg"
                 fullWidth
                 rightIcon={
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,28 +128,31 @@ export default function Home() {
                   </svg>
                 }
               >
-                Get Started
-              </LiquidButton.Large>
+                Enhanced Experience
+              </LiquidButton>
             </div>
           </div>
-        </LiquidCard.Interactive>
+        </LiquidCardInteractive>
 
-        {/* Features Grid */}
+        {/* Enhanced Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[
-            { title: "60fps", subtitle: "Smooth animations" },
-            { title: "<50kb", subtitle: "Tiny bundle size" },
-            { title: "TypeScript", subtitle: "Full type safety" },
-            { title: "A11y", subtitle: "WCAG compliant" }
+            { title: "Drag & Drop", subtitle: "Native support" },
+            { title: "Ripple FX", subtitle: "Smooth animations" },
+            { title: "Magnetic", subtitle: "Edge attractions" },
+            { title: "Enhanced", subtitle: "All components" }
           ].map((feature, index) => (
-            <LiquidCard.Clear key={index} className="p-4 text-center">
-              <div className="text-2xl font-bold text-white">
+            <LiquidCardCompact 
+              key={index} 
+              className="text-center"
+            >
+              <div className="text-lg font-bold text-white mb-1">
                 {feature.title}
               </div>
               <div className="text-sm text-blue-200">
                 {feature.subtitle}
               </div>
-            </LiquidCard.Clear>
+            </LiquidCardCompact>
           ))}
         </div>
 
@@ -149,31 +160,33 @@ export default function Home() {
 
       {/* Modal Demo */}
       <LiquidModal
-        open={isModalOpen}
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Liquid Glass Modal"
         size="md"
       >
-        <div className="p-6 space-y-4">
+        <div className="space-y-4">
+          <LiquidText variant="title" align="center">
+            Liquid Glass Modal
+          </LiquidText>
           <p className="text-gray-300">
-            This is a beautiful modal with liquid glass effects. It features:
+            This enhanced modal showcases all the new component features:
           </p>
           
           <ul className="space-y-2 text-gray-400">
-            <li>• Backdrop blur and glass effects</li>
-            <li>• Smooth animations</li>
-            <li>• Keyboard navigation</li>
-            <li>• Focus management</li>
-            <li>• Accessibility features</li>
+            <li>• Glass physics interactions</li>
+            <li>• Enhanced interactions</li>
+            <li>• Improved visual feedback</li>
+            <li>• Adaptive glass opacity</li>
+            <li>• Better accessibility</li>
           </ul>
 
           <div className="flex gap-3 pt-4">
-            <LiquidButton.Small onClick={() => setIsModalOpen(false)}>
+            <LiquidButton size="sm" onClick={() => setIsModalOpen(false)}>
               Close Modal
-            </LiquidButton.Small>
-            <LiquidButton.Small variant="clear">
+            </LiquidButton>
+            <LiquidButtonGhost size="sm">
               Learn More
-            </LiquidButton.Small>
+            </LiquidButtonGhost>
           </div>
         </div>
       </LiquidModal>

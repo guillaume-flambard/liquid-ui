@@ -56,7 +56,6 @@ export class LiquidGlassEngine {
     const blurValue = this.getBlurValue(config)
     const backgroundValue = this.getBackgroundValue(config)
     const borderValue = this.getBorderValue(config)
-    const shadowValue = this.getShadowValue(config)
 
     const styles: LiquidGlassStyles = {
       backdropFilter: `blur(${blurValue})`,
@@ -65,7 +64,6 @@ export class LiquidGlassEngine {
 
     // Add optional properties
     if (borderValue) styles.border = borderValue
-    if (shadowValue) styles.boxShadow = shadowValue
 
     // Add fallbacks for unsupported browsers
     if (!this.deviceCapabilities.supportsBackdropFilter) {
@@ -80,13 +78,14 @@ export class LiquidGlassEngine {
    */
   getAdaptiveBackground(config: GlassConfig, backgroundLuminance: number): string {
     const { glass } = liquidTokens
-    const baseColor = glass.colors[config.variant]
+    const glassSpec = glass[config.variant] || glass.frosted
     
     // Adjust opacity based on background brightness
     const luminanceMultiplier = backgroundLuminance > 0.5 ? 0.8 : 1.2
-    const adaptiveOpacity = glass.opacity[config.opacity] * luminanceMultiplier
+    const baseOpacity = this.extractOpacityFromBackground(glassSpec.background)
+    const adaptiveOpacity = baseOpacity * luminanceMultiplier
     
-    return this.adjustOpacity(baseColor, adaptiveOpacity)
+    return this.adjustOpacity(glassSpec.background, adaptiveOpacity)
   }
 
   /**
@@ -147,54 +146,45 @@ export class LiquidGlassEngine {
 
   private getBlurValue(config: GlassConfig): string {
     const { glass } = liquidTokens
+    const glassSpec = glass[config.variant] || glass.frosted
     
     // Reduce blur on low-performance devices
     if (this.deviceCapabilities.performanceLevel === 'low') {
-      return glass.blur.subtle
+      return '5px' // Reduced blur for performance
     }
     
-    return glass.blur[config.intensity]
+    return glassSpec.blur
   }
 
   private getBackgroundValue(config: GlassConfig): string {
     const { glass } = liquidTokens
-    const baseColor = glass.colors[config.variant] || glass.colors.frosted
-    const opacity = glass.opacity[config.opacity] || glass.opacity.regular
+    const glassSpec = glass[config.variant] || glass.frosted
     
-    return this.adjustOpacity(baseColor, opacity)
+    return glassSpec.background
   }
 
   private getBorderValue(config: GlassConfig): string | undefined {
     const { glass } = liquidTokens
+    const glassSpec = glass[config.variant] || glass.frosted
     
-    if (config.variant === 'clear') return undefined
-    
-    return glass.border.subtle
+    return glassSpec.border
   }
 
   private getShadowValue(config: GlassConfig): string | undefined {
-    const { glass } = liquidTokens
-    
     if (this.deviceCapabilities.performanceLevel === 'low') {
       return undefined // Skip shadows on low-performance devices
     }
     
-    switch (config.opacity) {
-      case 'light':
-        return glass.shadow.subtle
-      case 'regular':
-        return glass.shadow.regular
-      case 'strong':
-        return glass.shadow.strong
-      default:
-        return glass.shadow.regular
-    }
+    // Return a basic shadow for now
+    return '0 8px 32px rgba(0, 0, 0, 0.12)'
   }
 
   private getFallbackBackground(config: GlassConfig): string {
     // Fallback for browsers that don't support backdrop-filter
     const { glass } = liquidTokens
-    const fallbackOpacity = (glass.opacity[config.opacity] || glass.opacity.regular) * 1.5 // Increase opacity for visibility
+    const glassSpec = glass[config.variant] || glass.frosted
+    const baseOpacity = this.extractOpacityFromBackground(glassSpec.background)
+    const fallbackOpacity = Math.min(baseOpacity * 1.5, 0.95) // Increase opacity for visibility
     
     switch (config.variant) {
       case 'clear':
@@ -202,13 +192,9 @@ export class LiquidGlassEngine {
       case 'frosted':
         return `rgba(248, 250, 252, ${fallbackOpacity})`
       case 'tinted':
-        return `rgba(219, 234, 254, ${fallbackOpacity})`
+        return `rgba(0, 122, 255, ${fallbackOpacity})`
       case 'dark':
-        return `rgba(15, 23, 42, ${fallbackOpacity})`
-      case 'aurora':
-        return `rgba(147, 51, 234, ${fallbackOpacity})`
-      case 'solid':
-        return `rgba(255, 255, 255, ${Math.min(fallbackOpacity * 2, 0.95)})`
+        return `rgba(0, 0, 0, ${fallbackOpacity})`
       default:
         return `rgba(255, 255, 255, ${fallbackOpacity})`
     }
@@ -227,5 +213,17 @@ export class LiquidGlassEngine {
     }
     
     return colorString
+  }
+  
+  private extractOpacityFromBackground(backgroundString: string): number {
+    const rgbaMatch = backgroundString.match(/rgba?\(([^)]+)\)/)
+    if (!rgbaMatch) return 0.25
+    
+    const values = rgbaMatch[1].split(',').map(v => v.trim())
+    if (values.length >= 4) {
+      return parseFloat(values[3]) || 0.25
+    }
+    
+    return 0.25
   }
 }

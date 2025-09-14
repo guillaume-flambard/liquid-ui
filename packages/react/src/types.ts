@@ -18,7 +18,14 @@ export interface LiquidCardProps extends BaseLiquidProps, Omit<HTMLAttributes<HT
   hover?: boolean
   shadow?: boolean
   border?: boolean
+  padding?: 'sm' | 'md' | 'lg' | 'xl'
   onHover?: (isHovered: boolean) => void
+  draggable?: boolean
+  magneticEdges?: boolean
+  magneticStrength?: number
+  onLiquidDragStart?: (e: React.MouseEvent | React.TouchEvent) => void
+  onLiquidDrag?: (e: MouseEvent | TouchEvent, position: { x: number; y: number }) => void
+  onLiquidDragEnd?: (e: MouseEvent | TouchEvent) => void
 }
 
 // LiquidButton component props
@@ -31,25 +38,29 @@ export interface LiquidButtonProps extends BaseLiquidProps, Omit<ButtonHTMLAttri
 }
 
 // LiquidInput component props
-export interface LiquidInputProps extends BaseLiquidProps, Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
+export interface LiquidInputProps extends BaseLiquidProps, Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'size'> {
   label?: string
   error?: string
   helperText?: string
   leftIcon?: ReactNode
   rightIcon?: ReactNode
   fullWidth?: boolean
+  size?: 'sm' | 'md' | 'lg'
 }
 
 // LiquidModal component props
-export interface LiquidModalProps extends BaseLiquidProps {
-  open: boolean
+export interface LiquidModalProps extends BaseLiquidProps, Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
+  isOpen?: boolean
+  open?: boolean // Support both for backward compatibility
   onClose: () => void
   title?: string
   showCloseButton?: boolean
-  closeOnBackdropClick?: boolean
+  closeOnBackdrop?: boolean
+  closeOnBackdropClick?: boolean // Support both for backward compatibility
   closeOnEscape?: boolean
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
   centered?: boolean
+  backdropClassName?: string
 }
 
 // Component types with static presets
@@ -59,6 +70,8 @@ export type LiquidCardComponent = ForwardRefExoticComponent<LiquidCardProps & Re
   Tinted: ForwardRefExoticComponent<Omit<LiquidCardProps, 'variant' | 'intensity' | 'interactive' | 'hover' | 'shadow'> & RefAttributes<HTMLDivElement>>
   Interactive: ForwardRefExoticComponent<Omit<LiquidCardProps, 'interactive' | 'hover' | 'shadow' | 'border'> & RefAttributes<HTMLDivElement>>
   Static: ForwardRefExoticComponent<Omit<LiquidCardProps, 'interactive' | 'hover' | 'shadow'> & RefAttributes<HTMLDivElement>>
+  Hero: ForwardRefExoticComponent<Omit<LiquidCardProps, 'padding' | 'variant' | 'intensity'> & RefAttributes<HTMLDivElement>>
+  Compact: ForwardRefExoticComponent<Omit<LiquidCardProps, 'padding' | 'variant'> & RefAttributes<HTMLDivElement>>
 }
 
 export type LiquidButtonComponent = ForwardRefExoticComponent<LiquidButtonProps & RefAttributes<HTMLButtonElement>> & {
@@ -75,4 +88,10 @@ export type LiquidInputComponent = ForwardRefExoticComponent<LiquidInputProps & 
   Email: ForwardRefExoticComponent<Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'> & RefAttributes<HTMLInputElement>>
   Password: ForwardRefExoticComponent<Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'> & RefAttributes<HTMLInputElement>>
   Search: ForwardRefExoticComponent<Omit<LiquidInputProps, 'type' | 'variant' | 'intensity' | 'interactive'> & RefAttributes<HTMLInputElement>>
+}
+
+export type LiquidModalComponent = ForwardRefExoticComponent<LiquidModalProps & RefAttributes<HTMLDivElement>> & {
+  Alert: ForwardRefExoticComponent<Omit<LiquidModalProps, 'size' | 'showCloseButton' | 'centered'> & RefAttributes<HTMLDivElement>>
+  Confirm: ForwardRefExoticComponent<Omit<LiquidModalProps, 'size' | 'centered'> & RefAttributes<HTMLDivElement>>
+  Fullscreen: ForwardRefExoticComponent<Omit<LiquidModalProps, 'size' | 'centered'> & RefAttributes<HTMLDivElement>>
 }

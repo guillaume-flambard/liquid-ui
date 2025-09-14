@@ -1,0 +1,33 @@
+/* src/styles/LiquidInput.css */
+.liquid-input input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+.liquid-input input:focus::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.liquid-input input:disabled::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+.liquid-input input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+.liquid-input input:focus::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.liquid-input input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  transition: color 0.2s ease;
+}
+.liquid-input input:focus::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 1;
+}
+.liquid-input input:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+.liquid-input input:focus:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}

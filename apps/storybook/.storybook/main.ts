@@ -3,7 +3,6 @@ import type { StorybookConfig } from '@storybook/react-webpack5'
 const config: StorybookConfig = {
   stories: [
     '../src/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)',
-    '../../../packages/react/src/**/*.stories.@(js|jsx|ts|tsx|mdx)'
   ],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
@@ -34,6 +33,15 @@ const config: StorybookConfig = {
         '@liquid-ui/react': require.resolve('../../../packages/react/src'),
       }
     }
+    
+    // Add CSS support
+    if (config.module?.rules) {
+      config.module.rules.push({
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      })
+    }
+    
     return config
   },
 }

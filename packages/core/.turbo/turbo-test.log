@@ -1,0 +1,23 @@
+
+> @liquid-ui/core@0.1.0 test
+> vitest --coverage --passWithNoTests
+
+
+ DEV  v1.6.1 /Users/memo/projects/liquid-ui/packages/core
+      Coverage enabled with v8
+
+ % Coverage report from v8
+-----------|---------|----------|---------|---------|-------------------
+File       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------|---------|----------|---------|---------|-------------------
+All files  |       0 |        0 |       0 |       0 |                   
+ engine.ts |       0 |        0 |       0 |       0 | 1-229             
+ index.ts  |       0 |        0 |       0 |       0 | 1-4               
+ tokens.ts |       0 |        0 |       0 |       0 | 1-275             
+ utils.ts  |       0 |        0 |       0 |       0 | 1-219             
+-----------|---------|----------|---------|---------|-------------------
+include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+watch exclude:  **/node_modules/**, **/dist/**
+No test files found, exiting with code 0
+

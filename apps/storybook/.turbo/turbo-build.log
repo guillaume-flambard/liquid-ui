@@ -1,0 +1,11 @@
+
+> @liquid-ui/storybook@0.1.0 build
+> storybook build
+
+@storybook/core v8.6.14
+
+info => Cleaning outputDir: storybook-static
+info => Loading presets
+info => Building manager..
+info => Manager built ([38;2;181;126;229m169 ms[39m)
+info => Building preview..

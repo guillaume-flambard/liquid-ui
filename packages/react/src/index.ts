@@ -1,4 +1,10 @@
-// Components
+// Primitives - Low-level building blocks
+export * from './components/primitives'
+
+// Composed Components - High-level components
+export * from './components/composed'
+
+// Legacy exports for backward compatibility
 export { LiquidCard } from './components/LiquidCard'
 export { LiquidButton } from './components/LiquidButton'
 export { LiquidInput } from './components/LiquidInput'

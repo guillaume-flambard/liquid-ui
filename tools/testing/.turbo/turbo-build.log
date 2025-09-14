@@ -1,0 +1,14 @@
+
+> @liquid-ui/testing@0.1.0 build
+> tsup src/index.ts --dts
+
+CLI Building entry: src/index.ts
+CLI Using tsconfig: ../../tsconfig.json
+CLI tsup v8.5.0
+CLI Target: es2020
+CJS Build start
+CJS dist/index.js 5.59 KB
+CJS ⚡️ Build success in 34ms
+DTS Build start
+DTS ⚡️ Build success in 1071ms
+DTS dist/index.d.ts 1.68 KB

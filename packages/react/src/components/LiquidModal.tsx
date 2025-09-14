@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect, useRef, useCallback, forwardRef } from 'react'
 import { createPortal } from 'react-dom'
 import { clsx } from 'clsx'
 import { useLiquidGlass } from '../hooks/useLiquidGlass'
-import type { LiquidModalProps } from '../types'
+import type { LiquidModalProps, LiquidModalComponent } from '../types'
 
 /**
  * LiquidModal - Glass modal and overlay component
@@ -10,29 +10,38 @@ import type { LiquidModalProps } from '../types'
  * A beautiful modal with liquid glass effects, perfect for dialogs and overlays.
  * Includes backdrop blur, keyboard navigation, and accessibility features.
  */
-export const LiquidModal: React.FC<LiquidModalProps> = ({
-  open,
-  onClose,
-  title,
-  showCloseButton = true,
-  closeOnBackdropClick = true,
-  closeOnEscape = true,
-  size = 'md',
-  centered = true,
-  variant = 'frosted',
-  intensity = 'strong',
-  opacity = 'regular',
-  interactive = false,
-  adaptiveOpacity = false,
-  environmentBlending = true,
-  className,
-  children
-}) => {
+const LiquidModalBase = forwardRef<HTMLDivElement, LiquidModalProps>(
+  (
+    {
+      isOpen,
+      open = isOpen, // Support both props for backward compatibility
+      onClose,
+      title,
+      showCloseButton = true,
+      closeOnBackdrop = true,
+      closeOnBackdropClick = closeOnBackdrop, // Support both props
+      closeOnEscape = true,
+      size = 'md',
+      centered = true,
+      variant = 'frosted',
+      intensity = 'strong',
+      opacity = 'regular',
+      interactive = false,
+      adaptiveOpacity = false,
+      environmentBlending = true,
+      className,
+      backdropClassName,
+      children,
+      style,
+      ...rest
+    },
+    ref
+  ) => {
   const modalRef = useRef<HTMLDivElement>(null)
   const backdropRef = useRef<HTMLDivElement>(null)
   
   // Generate glass styles for the modal content
-  const glassStyles = useLiquidGlass({
+  const { glassStyles } = useLiquidGlass({
     variant,
     intensity,
     opacity,
@@ -42,7 +51,7 @@ export const LiquidModal: React.FC<LiquidModalProps> = ({
   })
   
   // Generate backdrop glass styles
-  const backdropGlassStyles = useLiquidGlass({
+  const { glassStyles: backdropGlassStyles } = useLiquidGlass({
     variant: 'dark',
     intensity: 'regular',
     opacity: 'light',
@@ -53,10 +62,11 @@ export const LiquidModal: React.FC<LiquidModalProps> = ({
   
   // Size classes
   const sizeClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl'
+    sm: 'max-w-md',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl',
+    full: 'max-w-none'
   }
   
   // Handle escape key
@@ -131,13 +141,23 @@ export const LiquidModal: React.FC<LiquidModalProps> = ({
         'justify-center',
         'p-4',
         'min-h-screen',
-        centered ? 'items-center' : 'items-start pt-16'
+        'backdrop-blur-md',
+        centered ? 'items-center' : 'items-start pt-16',
+        backdropClassName
       )}
       style={backdropGlassStyles}
       onClick={handleBackdropClick}
     >
       <div
-        ref={modalRef}
+        ref={(node) => {
+          // Handle both forwarded ref and internal ref
+          if (typeof ref === 'function') {
+            ref(node)
+          } else if (ref) {
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+          }
+          (modalRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+        }}
         className={clsx(
           'liquid-modal',
           'relative',
@@ -158,11 +178,12 @@ export const LiquidModal: React.FC<LiquidModalProps> = ({
           'zoom-in-95',
           className
         )}
-        style={glassStyles}
+        style={{ ...glassStyles, ...style }}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? 'modal-title' : undefined}
+        {...rest}
       >
         {/* Header */}
         {(title || showCloseButton) && (
@@ -220,6 +241,41 @@ export const LiquidModal: React.FC<LiquidModalProps> = ({
   
   // Render modal in a portal
   return createPortal(modalContent, document.body)
-}
+})
 
-LiquidModal.displayName = 'LiquidModal'
+LiquidModalBase.displayName = 'LiquidModal'
+
+// Create the main component with proper typing
+export const LiquidModal = LiquidModalBase as LiquidModalComponent
+
+// Preset components for easier usage
+LiquidModal.Alert = forwardRef<HTMLDivElement, Omit<LiquidModalProps, 'size' | 'showCloseButton' | 'centered'>>((props, ref) => (
+  <LiquidModalBase
+    ref={ref}
+    size="sm"
+    showCloseButton={false}
+    centered
+    {...props}
+  />
+))
+LiquidModal.Alert.displayName = 'LiquidModal.Alert'
+
+LiquidModal.Confirm = forwardRef<HTMLDivElement, Omit<LiquidModalProps, 'size' | 'centered'>>((props, ref) => (
+  <LiquidModalBase
+    ref={ref}
+    size="md"
+    centered
+    {...props}
+  />
+))
+LiquidModal.Confirm.displayName = 'LiquidModal.Confirm'
+
+LiquidModal.Fullscreen = forwardRef<HTMLDivElement, Omit<LiquidModalProps, 'size' | 'centered'>>((props, ref) => (
+  <LiquidModalBase
+    ref={ref}
+    size="full"
+    centered={false}
+    {...props}
+  />
+))
+LiquidModal.Fullscreen.displayName = 'LiquidModal.Fullscreen'
